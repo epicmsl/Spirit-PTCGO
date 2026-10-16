@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Origin Forme Dialga V SWSH 255
+2 Origin Forme Dialga VSTAR SWSH 256
+2 Origin Forme Palkia V SWSH 253
+2 Origin Forme Palkia VSTAR ASR 40
+2 Dialga EVS 112
+2 Palkia CEL 4
+2 Melmetal V SWSH 224
+2 Magnezone SWSH 208
+2 Magnemite ASR 105
+2 Magneton ASR 106
+2 Bronzong SWSH 91
+2 Bronzor LOR 125
+2 Zamazenta V BRS 105
+2 Zacian V SSH 138
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Metal Saucer SSH 170
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Metal Energy Energy 8
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

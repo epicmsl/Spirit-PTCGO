@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import damage_per, count_in_play
 from spirit.game.card_effects.trainers import is_darkness_pokemon
 from spirit.game.models.board import PokemonEntity
@@ -41,6 +41,7 @@ card = PokemonCardDef(
     collector_number=117,
     set_code="SWSH3",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=340,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.VMAX,

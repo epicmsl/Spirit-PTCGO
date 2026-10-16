@@ -1,0 +1,34 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Snorlax SWSH 32
+2 Snorlax SWSH 32
+2 Kangaskhan SWSH 38
+2 Bouffalant BW 90
+2 Audino BW 87
+2 Bibarel SWSH 188
+2 Bidoof BRS 120
+2 Regigigas SWSH 247
+2 Ditto V SHF 50
+2 Ditto VMAX SHF 51
+2 Noctowl SWSH 27
+2 Hoothoot ASR 120
+2 Dragonite V SWSH 154
+2 Dragonite VSTAR SWSH 236
+
+Trainer Cards - 16
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+
+Energy Cards - 16
+
+16 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

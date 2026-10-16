@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import self_energy_discard_attack
 from spirit.game.card_effects.trainers import is_basic_energy_card
 
@@ -47,4 +47,5 @@ card = PokemonCardDef(
             effect=fire_blast,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

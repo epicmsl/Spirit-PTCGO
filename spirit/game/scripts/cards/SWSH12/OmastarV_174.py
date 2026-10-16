@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, def_for
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, def_for, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import lock_defender_attacks
 from spirit.game.card_effects.support_common import search_to_bench
 from spirit.game.session.effects import is_evolution_pokemon
@@ -48,4 +48,5 @@ card = PokemonCardDef(
             effect=tentacle_lock,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

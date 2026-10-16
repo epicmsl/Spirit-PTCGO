@@ -1,0 +1,34 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 24
+
+2 Ho-Oh CEL 1
+2 Reshiram CEL 2
+2 Venusaur CEL 3
+2 Palkia CEL 4
+2 Pikachu CEL 5
+2 Rocket's Zapdos CEL 7
+2 _____'s Pikachu CEL 8
+2 Zekrom CEL 10
+2 Team Magma's Groudon CEL 11
+2 Mew ex CEL 13
+2 Gardevoir ex CEL 14
+2 Mewtwo-EX CEL 22
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+2 Professor's Research (Professor Oak) CEL 24
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+
+Energy Cards - 16
+
+16 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

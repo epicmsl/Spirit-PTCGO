@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions, AttrID
 from spirit.game.card_effects.attacks_common import condition_attack
 from spirit.game.card_effects.support_common import requires_hand
@@ -31,6 +31,7 @@ card = PokemonCardDef(
     collector_number=52,
     set_code="SWSH10",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=150,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.STAGE2,

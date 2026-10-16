@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_basic_energy_card
 from spirit.game.card_effects.pokemon import is_pokemon_gx
 from spirit.game.session.effects import is_basic_pokemon
@@ -44,5 +44,6 @@ card = ItemCardDef(
     collector_number=200,
     set_code="SWSH3",
     rarity=Rarities.RareSecret,
-    effect=turbo_patch
+    effect=turbo_patch,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

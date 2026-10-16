@@ -1,5 +1,5 @@
 from spirit.game.card_effects.trainers import bede, bede_playable
-from spirit.game.data_utils import SupporterCardDef
+from spirit.game.data_utils import Foil, SupporterCardDef
 from spirit.game.attributes import Rarities
 
 card = SupporterCardDef(
@@ -12,6 +12,7 @@ card = SupporterCardDef(
     collector_number=124,
     set_code="CZ",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     effect=bede,
     condition=bede_playable
 )

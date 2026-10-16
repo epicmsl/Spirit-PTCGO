@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_special_energy
 
 
@@ -48,4 +48,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareRainbow,
     effect=flannery,
     condition=_flannery_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

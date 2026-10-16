@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import energy_mix, psychic_leap
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="815e5788-0ccd-5b26-8646-77eb47fb6e9f",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=60,
     set_code="CZ",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=180,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.BASIC,

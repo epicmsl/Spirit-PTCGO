@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import place_counters, discard_random_from_hand
 
 
@@ -18,6 +18,7 @@ card = PokemonCardDef(
     collector_number=69,
     set_code="SWSH9",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=300,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.VMAX,

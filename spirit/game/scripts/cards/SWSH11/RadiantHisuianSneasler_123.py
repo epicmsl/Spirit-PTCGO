@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import condition_attack
 from spirit.game.card_effects.pokemon import more_poison
 
@@ -13,6 +13,7 @@ card = PokemonCardDef(
     collector_number=123,
     set_code="SWSH11",
     rarity=Rarities.RareRadiant,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.RADIANTHOLO]),
     hp=130,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.BASIC,

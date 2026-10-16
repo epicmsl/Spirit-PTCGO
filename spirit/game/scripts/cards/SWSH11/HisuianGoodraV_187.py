@@ -1,7 +1,7 @@
 from spirit.game.card_effects.support_common import gust_attack
 from spirit.game.card_effects.passives_common import protect_next_turn
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="42548660-c292-5bef-8bc4-95ec077385ed",
@@ -34,4 +34,5 @@ card = PokemonCardDef(
             effect=protect_next_turn(reduce=30),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

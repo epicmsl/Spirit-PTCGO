@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import serena, serena_playable
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="9da91305-afcf-57f7-971a-c0ab57422f13",
@@ -13,5 +13,6 @@ card = SupporterCardDef(
     set_code="SWSH12",
     rarity=Rarities.RareUltra,
     effect=serena,
-    condition=serena_playable
+    condition=serena_playable,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

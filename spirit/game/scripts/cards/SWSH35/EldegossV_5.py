@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import remove_self_from_play
 from spirit.game.session.effects import is_supporter_card
 
@@ -29,6 +29,7 @@ card = PokemonCardDef(
     collector_number=5,
     set_code="SWSH35",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=180,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.BASIC,

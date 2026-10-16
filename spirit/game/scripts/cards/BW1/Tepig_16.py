@@ -1,0 +1,4 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.card_effects.attacks_common import recoil_attack
+card = PokemonCardDef(guid='7cbec0e4-dc1b-5f7e-a805-202b75ae78a3', key='BW1', name='com.direwolfdigital.cake.data.archetypes.pokemon.Tepig.Name', display_name='Tepig', searchable_by=['Tepig', 'Basic', 'Tepig'], subtypes=['Basic'], collector_number=16, set_code='BW1', rarity=Rarities.Common, hp=70, elements=[PokemonTypes.FIRE], stage=PokemonStage.BASIC, retreat_cost=2, weakness_type=PokemonTypes.WATER, family_id=498, abilities=[Attack(title='Take Down', game_text='This Pokémon does 10 damage to itself.', cost={PokemonTypes.FIRE: 1, PokemonTypes.COLORLESS: 1}, damage=30, effect=recoil_attack(10))])

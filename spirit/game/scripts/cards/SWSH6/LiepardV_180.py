@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Triggers, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import remove_self_from_play
 
 
@@ -47,4 +47,5 @@ card = PokemonCardDef(
             effect=remove_self_from_play(destination="hand", with_attachments="same", optional=True),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

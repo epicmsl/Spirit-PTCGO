@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.pokemon import (
     ancient_wisdom, ancient_wisdom_condition, gigaton_break,
@@ -14,6 +14,7 @@ card = PokemonCardDef(
     collector_number=130,
     set_code="SWSH10",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=150,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.BASIC,

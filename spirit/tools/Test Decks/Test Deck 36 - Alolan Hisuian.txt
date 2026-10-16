@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Alolan Exeggutor V SWSH 225
+2 Hisuian Basculegion SWSH 205
+2 Hisuian Basculin SWSH 273
+2 Hisuian Decidueye V SWSH 238
+2 Hisuian Electrode V SWSH 294
+2 Hisuian Samurott V SWSH 239
+2 Hisuian Zoroark V SWSH 297
+2 Hisuian Zoroark VSTAR LOR 147
+2 Hisuian Typhlosion V ASR 53
+2 Galarian Slowpoke SWSH 126
+2 Galarian Darumaka FST 71
+2 Galarian Darmanitan SHF 97
+2 Galarian Runerigus SHF 139
+2 Galarian Yamask CRE 82
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Psychic Energy Energy 5
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

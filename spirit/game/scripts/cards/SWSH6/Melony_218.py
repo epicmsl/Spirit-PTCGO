@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef, is_pokemon_v
-from spirit.game.attributes import Rarities, PokemonTypes
+from spirit.game.data_utils import SupporterCardDef, is_pokemon_v, Foil
+from spirit.game.attributes import Rarities, PokemonTypes, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import energy_provides_type
 from spirit.game.card_effects.support_common import (
     attach_from_discard, requires_discard, requires_in_play,
@@ -42,4 +42,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareRainbow,
     effect=melony,
     condition=_melony_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,5 +1,5 @@
 from spirit.game.card_effects.trainers import marnie
-from spirit.game.data_utils import SupporterCardDef
+from spirit.game.data_utils import Foil, SupporterCardDef
 from spirit.game.attributes import Rarities
 
 card = SupporterCardDef(
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=56,
     set_code="SWSH35",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     effect=marnie
 )

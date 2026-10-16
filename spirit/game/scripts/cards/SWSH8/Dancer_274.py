@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 async def dancer(ctx):
@@ -19,5 +19,6 @@ card = SupporterCardDef(
     collector_number=274,
     set_code="SWSH8",
     rarity=Rarities.RareRainbow,
-    effect=dancer
+    effect=dancer,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

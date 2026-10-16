@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, unimplemented
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, unimplemented
 from spirit.game.card_effects.pokemon import FluffyBarragePassive
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=4,
     set_code="SWSH7",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=90,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.STAGE2,

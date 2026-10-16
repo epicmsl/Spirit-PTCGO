@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_basic_pokemon
 from spirit.game.card_effects.passives_common import team_damage_boost_passive
 from spirit.game.card_effects.attacks_common import lock_all_attacks
@@ -46,4 +46,5 @@ card = PokemonCardDef(
             effect=max_thunder_and_lightning,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

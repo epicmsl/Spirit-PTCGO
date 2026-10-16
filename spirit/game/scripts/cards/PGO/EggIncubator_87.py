@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import search_to_bench
 from spirit.game.session.effects import is_basic_pokemon
 
@@ -28,4 +28,5 @@ card = ItemCardDef(
     set_code="PGO",
     rarity=Rarities.RareSecret,
     effect=egg_incubator,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

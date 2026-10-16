@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Tepig BW 15
+2 Pignite BW 17
+2 Emboar BW 19
+2 Pansear BW 21
+2 Simisear BW 22
+2 Darumaka BW 23
+2 Darmanitan BW 25
+2 Vullaby BW 72
+2 Mandibuzz BW 73
+2 Rolycoly SHF 140
+2 Carkol SHF 141
+2 Coalossal SWSH 24
+2 Reshiram BW 26
+2 Ho-Oh CEL 1
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Fire Energy Energy 2
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

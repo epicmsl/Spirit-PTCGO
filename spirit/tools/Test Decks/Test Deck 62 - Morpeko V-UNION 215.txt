@@ -1,0 +1,34 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 20
+
+2 Morpeko V-UNION SWSH 215
+2 Morpeko V-UNION SWSH 216
+2 Morpeko V-UNION SWSH 217
+2 Morpeko V-UNION SWSH 218
+2 Morpeko SWSH 12
+2 Morpeko SWSH 31
+2 Morpeko SWSH 116
+2 Pikachu SWSH 20
+2 Pikachu SWSH 39
+2 Pikachu SWSH 153
+
+Trainer Cards - 24
+
+4 Professor's Research BRS 147
+4 Marnie CPA 56
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch SSH 183
+2 Energy Retrieval SSH 160
+2 Evolution Incense SSH 163
+2 Metal Saucer SSH 170
+2 Air Balloon SSH 156
+
+Energy Cards - 16
+
+16 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

@@ -12,6 +12,9 @@ from spirit.game.tournaments.manager import TournamentManager, _client_reward
 from .network_player import NetworkPlayer
 from spirit.game.progression.account import build_account_attributes
 from .ai_player import AIPlayer
+from .agent_seat import AgentSeat
+from spirit import config
+from ..content.deck_strategies import make_context
 from .constants import (
     GamePhase,
     SelectionKind,
@@ -95,14 +98,55 @@ from spirit.game.data_utils import (
     subtypes_for, unimplemented,
 )
 from spirit.database.player_data import COINS_PER_WIN, COINS_PER_LOSS, grant_coins
-from spirit.database.versus_data import award_match_points, get_progress
+from spirit.database.versus_data import (
+    award_match_points, get_progress, get_streak_state, record_match_outcome,
+)
 from spirit.database.async_utils import run_db
 
 
-def _persist_match_result(account_id: str, coins: int, is_winner: bool):
-    """One thread hop for a player's match-end persistence (coins + ladder points)."""
+def _persist_match_result(account_id: str, coins: int, is_winner: bool,
+                          counts: bool = False):
+    """One thread hop for a player's match-end persistence (coins + ladder
+    points + streak/daily-versus state). Returns the record outcome."""
     grant_coins(account_id, coins)
     award_match_points(account_id, is_winner)
+    return record_match_outcome(account_id, is_winner, counts)
+
+
+def _streak_attribute_values(outcome):
+    """202010 Streak + 202190 DailyRewardTrackProgress attribute entries."""
+    streak = int(outcome.get("streak") or 0)
+    return [
+        {"name": AttrID.WIN_STREAK.value,
+         "value": {"winStreak": streak > 0, "streakLength": streak}},
+        {"name": AttrID.DAILY_TRACK_PROGRESS.value,
+         "value": {"wins": int(outcome.get("daily_wins") or 0),
+                   "mostRecentWin": int(outcome.get("daily_last_win_ms") or 0)}},
+    ]
+
+
+def _daily_track_reward_entry(outcome, index=0):
+    """EOG rewardList marker for a crossed daily track tier: name/rewardReason
+    = DailyRewardTrackReward (client HasDailyProgressReward gate) and
+    rewardType = DailyRewardTrack (DailyRewardsCount gate; keeps it out of the
+    Tokens totals — the summary panel pulls the tier amount itself)."""
+    amount = sum(int(r.get("rewardAmount") or 0)
+                 for r in outcome.get("granted") or []
+                 if r.get("rewardType") == "Tokens")
+    return {
+        "name": "DailyRewardTrackReward",
+        "rewardType": "DailyRewardTrack",
+        "rewardAmount": amount,
+        "rewardProductID": None,
+        "rewardCurrency": "",
+        "rewardDescription": {"id": "DailyRewardTrack"},
+        "rewardReason": "DailyRewardTrackReward",
+        "selectedFrom": [],
+        "selectedIndex": 0,
+        "rewardSource": "",
+        "index": index,
+        "openedReward": None,
+    }
 from spirit.game.models.board import (
     BoardEntity, BoardState, EnergyEntity, PokemonEntity,
     ComponentCardEntity, CompositePokemonEntity,
@@ -392,12 +436,22 @@ class GameSession:
             logging.info(f"[Session {self.game_id}] Cancelled active gameplay sequence task.")
 
     def _initialize_players(self):
-        """Wraps physical connections or AI players under the uniform GamePlayer abstraction."""
+        """Wraps physical connections, AI players, or agent seats under the uniform GamePlayer abstraction."""
         for account_id, info in self.pairing["players"].items():
             client = info["client"]
             deck = info["deck"]
             
-            if client is None:
+            if info.get("agent"):
+                # Agent-driven duel seat (MiMo): offers ride the file bridge.
+                logging.info(f"[Session {self.game_id}] Initializing AgentSeat as opponent.")
+                self.players[account_id] = AgentSeat(
+                    account_id=account_id,
+                    username=info.get("agent_name") or "MiMo",
+                    deck_data=deck,
+                    session=self,
+                    bridge_dir=config.MIMO_BRIDGE_DIR,
+                )
+            elif client is None:
                 # Mock AI Bot
                 logging.info(f"[Session {self.game_id}] Initializing AI Bot as opponent.")
                 self.players[account_id] = AIPlayer(
@@ -429,14 +483,27 @@ class GameSession:
         _, all_time = get_progress(account_id, "")
         return 1000 + all_time
 
-    def _prefetch_ratings(self) -> Dict[str, int]:
-        """Reads every NetworkPlayer's rating in one thread hop (called via run_db)."""
-        ratings = {}
+    def _player_streak(self, player) -> int:
+        """Win streak for the in-duel gameExtrasWinStreak_ key; same cache/fallback
+        pattern as _player_rating (headless tests build options without prefetch)."""
+        account_id = getattr(player, "account_id", None)
+        if not isinstance(player, NetworkPlayer) or not account_id:
+            return 0
+        cache = getattr(self, "_streak_cache", None)
+        if cache is not None and account_id in cache:
+            return cache[account_id]
+        return get_streak_state(account_id)["streak"]
+
+    def _prefetch_match_meta(self) -> Dict[str, Any]:
+        """Reads every NetworkPlayer's ladder rating + win streak in one thread
+        hop (called via run_db)."""
+        meta = {"ratings": {}, "streaks": {}}
         for account_id, player in self.players.items():
             if isinstance(player, NetworkPlayer):
                 _, all_time = get_progress(account_id, "")
-                ratings[account_id] = 1000 + all_time
-        return ratings
+                meta["ratings"][account_id] = 1000 + all_time
+                meta["streaks"][account_id] = get_streak_state(account_id)["streak"]
+        return meta
 
     def _build_game_options(self) -> Dict[str, Any]:
         """Builds the full gameOptions dict (cosmetics, tokens, elo, tournament ID)."""
@@ -468,10 +535,15 @@ class GameSession:
             game_options_dict[GAME_OPTION_TOKENS_KEY] = ",".join(tokens)
 
         # showPlayerUpsetNUX (G.D) float.Parses gameOptions["eloRating_<id>"]
-        # unguarded for every match participant — the key must exist.
+        # unguarded for every match participant — the key must exist. The streak
+        # display reads gameExtrasWinStreak_<id> the same way (ContainsKey +
+        # int.Parse in VersusPlayerView); emit "0" for bots/streakless players.
         for player_id, player in self.players.items():
             game_options_dict[f"eloRating_{player_id}"] = str(
                 self._player_rating(player)
+            )
+            game_options_dict[f"gameExtrasWinStreak_{player_id}"] = str(
+                self._player_streak(player)
             )
 
         # Legacy bracket matches: the client's TournamentManager reads this key
@@ -511,9 +583,11 @@ class GameSession:
         """Fires the MatchFound packet to notify clients of the finalized match and start transition."""
         logging.info(f"[Session {self.game_id}] Starting GameSession.")
 
-        # Prefetch ladder ratings off the event loop so _build_game_options never
-        # blocks the loop on SQLite reads.
-        self._rating_cache = await run_db(self._prefetch_ratings)
+        # Prefetch ladder ratings + streaks off the event loop so
+        # _build_game_options never blocks the loop on SQLite reads.
+        meta = await run_db(self._prefetch_match_meta)
+        self._rating_cache = meta["ratings"]
+        self._streak_cache = meta["streaks"]
 
         # Build the full gameOptions (cosmetics/tokens/elo) once and persist it so
         # both MatchFound and SerializedGameState carry player avatars/cosmetics.
@@ -654,12 +728,12 @@ class GameSession:
         if idle_timeout_ms is None:
             idle_timeout_ms = ACTION_TIMEOUT_MS if main_offer else FOLLOW_UP_TIMEOUT_MS
         timed = isinstance(player, NetworkPlayer)
+        # Zero-length custom choices hide the prompt bar, not the server deadline.
+        hide_choice_timer = (
+            msg_name == OutboundMsg.CUSTOM_CHOICE_REQUIRED.value
+            and value.get("offerLength") == 0
+        )
         if timed:
-            # Zero-length custom choices hide the prompt bar, not the server deadline.
-            hide_choice_timer = (
-                msg_name == OutboundMsg.CUSTOM_CHOICE_REQUIRED.value
-                and value.get("offerLength") == 0
-            )
             value = dict(value, offerLength=0 if hide_choice_timer else idle_timeout_ms,
                          startingTimestamp=int(time.time() * 1000))
         envelope = self._sequence_envelope(
@@ -669,13 +743,25 @@ class GameSession:
         player.pending_choice_future = loop.create_future()
         player._pending_offer = (OutboundMsg.SEQUENCE_MESSAGE.value, envelope, 0)
         remaining = max(0.0, (idle_timeout_ms or 0) / 1000)
+        # Visible countdown shape: own-turn offers keep the familiar quiet
+        # stretch + ACTION_COUNTDOWN_DURATION_MS counter; response offers (the
+        # ones that arrive during the opponent's turn) show their whole window
+        # ticking down, so the player can see exactly how much time is left.
+        if hide_choice_timer:
+            timer_countdown_ms = 0
+        elif main_offer:
+            timer_countdown_ms = min(ACTION_COUNTDOWN_DURATION_MS, idle_timeout_ms or 0)
+        else:
+            timer_countdown_ms = idle_timeout_ms or 0
         timer_running = False
         async with self._wire_lock:
             await player.send_packet(OutboundMsg.SEQUENCE_MESSAGE.value, envelope)
             if timed:
                 await player.send_packet(
                     OutboundMsg.SET_IDLE_TIMER.value,
-                    self._idle_timer_payload(player.account_id, idle_timeout_ms or 0),
+                    self._idle_timer_payload(
+                        player.account_id, idle_timeout_ms or 0, timer_countdown_ms
+                    ),
                 )
                 timer_running = remaining > 0
         try:
@@ -699,6 +785,28 @@ class GameSession:
                                 f"no auto-answer; returning a null selection."
                             )
                             return {"selection": None}
+                    elif isinstance(player, AgentSeat):
+                        # Agent duel seat (bridge-driven): wait for the bridge,
+                        # but never forever -- on watchdog expiry resolve with a
+                        # legal default so the human opponent is never frozen.
+                        try:
+                            reply = await asyncio.wait_for(
+                                player.pending_choice_future,
+                                config.MIMO_PROMPT_TIMEOUT_SECONDS,
+                            )
+                        except asyncio.TimeoutError:
+                            logging.error(
+                                f"[Session {self.game_id}] Prompt '{msg_name}' hit "
+                                f"the wire for agent seat {player.screen_name} with "
+                                f"no bridge reply within "
+                                f"{config.MIMO_PROMPT_TIMEOUT_SECONDS:g}s; returning "
+                                f"a null selection."
+                            )
+                            return {
+                                "selection": None,
+                                "counter": expected_counter,
+                                "_timed_out": True,
+                            }
                     elif timed:
                         if remaining <= 0:
                             wait_status = "timeout"
@@ -750,7 +858,7 @@ class GameSession:
                     await self._wait_for_connection_resume()
                     if remaining > 0:
                         await self._send_idle_timer(
-                            player, round(remaining * 1000)
+                            player, round(remaining * 1000), timer_countdown_ms
                         )
                         timer_running = True
                     continue
@@ -771,9 +879,14 @@ class GameSession:
                         f"selection timer expired ({msg_name})."
                     )
                     if not main_offer:
-                        await self.end_game(
-                            self._opponent_id(player.account_id),
-                            f"{player.screen_name} ran out of time to make a selection",
+                        # A prompt answered during the OPPONENT'S turn (new
+                        # Active after a KO, prizes, forced responses) is a
+                        # response, not a turn: expiring it auto-resolves with
+                        # the caller's default instead of ending the match, so
+                        # it can never eat the player's own upcoming turn.
+                        logging.info(
+                            f"[Session {self.game_id}] Auto-resolving "
+                            f"{player.screen_name}'s timed-out response prompt."
                         )
                     return {
                         "selection": None,
@@ -801,10 +914,20 @@ class GameSession:
             player._pending_offer = None
 
     @staticmethod
-    def _idle_timer_payload(player_id: str, remaining_ms: int) -> Dict[str, Any]:
-        """Builds the stock playmat timer payload for a remaining duration."""
+    def _idle_timer_payload(
+        player_id: str, remaining_ms: int, countdown_ms: Optional[int] = None
+    ) -> Dict[str, Any]:
+        """Builds the stock playmat timer payload for a remaining duration.
+
+        `countdown_ms` is the slice the client renders as the visible
+        "Seconds Remaining" counter (clamped to the remaining time); the rest
+        rides as silent `inactivityDuration`. Omitted = the usual
+        ACTION_COUNTDOWN_DURATION_MS-shaped tail.
+        """
         remaining_ms = max(0, int(remaining_ms))
-        countdown_ms = min(ACTION_COUNTDOWN_DURATION_MS, remaining_ms)
+        if countdown_ms is None:
+            countdown_ms = min(ACTION_COUNTDOWN_DURATION_MS, remaining_ms)
+        countdown_ms = max(0, min(int(countdown_ms), remaining_ms))
         return {
             "playerID": player_id,
             "inactivityDuration": remaining_ms - countdown_ms,
@@ -812,12 +935,14 @@ class GameSession:
             "forced": False,
         }
 
-    async def _send_idle_timer(self, player: NetworkPlayer, remaining_ms: int):
+    async def _send_idle_timer(
+        self, player: NetworkPlayer, remaining_ms: int, countdown_ms: Optional[int] = None
+    ):
         """Starts, restarts, or stops one player's stock playmat timer."""
         async with self._wire_lock:
             await player.send_packet(
                 OutboundMsg.SET_IDLE_TIMER.value,
-                self._idle_timer_payload(player.account_id, remaining_ms),
+                self._idle_timer_payload(player.account_id, remaining_ms, countdown_ms),
             )
         if remaining_ms > 0:
             await player.flush_outbound()
@@ -1676,6 +1801,24 @@ class GameSession:
         if not display or count <= 0:
             return []
         if isinstance(player, AIPlayer):
+            # Deck searches are the brain's job (grab the missing combo piece);
+            # any other browser (hand discard, in-play pick) keeps deck order.
+            strategy = getattr(player, "deck_strategy", None)
+            if (
+                strategy
+                and strategy.get("search_score")
+                and cards
+                and cards[0]._containing_area_name() == "deck"
+            ):
+                brain = strategy["search_score"]
+                ctx = make_context(self, player_id)
+                ranked = sorted(cards, key=lambda c: brain(c, ctx), reverse=True)
+                picked = [c.entity_id for c in ranked[:count]]
+                logging.info(
+                    f"[Session {self.game_id}] AI {player_id} deck search picks "
+                    f"{[self._ai_card_name_for(c) for c in ranked[:count]]}."
+                )
+                return picked
             return valid[:count]
 
         # Clamp to the pickable set: a look-at/search with no (or few) matches
@@ -1859,6 +2002,17 @@ class GameSession:
         if not valid or count <= 0:
             return []
         if isinstance(player, AIPlayer):
+            # Strategy brains rank in-place picks: promote the ready attacker,
+            # gust the KO-window body, bounce a stuck utility with Net, and
+            # discard the least valuable card for Quick Ball costs.
+            strategy = getattr(player, "deck_strategy", None)
+            if strategy and strategy.get("pick_score"):
+                brain = strategy["pick_score"]
+                ctx = make_context(self, player_id)
+                ranked = sorted(
+                    cards, key=lambda c: brain(prompt, ctx, c), reverse=True
+                )
+                return [c.entity_id for c in ranked[:count]]
             return valid[:count]
 
         min_to_select = count if minimum is None else minimum
@@ -1985,6 +2139,32 @@ class GameSession:
         if not valid or count <= 0:
             return {}
         if isinstance(player, AIPlayer):
+            strategy = getattr(player, "deck_strategy", None)
+            if strategy and strategy.get("counter_plan"):
+                # Max-Phantom style placement: the brain spends counters on
+                # cheapest KOs first, then pushes the next target toward its
+                # threshold instead of dumping all of them on valid[0].
+                ctx = make_context(self, player_id)
+                plan = strategy["counter_plan"](candidates, count, ctx) or {}
+                clean: Dict[str, int] = {}
+                remaining = count
+                for candidate in candidates:
+                    take = plan.get(candidate.entity_id, 0)
+                    try:
+                        take = int(take)
+                    except (TypeError, ValueError):
+                        take = 0
+                    take = max(0, min(take, remaining))
+                    if take:
+                        clean[candidate.entity_id] = take
+                        remaining -= take
+                if remaining > 0:
+                    clean[valid[0]] = clean.get(valid[0], 0) + remaining
+                logging.info(
+                    f"[Session {self.game_id}] AI {player_id} places "
+                    f"{count} damage counters: {clean}."
+                )
+                return clean
             return {valid[0]: count}
 
         node = {
@@ -2027,6 +2207,13 @@ class GameSession:
                 )
                 selection = reply.get("selection") if isinstance(reply, dict) else None
                 if not isinstance(selection, dict):
+                    if isinstance(reply, dict) and reply.get("_timed_out"):
+                        logging.info(
+                            f"[Session {self.game_id}] Auto-placing damage "
+                            f"counters for {player.screen_name} after a "
+                            "timed-out choice."
+                        )
+                        return {valid[0]: count}
                     logging.warning(
                         f"[Session {self.game_id}] Damage counter placement got no "
                         f"selection; re-offering."
@@ -2101,6 +2288,15 @@ class GameSession:
                 if selection is None:
                     if min_effective == 0:
                         return []
+                    if reply.get("_timed_out"):
+                        # Expired on a response prompt (opponent's turn): take
+                        # the same default the retry ladder falls back to.
+                        logging.info(
+                            f"[Session {self.game_id}] Auto-picking "
+                            f"{min_effective} card(s) for {player.screen_name} "
+                            "after a timed-out choice."
+                        )
+                        return valid[:min_effective]
                     continue
                 picked: List[str] = []
                 responses = selection.get("targetResponses") or [] \
@@ -2773,6 +2969,10 @@ class GameSession:
                         )
                 if len(picked) >= needed:
                     return picked[:count]
+            if reply.get("_timed_out"):
+                # Response prompt expired: fall back to the same default the
+                # retry ladder would have used.
+                return prize_ids[:count]
         return prize_ids[:count]
 
     async def prompt_prize_reveal_pick(
@@ -2856,6 +3056,16 @@ class GameSession:
             return False
         player = self.players[player_id]
         picked = candidates[0]
+        strategy = getattr(player, "deck_strategy", None)
+        if strategy and strategy.get("pick_score"):
+            # Promote the ready attacker instead of blind bench[0] (a stuck
+            # utility Active must not keep the powered VMAX benched).
+            brain = strategy["pick_score"]
+            ctx = make_context(self, player_id)
+            picked = max(
+                candidates,
+                key=lambda c: brain(PROMPT_CHOOSE_NEW_ACTIVE, ctx, c),
+            )
         if not isinstance(player, AIPlayer) and len(candidates) > 1:
             offer = self._placement_offer_value(
                 player_id, PROMPT_CHOOSE_NEW_ACTIVE, candidates, TARGET_TYPE_ACTIVE
@@ -2870,6 +3080,15 @@ class GameSession:
                 card_id = self._parse_placement_reply(reply, candidates)
                 if card_id:
                     picked = self.board_state.get_entity(card_id) or picked
+                    break
+                if reply.get("_timed_out"):
+                    # Response prompt expired (e.g. AFK during the opponent's
+                    # turn): promote the default the AI would pick.
+                    logging.info(
+                        f"[Session {self.game_id}] Auto-promoting "
+                        f"{picked.entity_id} for {player.screen_name} after a "
+                        "timed-out choice."
+                    )
                     break
                 offer = self._placement_offer_value(
                     player_id, PROMPT_CHOOSE_NEW_ACTIVE, candidates, TARGET_TYPE_ACTIVE
@@ -2997,12 +3216,24 @@ class GameSession:
             f"[Session {self.game_id}] Game over: "
             f"{self.players[winner_id].screen_name} wins ({reason})."
         )
+        counts = self._streak_counts(reason)
         for pid, player in self._unique_recipients():
             coins = COINS_PER_WIN if pid == winner_id else COINS_PER_LOSS
+            outcome = None
             if isinstance(player, NetworkPlayer):
                 # Off the event loop: match-end money/ladder writes can otherwise
                 # stall the loop up to the busy timeout under write contention.
-                await run_db(_persist_match_result, player.account_id, coins, pid == winner_id)
+                outcome = await run_db(
+                    _persist_match_result, player.account_id, coins,
+                    pid == winner_id, counts)
+                if outcome and outcome.get("updated"):
+                    # Fresh streak/daily attrs BEFORE GameCompleted: the EOG
+                    # summary panel reads daily wins to pick the crossed tier.
+                    await player.send_packet(
+                        OutboundMsg.ACCOUNT_PROPERTIES_UPDATED.value,
+                        {"accountID": player.account_id,
+                         "attributes": _streak_attribute_values(outcome)},
+                    )
             reward_list = []
             if coins > 0:
                 reward_list.append({
@@ -3021,6 +3252,8 @@ class GameSession:
                     "index": 0,
                     "openedReward": None,
                 })
+            if outcome and outcome.get("crossed"):
+                reward_list.append(_daily_track_reward_entry(outcome))
             reward_list.extend(await self._progress_daily_challenges(pid, player, winner_id, reason))
             envelope = self._sequence_envelope(
                 EMPTY_SEQUENCE_ID,
@@ -3048,6 +3281,19 @@ class GameSession:
         await self._push_account_updates()
         self.declare_winner(winner_id, reason)
         raise GameOver()
+
+    def _streak_counts(self, reason: str) -> bool:
+        """Streak/daily-versus eligibility for this game: queue PVP, friend
+        challenges, and queue-AI bot matches count; tournaments and standalone
+        practice never do, and game-error/turn-0 aborts leave streaks untouched."""
+        pairing = self.pairing or {}
+        if pairing.get("tournament") or pairing.get("legacy_tournament"):
+            return False
+        if pairing.get("queue_name") == "SinglePlayer":
+            return False
+        if reason == "A game error occurred." or self.turn_state.turn_number == 0:
+            return False
+        return True
 
     async def _progress_daily_challenges(self, pid, player, winner_id, reason):
         """Credits multiplayer results before the client's end-game quest animation."""
@@ -3403,16 +3649,56 @@ class GameSession:
         self.game_phase = GamePhase.SETUP_PHASE
 
     async def run_mulligan_phase(self):
-        """Reshuffles Basic-less opening hands and offers the opponent extra draws."""
+        """Runs setup placement and mulligans in rulebook order (issue #19).
+
+        The official rules (text unchanged since the 2017 SM era rulebooks
+        and matching the PTCGO-era flow) order setup as: players who found a
+        Basic place their Active and Bench immediately; only then does the
+        Basic-less player resolve mulligans (redraw + batched reveal), place
+        their own Active and Bench, and only afterwards may the healthy
+        player take the compensation draws -- Basics drawn among those may
+        still go onto the Bench. Prizes/introductions stay in
+        run_placement_phase.
+
+        The mulligan cohort is partitioned ONCE from the opening hands:
+        once the healthy players place (emptying Basics from their hands),
+        re-running the Basic scan on them would misclassify them as
+        mulliganers forever.
+        """
         self.game_phase = GamePhase.MULLIGAN_PHASE
         board = self.board_state
         mulligan_counts: Dict[str, int] = {pid: 0 for pid in self.players}
         # player_id -> list of {entity_id: [attribute dicts]} piles, one per mulligan
         reveal_piles: Dict[str, List[Dict[str, Any]]] = {pid: [] for pid in self.players}
 
+        order = self._turn_order()
+        cohort = [pid for pid in order if not board.setup_active_candidates(pid)]
+        healthy = [pid for pid in order if pid not in cohort]
+
+        # Placement done-sets are SHARED across every sub-phase: each player's
+        # "please wait" prompt closes against real cross-phase progress (a
+        # healthy player who finished in phase 1 counts as done while the
+        # cohort places in phase 3).
+        active_done: set = set()
+        bench_done: set = set()
+
+        # Phase 1: players who found a Basic place their Active and Bench
+        # now; the cohort shows a wait banner until its turn to place.
+        for pid in cohort:
+            player = self.players[pid]
+            if isinstance(player, NetworkPlayer):
+                await self._send_pause_prompt(player, PROMPT_WAIT_OPPONENT_SETUP)
+        await self._gather_placement(
+            healthy, self._run_active_placement, active_done, keep_waiting=cohort)
+        # Bench tail re-arms the healthy players' wait banner (they now wait
+        # out the cohort's mulligans), so nobody may be closed here.
+        await self._gather_placement(
+            healthy, self._run_bench_placement, bench_done, keep_waiting=order)
+
+        # Phase 2: the cohort reshuffles until it finds a Basic.
         while True:
             needs_mulligan = [
-                pid for pid in self._turn_order()
+                pid for pid in cohort
                 if not board.setup_active_candidates(pid)
             ]
             if not needs_mulligan:
@@ -3473,8 +3759,57 @@ class GameSession:
             if needs_mulligan is None:
                 break
 
+        # The reveal carousel is a full-screen modal: drop the wait banners
+        # for its duration, then let the healthy players resume waiting
+        # while the cohort places (the cohort's own prompt comes back as
+        # the CHOOSE_ACTIVE banner inside the placement runner).
+        await self._placement_barrier(keep_waiting=())
         await self._reveal_mulligans(reveal_piles)
-        await self._offer_extra_draws(mulligan_counts)
+        if cohort:
+            for pid in healthy:
+                player = self.players[pid]
+                if isinstance(player, NetworkPlayer):
+                    await self._send_pause_prompt(player, PROMPT_WAIT_OPPONENT_SETUP)
+
+        # Phase 3: the cohort places its Active and Bench.
+        await self._wait_for_connection_resume()
+        await self._gather_placement(
+            cohort, self._run_active_placement, active_done, keep_waiting=healthy)
+        await self._gather_placement(
+            cohort, self._run_bench_placement, bench_done, keep_waiting=healthy)
+
+        # Everyone has placed: clear every banner before the compensation
+        # dialogs so a "please wait" prompt never coexists with them.
+        await self._placement_barrier(keep_waiting=())
+
+        # Compensation draws (differential netting = rulebook example), then
+        # the post-compensation Bench pass for whoever accepted a draw.
+        accepted = await self._offer_extra_draws(mulligan_counts)
+        if accepted:
+            # Always offered, even with no Basics in hand: skipping would
+            # leak through timing that the draws contained no Basic.
+            await self._gather_placement(
+                [pid for pid in order if pid in accepted],
+                self._run_bench_placement, bench_done, keep_waiting=())
+            await self._placement_barrier(keep_waiting=())
+
+    async def _placement_barrier(self, keep_waiting: set):
+        """Connection gate + clears lingering wait prompts (except keepers)."""
+        for pid in self._turn_order():
+            await self._wait_for_connection_resume()
+            if pid in keep_waiting:
+                continue
+            await self._send_close_pause_prompt(self.players[pid])
+
+    async def _gather_placement(self, players, runner, done_players,
+                                keep_waiting: set):
+        """Runs one placement sub-phase for `players`, then hits a barrier."""
+        if players:
+            await asyncio.gather(*(
+                self._run_state_unit(runner(pid, done_players))
+                for pid in players
+            ))
+        await self._placement_barrier(keep_waiting)
 
     async def _broadcast_draw(self, player_id: str, count: int):
         """Draws cards server-side and animates them in a Draw bracket on both clients.
@@ -3533,13 +3868,17 @@ class GameSession:
                 [effect],
             )
 
-    async def _offer_extra_draws(self, mulligan_counts: Dict[str, int]):
+    async def _offer_extra_draws(self, mulligan_counts: Dict[str, int]) -> set:
         """Offers the less-mulliganed player one Yes/No extra draw per net mulligan.
 
         Uses CustomChoiceRequired (generic R.y button dialog) rather than
         MulliganChoiceRequired: the client contains no UI that can answer a
         MulliganChoiceNode, which would soft-lock the prompt.
+
+        Returns the players who accepted at least one draw -- they get the
+        post-compensation Bench pass (Basics drawn may still be benched).
         """
+        accepted: set = set()
         for player_id in self._turn_order():
             opponent_id = self._opponent_id(player_id)
             net_draws = mulligan_counts.get(opponent_id, 0) - mulligan_counts.get(player_id, 0)
@@ -3558,30 +3897,16 @@ class GameSession:
                     f"extra card for opponent mulligan ({i + 1}/{net_draws})."
                 )
                 await self._broadcast_draw(player_id, 1)
+                accepted.add(player_id)
+        return accepted
 
     async def run_placement_phase(self):
-        """Both players place their Active (required), then their Bench (optional)."""
-        self.game_phase = GamePhase.PLACEMENT_PHASE
+        """Setup's tail: deal prizes, then reveal the placed Pokemon.
 
-        done_players: set = set()
-        await asyncio.gather(*(
-            self._run_state_unit(self._run_active_placement(pid, done_players))
-            for pid in self._turn_order()
-        ))
-        # Barrier reached: clear any lingering "please wait" prompts.
-        for player in self.players.values():
-            await self._wait_for_connection_resume()
-            await self._send_close_pause_prompt(player)
-
-        done_players = set()
-        await asyncio.gather(*(
-            self._run_state_unit(self._run_bench_placement(pid, done_players))
-            for pid in self._turn_order()
-        ))
-        for player in self.players.values():
-            await self._wait_for_connection_resume()
-            await self._send_close_pause_prompt(player)
-
+        Active/Bench placement itself now runs inside run_mulligan_phase in
+        rulebook order (issue #19), so only the prize deal and the initial
+        introduction remain here.
+        """
         self.game_phase = GamePhase.PRIZE_DEAL
         await self._wait_for_connection_resume()
         await self._run_state_unit(self._deal_prize_cards())
@@ -3675,8 +4000,7 @@ class GameSession:
         """Offers recomputed legal actions until the player ends their turn."""
         player = self.players[active_id]
         if isinstance(player, AIPlayer):
-            # The AI takes no main-phase actions yet; it simply passes.
-            logging.info(f"[Session {self.game_id}] {player.screen_name} (AI) ends turn.")
+            await self._run_ai_turn(active_id)
             return
 
         for _ in range(MAX_ACTIONS_PER_TURN):
@@ -3724,6 +4048,223 @@ class GameSession:
             f"[Session {self.game_id}] {player.screen_name} hit the per-turn "
             f"action cap ({MAX_ACTIONS_PER_TURN}); forcing end of turn."
         )
+
+    # Order the AI works through its main phase: develop the board, then spend
+    # the turn's attack (an attack ends the turn, so it must come last).
+    AI_ACTION_PRIORITY = (
+        ACTION_PLAY_POKEMON,
+        ACTION_PLAY_ENERGY,
+        ACTION_EVOLVE,
+        ACTION_PLAY_LEGEND,
+        # Free board effects (Quick Shooting); only reached when the deck's
+        # strategy allow-lists the ability, so unscripted bots can't fire
+        # turn-ending abilities like Intrepid Sword.
+        ACTION_USE_ABILITY,
+        ACTION_USE_TRAINER,
+        ACTION_PLAY_STADIUM,
+        ACTION_ATTACH_TOOL,
+        ACTION_USE_ATTACK,
+        # Last resort only: the active has no usable attack, so swap in a
+        # benched Pokemon that might have the energy to attack.
+        ACTION_RETREAT,
+    )
+    # Seconds between AI plays so the client's animations keep up with a bot
+    # that could otherwise fire its whole turn in one frame.
+    AI_ACTION_PACE_SECONDS = 0.9
+
+    async def _run_ai_turn(self, active_id: str):
+        """Greedy main-phase policy for an AIPlayer opponent.
+
+        Drives the same legal-action table and action executors the human turn
+        loop uses, so the bot can only ever make plays the client itself could.
+        Every prompt raised while resolving one of these actions has an AI
+        auto-answer branch (or the AI_PROMPT_GRACE fallback), so the gameplay
+        task can never hang waiting on a bot.
+        """
+        player = self.players[active_id]
+        attempted = set()
+        for _ in range(MAX_ACTIONS_PER_TURN):
+            await self._wait_for_connection_resume()
+            await self._run_state_unit(self._refresh_dynamic_attacks(active_id))
+            target_map = compute_legal_actions(
+                self.board_state, self.turn_state, active_id, self.game_id
+            )
+            chosen = self._choose_ai_action(active_id, target_map, attempted)
+            if chosen is None:
+                logging.info(
+                    f"[Session {self.game_id}] {player.screen_name} (AI) ends turn."
+                )
+                return
+            entry, target_ids = chosen
+            attempted.add((entry["entityID"], entry["selectableAction"]["actionID"]))
+            await self.choreo_pause(self.AI_ACTION_PACE_SECONDS)
+            turn_over = await self._run_state_unit(
+                self._apply_player_action(active_id, entry, target_ids)
+            )
+            if turn_over:
+                return
+        logging.warning(
+            f"[Session {self.game_id}] {player.screen_name} (AI) hit the per-turn "
+            f"action cap ({MAX_ACTIONS_PER_TURN}); forcing end of turn."
+        )
+
+    def _choose_ai_action(
+        self, player_id: str, target_map: List[Dict[str, Any]], attempted: set
+    ) -> Optional[tuple]:
+        """Picks the highest-priority legal action the AI hasn't already tried.
+
+        When the bot's deck has a strategic brain (content.deck_strategies),
+        the brain gates candidates (allow_action) and ranks them inside each
+        priority bucket (action_score / attack_score).  Without one, behavior
+        is the original greedy priority order.
+        Returns (entry, target_ids), or None when the AI is done acting (the
+        caller ends the turn).
+        """
+        by_action: Dict[str, List[Dict[str, Any]]] = {}
+        for entry in target_map:
+            key = (entry["entityID"], entry["selectableAction"]["actionID"])
+            if key in attempted:
+                continue
+            by_action.setdefault(entry["selectableAction"]["description"], []).append(entry)
+
+        strategy = self._ai_strategy(player_id)
+        ctx = make_context(self, player_id) if strategy else None
+
+        for description in self.AI_ACTION_PRIORITY:
+            candidates = by_action.get(description)
+            if not candidates:
+                continue
+            # Unscripted bots never reach their Pokemon Abilities: some end
+            # the turn (Intrepid Sword) and the generic AI can't judge that.
+            if strategy is None and description == ACTION_USE_ABILITY:
+                continue
+            if strategy is not None:
+                allow = strategy.get("allow_action")
+                if allow is not None:
+                    candidates = [
+                        e for e in candidates
+                        if allow(description, self._ai_entry_name(e), ctx)
+                    ]
+                    if not candidates:
+                        continue
+            if description == ACTION_USE_ATTACK:
+                if strategy is not None and strategy.get("attack_score"):
+                    brain = strategy["attack_score"]
+
+                    def _brain_attack(entry):
+                        ability = ABILITIES_BY_ID.get(
+                            entry["selectableAction"]["actionID"]
+                        )
+                        return brain(
+                            getattr(ability, "title", "") or "",
+                            self._attack_score(entry),
+                            ctx,
+                        )
+                    candidates = sorted(candidates, key=_brain_attack, reverse=True)
+                else:
+                    candidates = sorted(candidates, key=self._attack_score, reverse=True)
+            elif strategy is not None and strategy.get("action_score"):
+                brain = strategy["action_score"]
+                candidates = sorted(
+                    candidates,
+                    key=lambda e: brain(description, self._ai_entry_name(e), ctx),
+                    reverse=True,
+                )
+            entry = candidates[0]
+            logging.info(
+                f"[Session {self.game_id}] AI {player_id} plays "
+                f"{self._ai_entry_name(entry)} ({description})."
+            )
+            return entry, self._ai_targets(player_id, entry)
+        return None
+
+    def _ai_strategy(self, player_id: str) -> Optional[dict]:
+        """The deck's strategic brain, or None for a generic AI player."""
+        player = self.players.get(player_id)
+        if player is None:
+            return None
+        return getattr(player, "deck_strategy", None)
+
+    def _ai_entry_name(self, entry: Dict[str, Any]) -> str:
+        """Human card/ability name for a legal-action entry.
+
+        Ability entries name the ability (Quick Shooting), everything else
+        names the card being played (Boss's Orders, Dragapult VMAX, ...).
+        """
+        action = entry["selectableAction"]
+        if action.get("description") == ACTION_USE_ABILITY:
+            ability = ABILITIES_BY_ID.get(action.get("actionID"))
+            return (getattr(ability, "title", "") or "") if ability else ""
+        entity = self.board_state.get_entity(entry.get("entityID"))
+        if entity is None:
+            return ""
+        definition = def_for(getattr(entity, "archetype_id", None))
+        display = getattr(definition, "display_name", None)
+        if display:
+            return display
+        raw = entity.get_attribute(AttrID.NAME)
+        if isinstance(raw, dict):
+            return raw.get("id", "")
+        return raw or ""
+
+    @staticmethod
+    def _ai_card_name_for(card) -> str:
+        """Display name for a bare card entity (deck-search logging)."""
+        definition = def_for(getattr(card, "archetype_id", None))
+        return getattr(definition, "display_name", None) or ""
+
+    @staticmethod
+    def _attack_score(entry: Dict[str, Any]) -> float:
+        """Printed damage of an attack entry; used to pick the biggest swing."""
+        ability = ABILITIES_BY_ID.get(entry["selectableAction"]["actionID"])
+        damage = getattr(ability, "damage", 0) or 0
+        if not isinstance(damage, (int, float)):
+            damage = 0
+        # "x" attacks scale with energy/counters on board: assume a modest
+        # multiplier so they aren't ranked below their printed number.
+        if getattr(ability, "damage_operator", "") == "x":
+            damage *= 3
+        return float(damage)
+
+    def _ai_targets(self, player_id: str, entry: Dict[str, Any]) -> List[str]:
+        """Synthesizes the reply's target list from the offer's declared nodes.
+
+        Each node contributes up to its numberToSelect valid targets (mirroring
+        a client click).  With a strategic brain the brain's target_score ranks
+        the valid set (where energy lands, whom Boss gusts, who Quick Shooting
+        pings); otherwise energy/tool/evolution picks prefer the Active so the
+        bot powers up the Pokemon it is actually attacking with.
+        """
+        description = entry["selectableAction"]["description"]
+        strategy = self._ai_strategy(player_id)
+        target_score = strategy.get("target_score") if strategy else None
+        name = self._ai_entry_name(entry) if target_score else None
+        ctx = make_context(self, player_id) if target_score else None
+        prefer_active = target_score is None and description in (
+            ACTION_PLAY_ENERGY, ACTION_EVOLVE, ACTION_ATTACH_TOOL,
+        )
+        active = self.board_state.active_pokemon(player_id) if prefer_active else None
+        picked: List[str] = []
+        for info in entry.get("targetInfoLst") or []:
+            valid = [t for t in (info.get("validTargets") or []) if isinstance(t, str)]
+            if not valid:
+                continue
+            if target_score is not None:
+                # Stable: equal scores keep the offer's original ordering.
+                valid = sorted(
+                    valid,
+                    key=lambda t: target_score(description, name, ctx, t),
+                    reverse=True,
+                )
+            elif active is not None and active.entity_id in valid:
+                valid = [active.entity_id] + [t for t in valid if t != active.entity_id]
+            want = info.get("numberToSelect") or 1
+            try:
+                want = max(1, int(want))
+            except (TypeError, ValueError):
+                want = 1
+            picked.extend(valid[:want])
+        return picked
 
     def _main_offer_value(
         self, player_id: str, target_map: List[Dict[str, Any]]
@@ -4402,6 +4943,12 @@ class GameSession:
             expected_counter=counter,
         )
         selection = reply.get("selection")
+        if reply.get("_timed_out") and count > 0:
+            logging.info(
+                f"[Session {self.game_id}] Defaulting {player.screen_name}'s "
+                "timed-out panel choice to the first option."
+            )
+            return 0
         responses = selection.get("targetResponses") or [] \
             if isinstance(selection, dict) else []
         for response in responses:
@@ -5251,11 +5798,21 @@ class GameSession:
                 picked = self._parse_placement_reply(reply, basics)
                 if picked:
                     await self._place_setup_card(player_id, picked, active_area)
+                elif reply.get("_timed_out"):
+                    logging.info(
+                        f"[Session {self.game_id}] Auto-placing {player.screen_name}'s "
+                        "Active after a timed-out choice."
+                    )
+                    await self._place_setup_card(
+                        player_id, basics[0].entity_id, active_area
+                    )
+                    break
         finally:
             done_players.add(player_id)
 
         # Swap the "choose" prompt for the waiting prompt (or clear it if the
-        # opponent already finished -- run_placement_phase closes the rest).
+        # opponent already finished -- run_mulligan_phase's barriers close
+        # the rest).
         if isinstance(player, NetworkPlayer):
             if self._opponent_id(player_id) in done_players:
                 await self._send_close_pause_prompt(player)
@@ -5297,6 +5854,16 @@ class GameSession:
                     offer,
                     expected_counter=offer["counter"],
                 )
+                if reply.get("_timed_out"):
+                    # Never answered: bench the same way the AI does, then go.
+                    remaining_slots = BENCH_CAPACITY - len(bench_area.children)
+                    for card in basics[:remaining_slots]:
+                        await self._place_setup_card(player_id, card.entity_id, bench_area)
+                    logging.info(
+                        f"[Session {self.game_id}] Auto-benching for "
+                        f"{player.screen_name} after a timed-out choice."
+                    )
+                    break
                 if reply.get("selection") is None:
                     # Null-selection Advance ("Done" button) = finished placing.
                     logging.info(f"[Session {self.game_id}] {player.screen_name} is done benching.")

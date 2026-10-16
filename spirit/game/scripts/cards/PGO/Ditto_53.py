@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Ability
+from spirit.game.data_utils import Ability, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.pokemon import SuddenTransformationPassive
 
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=53,
     set_code="PGO",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=70,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.BASIC,

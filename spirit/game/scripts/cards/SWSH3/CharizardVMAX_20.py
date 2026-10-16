@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import self_energy_discard_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="a73a724a-b032-5440-920c-01bd5c74f571",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=20,
     set_code="SWSH3",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=330,
     elements=[PokemonTypes.FIRE],
     stage=PokemonStage.VMAX,

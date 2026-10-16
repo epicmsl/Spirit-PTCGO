@@ -1,0 +1,24 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 4
+
+2 Garbodor SWSH 25
+2 Hydreigon C SWSH 138
+
+Trainer Cards - 22
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+4 Switch SSH 183
+
+Energy Cards - 34
+
+34 Darkness Energy Energy 7
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

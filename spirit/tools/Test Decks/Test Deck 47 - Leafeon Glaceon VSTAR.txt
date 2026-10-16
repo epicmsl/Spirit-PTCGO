@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Leafeon SWSH 191
+2 Leafeon V SWSH 194
+2 Leafeon VSTAR CRZ 14
+2 Glaceon SWSH 192
+2 Glaceon V SWSH 196
+2 Glaceon VSTAR SWSH 197
+2 Ice Rider Calyrex V SWSH 130
+2 Shadow Rider Calyrex V SWSH 131
+2 Arceus V SWSH 204
+2 Arceus VSTAR BRS 123
+2 Rayquaza V SWSH 147
+2 Lugia VIV 132
+2 Lugia V SWSH 301
+2 Giratina V SWSH 259
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Water Energy Energy 3
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

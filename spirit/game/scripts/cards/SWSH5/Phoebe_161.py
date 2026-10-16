@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_pokemon_vmax, has_vmax_in_play
 
 
@@ -21,5 +21,6 @@ card = SupporterCardDef(
     set_code="SWSH5",
     rarity=Rarities.RareUltra,
     effect=phoebe,
-    condition=has_vmax_in_play
+    condition=has_vmax_in_play,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

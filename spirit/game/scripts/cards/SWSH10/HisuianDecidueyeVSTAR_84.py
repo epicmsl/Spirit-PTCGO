@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_energy_card
 
 
@@ -26,6 +26,7 @@ card = PokemonCardDef(
     collector_number=84,
     set_code="SWSH10",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=270,
     elements=[PokemonTypes.FIGHTING],
     stage=PokemonStage.VSTAR,
@@ -37,6 +38,7 @@ card = PokemonCardDef(
         Ability(
             title="Star of Fortune",
             game_text="During your turn, you may draw cards until you have 8 cards in your hand. (You can't use more than 1 VSTAR Power in a game.)",
+            activation=Activations.ONCE_PER_TURN,
             vstar=True,
             effect=star_of_fortune,
         ),

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions, AttrID
+from spirit.game.data_utils import Ability, Activations, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import condition_attack
 from spirit.game.session.passives import effective_max_hp
 
@@ -48,4 +48,5 @@ card = PokemonCardDef(
             effect=condition_attack(SpecialConditions.BURNED),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

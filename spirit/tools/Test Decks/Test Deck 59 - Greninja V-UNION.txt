@@ -1,0 +1,34 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 20
+
+2 Greninja V-UNION SWSH 155
+2 Greninja V-UNION SWSH 156
+2 Greninja V-UNION SWSH 157
+2 Greninja V-UNION SWSH 158
+2 Radiant Greninja ASR 46
+2 Morpeko SWSH 12
+2 Morpeko SWSH 31
+2 Snorlax SWSH 32
+2 Snorlax SWSH 68
+2 Kangaskhan SWSH 38
+
+Trainer Cards - 24
+
+4 Professor's Research BRS 147
+4 Marnie CPA 56
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch SSH 183
+2 Energy Retrieval SSH 160
+2 Evolution Incense SSH 163
+2 Metal Saucer SSH 170
+2 Air Balloon SSH 156
+
+Energy Cards - 16
+
+16 Water Energy Energy 3
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

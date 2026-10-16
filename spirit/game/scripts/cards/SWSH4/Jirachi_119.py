@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import look_at_top, search_attach_energy
 from spirit.game.card_effects.pokemon import in_active_spot
 from spirit.game.card_effects.trainers import is_basic_energy_card
@@ -14,6 +14,7 @@ card = PokemonCardDef(
     collector_number=119,
     set_code="SWSH4",
     rarity=Rarities.Amazing,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET]),
     hp=70,
     elements=[PokemonTypes.METAL],
     stage=PokemonStage.BASIC,

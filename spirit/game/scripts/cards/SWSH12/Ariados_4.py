@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, subtypes_for
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, subtypes_for
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.session.passives import Passive, active_passives
 
@@ -29,6 +29,7 @@ card = PokemonCardDef(
     collector_number=4,
     set_code="SWSH12",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=90,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.STAGE1,

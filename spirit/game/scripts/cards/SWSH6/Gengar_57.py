@@ -1,5 +1,5 @@
 from spirit.game.card_effects.pokemon import last_gift
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.attacks_common import damage_per, damage_counters_on
 
@@ -13,6 +13,7 @@ card = PokemonCardDef(
     collector_number=57,
     set_code="SWSH6",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=130,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.STAGE2,

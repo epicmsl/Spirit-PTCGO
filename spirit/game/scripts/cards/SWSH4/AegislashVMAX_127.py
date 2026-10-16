@@ -20,7 +20,7 @@ card = PokemonCardDef(
     resistance_type=PokemonTypes.GRASS,
     evolves_from="com.direwolfdigital.cake.data.archetypes.pokemon.AegislashV.Name",
     family_id=681,
-    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SWHOLO]),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     abilities=[
         Attack(
             title="Max Hack",

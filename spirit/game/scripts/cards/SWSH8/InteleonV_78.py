@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import snipe_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="c1a7d9e3-2fee-55de-89f5-4d5fdd9a5c7a",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=78,
     set_code="SWSH8",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=200,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.BASIC,

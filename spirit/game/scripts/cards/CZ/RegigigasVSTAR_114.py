@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import lock_all_attacks
 from spirit.game.session.effects import full_stack
 
@@ -43,6 +43,7 @@ card = PokemonCardDef(
     collector_number=114,
     set_code="CZ",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=300,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.VSTAR,
@@ -54,6 +55,7 @@ card = PokemonCardDef(
         Ability(
             title="Star Guardian",
             game_text="During your turn, if your opponent has exactly 1 Prize card remaining, you may choose 1 of your opponent's Benched Pok\u00e9mon. They discard that Pok\u00e9mon and all attached cards. (You can't use more than 1 VSTAR Power in a game.)",
+            activation=Activations.ONCE_PER_TURN,
             vstar=True,
             condition=_star_guardian_condition,
             effect=star_guardian,

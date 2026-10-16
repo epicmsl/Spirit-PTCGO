@@ -1,0 +1,26 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 8
+
+2 Zeraora VMAX SWSH 264
+2 Zeraora VSTAR SWSH 265
+2 Zeraora V CRE 53
+2 Joltik VIV 55
+
+Trainer Cards - 22
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+4 Switch SSH 183
+
+Energy Cards - 30
+
+30 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

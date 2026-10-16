@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import requires_hand
 from spirit.game.session.effects import is_trainer_card
 
@@ -36,4 +36,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareRainbow,
     effect=oleana_effect,
     condition=requires_hand(n=2),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

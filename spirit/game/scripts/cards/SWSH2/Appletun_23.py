@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.support_common import requires_in_play
 from spirit.game.session.effects import is_basic_pokemon
@@ -32,6 +32,7 @@ card = PokemonCardDef(
     collector_number=23,
     set_code="SWSH2",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=90,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.STAGE1,

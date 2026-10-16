@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import damage_per, count_in_play
 from spirit.game.card_effects.trainers import is_darkness_pokemon
 from spirit.game.models.board import PokemonEntity
@@ -63,4 +63,5 @@ card = PokemonCardDef(
             effect=damage_per(count_in_play("mine", is_darkness_pokemon), 30),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

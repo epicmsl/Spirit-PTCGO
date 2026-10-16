@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef, subtypes_for
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, subtypes_for, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_basic_pokemon
 from spirit.game.card_effects.support_common import search_to_bench
 
@@ -19,4 +19,5 @@ card = SupporterCardDef(
     set_code="SWSH6",
     rarity=Rarities.RareRainbow,
     effect=search_to_bench(_is_basic_rapid_strike, count=3),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,0 +1,33 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 25
+
+2 Charizard VIV 25
+1 Blastoise PGO 17
+2 Venusaur CEL 3
+2 Ho-Oh CEL 1
+2 Reshiram BW 26
+2 Kyogre SHF 21
+2 Palkia CEL 4
+2 Zekrom BW 47
+2 Dialga EVS 112
+2 Lugia VIV 132
+2 Xerneas CEL 12
+2 Yveltal CEL 19
+2 Mewtwo-EX CEL 22
+
+Trainer Cards - 13
+
+1 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+
+Energy Cards - 22
+
+22 Fire Energy Energy 2
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

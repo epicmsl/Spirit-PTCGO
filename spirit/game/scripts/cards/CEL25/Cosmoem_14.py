@@ -1,6 +1,6 @@
 from spirit.game.card_effects.passives_common import flip_protection
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="2589456e-8b54-52cb-a934-53572a7b152d",
@@ -28,4 +28,5 @@ card = PokemonCardDef(
             effect=flip_protection(prevent=True),
         ),
     ],
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.FLATSILVER])
 )

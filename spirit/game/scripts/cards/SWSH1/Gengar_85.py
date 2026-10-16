@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions, AttrID
 from spirit.game.card_effects.attacks_common import condition_attack
 from spirit.game.session.passives import effective_max_hp
@@ -48,6 +48,7 @@ card = PokemonCardDef(
     collector_number=85,
     set_code="SWSH1",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=110,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.STAGE2,

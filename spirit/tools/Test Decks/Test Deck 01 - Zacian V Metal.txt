@@ -1,0 +1,37 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 25
+
+2 Zacian V SSH 138
+2 Zamazenta V BRS 105
+2 Copperajah SHF 164
+2 Duraludon SWSH 28
+2 Galarian Perrserker FST 181
+2 Bronzong SWSH 91
+2 Zacian SWSH 33
+2 Cufant SHF 49
+2 Klink BW 74
+2 Klang BW 75
+2 Klinklang BW 76
+1 Zacian V-UNION SWSH 163
+1 Rusted Sword SHF 62
+1 Rusted Shield SHF 61
+
+Trainer Cards - 21
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Metal Saucer SSH 170
+2 Air Balloon SSH 156
+2 Switch BW 104
+1 Switch SSH 183
+
+Energy Cards - 14
+
+14 Metal Energy Energy 8
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

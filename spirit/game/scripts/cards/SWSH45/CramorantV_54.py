@@ -1,6 +1,6 @@
 from spirit.game.card_effects.support_common import search_to_hand
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def spit_shot(ctx):
@@ -26,6 +26,7 @@ card = PokemonCardDef(
     collector_number=54,
     set_code="SWSH45",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=200,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.BASIC,

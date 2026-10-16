@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.attacks_common import damage_per, count_energy
 from spirit.game.card_effects.pokemon import energy_provides_type
@@ -33,6 +33,7 @@ card = PokemonCardDef(
     collector_number=33,
     set_code="SWSH5",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=150,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.STAGE2,

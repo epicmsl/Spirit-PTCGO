@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import recoil_attack
 from spirit.game.card_effects.pokemon import is_energy_card
 from spirit.game.card_effects.support_common import attach_from_discard, requires_discard
@@ -42,4 +42,5 @@ card = PokemonCardDef(
             effect=recoil_attack(30),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

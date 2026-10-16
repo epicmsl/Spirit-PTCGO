@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import (
     concealed_cards, has_energy_in_hand, moonlight_shuriken,
 )
@@ -14,6 +14,7 @@ card = PokemonCardDef(
     collector_number=46,
     set_code="SWSH10",
     rarity=Rarities.RareRadiant,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.RADIANTHOLO]),
     hp=130,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.BASIC,

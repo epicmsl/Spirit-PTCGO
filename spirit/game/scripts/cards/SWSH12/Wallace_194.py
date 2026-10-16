@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import wallace
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="7f616e6c-a41f-53a4-8a86-9e4551781be5",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=194,
     set_code="SWSH12",
     rarity=Rarities.RareUltra,
-    effect=wallace
+    effect=wallace,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

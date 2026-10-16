@@ -1,0 +1,36 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 30
+
+2 Blipbug SHF 80
+2 Dottler SHF 81
+2 Orbeetle SHF 82
+2 Orbeetle V SWSH 78
+2 Gossifleur SWSH 10
+2 Eldegoss SWSH 46
+2 Applin SHF 85
+2 Flapple SWSH 22
+2 Appletun SHF 87
+2 Rowlet SWSH 220
+2 Dartrix SHF 7
+2 Decidueye SWSH 35
+2 Yanma SHF 1
+2 Yanmega SHF 2
+2 Trapinch SHF 40
+
+Trainer Cards - 16
+
+2 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Grass Energy Energy 1
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

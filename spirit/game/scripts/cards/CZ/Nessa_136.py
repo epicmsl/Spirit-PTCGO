@@ -1,4 +1,4 @@
-from spirit.game.data_utils import SupporterCardDef
+from spirit.game.data_utils import Foil, SupporterCardDef
 from spirit.game.attributes import PokemonTypes, Rarities, AttrID
 from spirit.game.card_effects.support_common import recover_from_discard, requires_discard, is_energy
 from spirit.game.session.effects import is_water_pokemon
@@ -23,6 +23,7 @@ card = SupporterCardDef(
     collector_number=136,
     set_code="CZ",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     effect=recover_from_discard(
         _nessa_predicate, count=4, minimum=1, reveal=False, to="hand",
         prompt="Choose up to 4 Water Pokémon and Water Energy cards",

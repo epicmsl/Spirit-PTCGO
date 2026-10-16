@@ -1,0 +1,39 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 38
+
+2 Eevee SWSH 42
+2 Eevee V SWSH 65
+2 Eevee VMAX SWSH 87
+2 Flareon SWSH 41
+2 Flareon V SWSH 149
+2 Flareon VMAX EVS 18
+2 Vaporeon SWSH 72
+2 Vaporeon V SWSH 150
+2 Vaporeon VMAX SWSH 182
+2 Jolteon SWSH 94
+2 Jolteon V SWSH 151
+2 Jolteon VMAX EVS 51
+2 Espeon SWSH 174
+2 Espeon V SWSH 201
+2 Umbreon SWSH 129
+2 Umbreon V SWSH 203
+2 Sylveon SWSH 211
+2 Sylveon V EVS 74
+2 Radiant Eevee SWSH 230
+
+Trainer Cards - 8
+
+1 Professor's Research BRS 147
+1 Marnie SWSH 120
+1 Boss's Orders BRS 132
+3 Quick Ball SSH 179
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

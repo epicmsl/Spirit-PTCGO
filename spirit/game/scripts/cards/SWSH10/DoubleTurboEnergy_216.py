@@ -1,6 +1,6 @@
 from spirit.game.card_effects.energies import DoubleTurboPassive
-from spirit.game.data_utils import EnergyCardDef
-from spirit.game.attributes import PokemonTypes, Rarities
+from spirit.game.data_utils import EnergyCardDef, Foil
+from spirit.game.attributes import PokemonTypes, Rarities, FoilMasks, FoilEffects
 
 card = EnergyCardDef(
     guid="2841b910-53da-5908-9801-36606fb166b1",
@@ -15,5 +15,6 @@ card = EnergyCardDef(
     energy_type=PokemonTypes.COLORLESS,
     is_special=True,
     provides=[[PokemonTypes.COLORLESS, PokemonTypes.COLORLESS]],
-    passive=DoubleTurboPassive()
+    passive=DoubleTurboPassive(),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

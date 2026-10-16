@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Munna BW 48
+2 Musharna BW 49
+2 Woobat BW 50
+2 Swoobat BW 51
+2 Solosis BW 55
+2 Duosion BW 56
+2 Reuniclus BW 57
+2 Venipede BW 52
+2 Whirlipede BW 53
+2 Scolipede BW 54
+2 Throh BW 61
+2 Sawk BW 62
+2 Timburr BW 58
+2 Gurdurr BW 60
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Psychic Energy Energy 5
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

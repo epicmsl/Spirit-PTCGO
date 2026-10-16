@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import power_tablet
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = ItemCardDef(
     guid="7555a278-2bdb-593b-979e-de8692e39e3f",
@@ -12,5 +12,6 @@ card = ItemCardDef(
     collector_number=281,
     set_code="SWSH8",
     rarity=Rarities.RareSecret,
-    effect=power_tablet
+    effect=power_tablet,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

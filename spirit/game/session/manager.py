@@ -1,14 +1,18 @@
 import logging
+import random
 import uuid
 import asyncio
 
+from pathlib import Path
 from typing import Dict, List, Any, Optional
+from spirit import config
 from spirit.network.message_names import OutboundMsg
 from spirit.game.attributes import DeckFormat
 from spirit.game.decks.formats import FormatManager
 from spirit.game.decks.validation import DeckValidator
 from spirit.server import metrics
 from .game_session import GameSession
+from .agent_seat import bridge_is_fresh
 
 # A client-supplied queueName longer than this is rejected (abuse: the queues dict
 # is keyed by this string). Real format/tournament names are short.
@@ -187,12 +191,227 @@ class GameSessionManager:
             })
             await client.send_packet(entered_packet, request_id)
 
+            # Lone player in a quiet server: schedule a tiered fallback so the
+            # queue doesn't sit forever (MiMo agent seat, then AI bot). A human
+            # joining first pops this entry and the timer's membership check
+            # cancels the fill.
+            fill_enabled = config.AI_MATCH_TIMEOUT > 0 or (
+                config.MIMO_FILL_ENABLED and config.MIMO_FILL_SECONDS > 0
+            )
+            if fill_enabled and not tournament_context:
+                self._spawn(self._auto_fill_with_ai(queue_name, client))
+
+    async def _auto_fill_with_ai(self, queue_name: str, client):
+        """Tiered fill for a player who waited alone in a queue.
+
+        A human joining first wins the seat at any stage. Timeline:
+        MIMO_FILL_SECONDS -> MiMo agent seat, but only while the duel-bridge
+                              heartbeat is fresh (tools/mimo_duel_cli.py serve);
+        AI_MATCH_TIMEOUT   -> stock AI bot fallback.
+        """
+        mimo_attempted = False
+        if config.MIMO_FILL_ENABLED and config.MIMO_FILL_SECONDS > 0:
+            await asyncio.sleep(config.MIMO_FILL_SECONDS)
+            mimo_attempted = True
+            entry = self._pending_queue_entry(queue_name, client)
+            if entry is None:
+                return
+            if bridge_is_fresh(
+                config.MIMO_BRIDGE_DIR, config.MIMO_HEARTBEAT_MAX_AGE_SECONDS
+            ):
+                self._pair_lone_player(queue_name, client, entry, agent=True)
+                return
+        if config.AI_MATCH_TIMEOUT > 0:
+            if mimo_attempted:
+                remaining = config.AI_MATCH_TIMEOUT - config.MIMO_FILL_SECONDS
+                if remaining > 0:
+                    await asyncio.sleep(remaining)
+            else:
+                await asyncio.sleep(config.AI_MATCH_TIMEOUT)
+            entry = self._pending_queue_entry(queue_name, client)
+            if entry is None:
+                return
+            self._pair_lone_player(queue_name, client, entry, agent=False)
+
+    def _pending_queue_entry(self, queue_name: str, client):
+        """The client's still-pending queue entry, or None if already resolved.
+
+        Read-only: a human match, cancel, or disconnect (disconnect handlers
+        pull the client out of every queue) leaves no live entry behind.
+        """
+        queue = self.queues.get(queue_name)
+        if not queue:
+            return None
+        entry = next((e for e in queue if e["client"] is client), None)
+        if entry is None:
+            return None
+        account_id = client.player.account_id if client.player else None
+        if not account_id or client.server.clients_by_account.get(account_id) is not client:
+            return None
+        return entry
+
+    def _claim_queue_entry(self, queue_name: str, client, entry) -> bool:
+        """Removes the entry from the queue once we commit to seating an opponent."""
+        queue = self.queues.get(queue_name)
+        if not queue or entry not in queue:
+            return False
+        queue.remove(entry)
+        if not queue:
+            self.queues.pop(queue_name, None)
+        return True
+
+    def _pair_lone_player(self, queue_name: str, client, entry, agent: bool):
+        """Pairs the lone queued human with a bot seat, or the MiMo agent seat."""
+        if not self._claim_queue_entry(queue_name, client, entry):
+            return
+        account_id = client.player.account_id
+        game_id = str(uuid.uuid4())
+        # The client's AccountID deserializer parses every MatchFound player id
+        # as a GUID, so the seat id must look like one (ai_bot_<gid> throws).
+        seat_id = str(uuid.uuid4())
+        seat_deck = self._ai_deck(entry.get("deck") or {}, queue_name, agent=agent)
+        seat_label = "MiMo agent seat" if agent else "AI bot"
+        logging.info(
+            f"[Matchmaking] No human match; pairing {client.player.username} "
+            f"with {seat_label} in '{queue_name}' ({game_id})"
+        )
+        seat_info = {
+            "client": None,   # No TCP client connection
+            "deck": seat_deck,
+            "ready": True      # Bot/agent seats are instantly ready
+        }
+        if agent:
+            seat_info["agent"] = True
+
+        self.pending_pairings[game_id] = {
+            "players": {
+                account_id: {
+                    "client": client,
+                    "deck": entry.get("deck") or {},
+                    "ready": False
+                },
+                seat_id: seat_info
+            },
+            "is_solo": True,
+            "solitaire_id": "queue_mimo" if agent else "queue_ai",
+            "options": entry.get("options") or {},
+            "queue_name": queue_name
+        }
+
+        # The client already got MatchQueueEntered; finish the handshake the
+        # same way a human pairing does (ConfirmReadyForMatch -> MatchFound).
+        self._dispatch_ready_check(game_id, queue_name, [client])
+
+    def _ai_deck(self, human_deck: dict, queue_name: str,
+                 exclude_names=None, agent: bool = False) -> dict:
+        """Deck for the auto-fill bot.
+
+        Theme queues demand a legal theme deck, so the bot mirrors the player's
+        there; anywhere else it rolls a random pick from the curated pool
+        (BOT_DECKS plus the four starter decks), avoiding a pure mirror of the
+        player's own deck. exclude_names (tournament brackets) reserves deck
+        names already seated so each bot spot gets a distinct archetype while
+        the pool allows; exhausted pools fall back to plain non-mirror picks.
+        agent=True (the MiMo duel seat, standard queues only) consults the
+        deck-file overrides first (_agent_deck_override) -- mirrors allowed on
+        purpose. Falls back to the player's deck if the catalog is unusable.
+        """
+        try:
+            is_theme_queue = (
+                FormatManager().resolve_format_guid(queue_name) == DeckFormat.THEME.value
+                or queue_name.lower().endswith("themedeck")
+            )
+            if is_theme_queue and human_deck:
+                return human_deck
+            if agent:
+                deck = self._agent_deck_override(queue_name)
+                if deck:
+                    return deck
+            from spirit.game.content.starter import build_deck_data
+            from spirit.game.content.bot_decks import BOT_DECKS
+            # Only decks with a strategic brain are active opponents
+            # (ACTIVE_BOT_DECKS); starter decks stay out until they get
+            # brains of their own.
+            pool = list(BOT_DECKS)
+            human_name = human_deck.get("deckName")
+            exclude = set(exclude_names or ())
+            rivals = [d for d in pool
+                      if d[0] != human_name and d[0] not in exclude]
+            rivals = rivals or [d for d in pool if d[0] != human_name] or pool
+            name, decklist = random.choice(rivals)
+            deck = build_deck_data(name, decklist)
+            if deck.get("piles", {}).get("deck"):
+                logging.info(f"[Matchmaking] AI bot drew deck '{name}'.")
+                return deck
+            logging.warning("[Matchmaking] AI deck resolved empty; mirroring instead.")
+        except Exception as e:
+            logging.warning(f"[Matchmaking] AI deck build failed, mirroring the player's deck: {e}")
+        return human_deck or {}
+
+    _agent_lookup_cache = None
+
+    def _agent_deck_override(self, queue_name: str) -> dict:
+        """Deck file for the MiMo agent seat (standard queues only).
+
+        Priority: bridge control file (MIMO_BRIDGE_DIR/agent_deck.txt, written
+        by `tools/mimo_duel_cli.py set-deck`) > MIMO_AGENT_DECK_FILE > a random
+        .txt from MIMO_AGENT_DECK_DIR > None (caller keeps the curated pool).
+        A broken or empty file logs a warning and falls through, so the seat
+        is never left without a deck.
+        """
+        path = None
+        bridge = Path(config.MIMO_BRIDGE_DIR) / "agent_deck.txt"
+        if bridge.is_file():
+            path = bridge
+        elif config.MIMO_AGENT_DECK_FILE and Path(config.MIMO_AGENT_DECK_FILE).is_file():
+            path = Path(config.MIMO_AGENT_DECK_FILE)
+        elif config.MIMO_AGENT_DECK_DIR:
+            folder = Path(config.MIMO_AGENT_DECK_DIR)
+            files = sorted(folder.glob("*.txt")) if folder.is_dir() else []
+            if files:
+                path = random.choice(files)
+        if path is None:
+            return None
+        try:
+            deck = self._build_agent_deck(path)
+            if deck.get("piles", {}).get("deck"):
+                logging.info(
+                    f"[Matchmaking] MiMo agent seat drew deck file "
+                    f"'{path.name}' in '{queue_name}'.")
+                return deck
+            logging.warning(
+                f"[Matchmaking] Agent deck file '{path}' resolved empty; using pool.")
+        except Exception as e:
+            logging.warning(
+                f"[Matchmaking] Agent deck file '{path}' failed ({e}); using pool.")
+        return None
+
+    def _build_agent_deck(self, path: Path) -> dict:
+        """PTCGO .txt export -> client-shaped deck data via the bot-deck loader.
+
+        refs_from_file yields (count, live set code, collector) tuples -- the
+        same shape build_deck_data/resolve_decklist consume. Any unparsable
+        line raises so callers can log and fall back to the curated pool.
+        """
+        from spirit.tools import build_bot_decks as bbd
+        from spirit.game.content.starter import build_deck_data
+        cls = type(self)
+        if cls._agent_lookup_cache is None:
+            cls._agent_lookup_cache = bbd.card_lookup()
+        by_ref, by_name = cls._agent_lookup_cache
+        refs, problems = bbd.refs_from_file(path, by_ref, by_name)
+        if problems:
+            raise ValueError("; ".join(problems))
+        return build_deck_data(path.stem, refs)
+
     async def start_solo_match(self, client, deck_data: dict, solitaire_id: str, match_options: dict, request_id: int = 0):
         """Starts a local/offline single player practice match against an AI opponent."""
         await self.remove_from_queue(client, send_left_packet=False)
         self.remove_session_by_player_id(client.player.account_id)
 
         game_id = str(uuid.uuid4())
+        # GUID-form id: the client parses MatchFound player ids as GUIDs.
+        bot_id = str(uuid.uuid4())
         logging.info(f"[Matchmaking] Starting Single Player match {game_id} for {client.player.username} vs AI ({solitaire_id})")
 
         self.pending_pairings[game_id] = {
@@ -202,7 +421,7 @@ class GameSessionManager:
                     "deck": deck_data,
                     "ready": False
                 },
-                "mock_ai_bot": {
+                bot_id: {
                     "client": None, # No TCP client connection
                     "deck": {},    # Standard bot deck
                     "ready": True  # AI is instantly ready

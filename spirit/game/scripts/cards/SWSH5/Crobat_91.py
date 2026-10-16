@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 
 
@@ -18,6 +18,7 @@ card = PokemonCardDef(
     collector_number=91,
     set_code="SWSH5",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=130,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.STAGE2,

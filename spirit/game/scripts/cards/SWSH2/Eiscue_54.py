@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.attacks_common import spread_damage
 from spirit.game.session.passives import Passive, effective_max_hp
@@ -24,6 +24,7 @@ card = PokemonCardDef(
     collector_number=54,
     set_code="SWSH2",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=120,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.BASIC,

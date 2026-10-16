@@ -1,0 +1,49 @@
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects, PokemonTypes, AttrID
+from spirit.game.card_effects.trainers import is_basic_energy_card
+
+
+def _is_lightning_energy_card(card):
+    if not is_basic_energy_card(card):
+        return False
+    types = card.get_attribute(AttrID.POKEMON_TYPES) or []
+    return PokemonTypes.LIGHTNING.value in types
+
+
+async def _spark(ctx):
+    drawn = await ctx.draw_cards(2)
+    if drawn <= 0:
+        return
+    heads = (await ctx.flip_coins(1, "Spark"))[0]
+    if not heads:
+        return
+    bench = ctx.my_bench()
+    if not bench:
+        return
+    energies = [c for c in ctx.discard_pile() if _is_lightning_energy_card(c)]
+    if not energies:
+        return
+    picks = await ctx.choose_cards(
+        energies, 1, minimum=1, prompt="Choose a Lightning Energy card from your discard pile.",
+    )
+    if not picks:
+        return
+    target = await ctx.choose_pokemon(bench, "Choose 1 of your Benched Pokémon")
+    if target is None:
+        return
+    await ctx.attach_energy(picks[0], target)
+
+
+card = SupporterCardDef(
+    guid="06d495d8-cf36-5eb8-996d-f5a993781a94",
+    key="Promo_SWSH",
+    name="com.direwolfdigital.cake.data.archetypes.trainer.Spark.Name",
+    display_name="Spark",
+    searchable_by=["Spark", "Supporter"],
+    subtypes=["Supporter"],
+    collector_number=226,
+    set_code="Promo_SWSH",
+    rarity=Rarities.RareUltra,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
+    effect=_spark,
+)

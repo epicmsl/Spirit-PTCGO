@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import AttrID, PokemonTypes, Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_energy_card
 
 
@@ -43,4 +43,5 @@ card = SupporterCardDef(
     set_code="PGO",
     rarity=Rarities.RareRainbow,
     effect=blanche,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

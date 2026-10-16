@@ -1,7 +1,7 @@
 from spirit.game.card_effects.support_common import search_attach_energy
 from spirit.game.card_effects.trainers import is_basic_energy_card
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, is_pokemon_v
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, is_pokemon_v, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 trinity_charge = search_attach_energy(
     is_basic_energy_card, count=3,
@@ -38,4 +38,5 @@ card = PokemonCardDef(
             damage=130,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

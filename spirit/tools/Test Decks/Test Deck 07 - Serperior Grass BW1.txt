@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Snivy BW 1
+2 Servine BW 3
+2 Serperior BW 5
+2 Pansage BW 7
+2 Simisage BW 8
+2 Petilil BW 9
+2 Lilligant BW 10
+2 Maractus BW 11
+2 Deerling BW 13
+2 Sawsbuck BW 14
+2 Celebi SHF 3
+2 Tropius SHF 5
+2 Cacnea SHF 4
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Grass Energy Energy 1
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

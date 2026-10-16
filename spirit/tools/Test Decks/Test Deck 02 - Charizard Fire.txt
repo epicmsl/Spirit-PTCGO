@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Charmander SWSH 92
+2 Charmeleon VIV 24
+2 Charizard V SWSH 50
+2 Charizard VMAX SWSH 261
+2 Charizard VSTAR SWSH 262
+2 Lance's Charizard V SWSH 133
+2 Centiskorch SWSH 48
+2 Coalossal SWSH 24
+2 Sizzlipede SHF 91
+2 Rolycoly SHF 140
+2 Carkol SHF 141
+2 Charizard VIV 25
+2 Ho-Oh CEL 1
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+
+Energy Cards - 14
+
+14 Fire Energy Energy 2
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

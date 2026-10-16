@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities, AttrID, TrainerType
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, AttrID, TrainerType, FoilMasks, FoilEffects
 
 
 def _is_pokemon_tool_card(card):
@@ -46,4 +46,5 @@ card = ItemCardDef(
     rarity=Rarities.RareSecret,
     effect=tool_scrapper,
     condition=tool_scrapper_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import amazing_shot
-from spirit.game.data_utils import PokemonCardDef, Attack
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="a4d02546-82ac-5b28-8171-04f4e4f14409",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=50,
     set_code="SWSH4",
     rarity=Rarities.Amazing,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET]),
     hp=110,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.BASIC,

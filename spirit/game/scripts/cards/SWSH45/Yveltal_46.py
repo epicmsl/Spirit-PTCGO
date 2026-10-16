@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import amazing_destruction
-from spirit.game.data_utils import PokemonCardDef, Attack
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="69e7c69a-a11f-5f8f-a4c5-483669997e7f",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=46,
     set_code="SWSH45",
     rarity=Rarities.Amazing,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET]),
     hp=110,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.BASIC,

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import trekking_shoes
 
 card = ItemCardDef(
@@ -12,5 +12,6 @@ card = ItemCardDef(
     collector_number=215,
     set_code="SWSH10",
     rarity=Rarities.RareSecret,
-    effect=trekking_shoes
+    effect=trekking_shoes,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonToolCardDef, Ability, Triggers
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import Ability, PokemonToolCardDef, Triggers, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_basic_energy_card
 
 
@@ -26,7 +26,7 @@ card = PokemonToolCardDef(
     key="SWSH5",
     name="com.direwolfdigital.cake.data.archetypes.trainer.ExpShare.Name",
     display_name="Exp. Share",
-    searchable_by=["Exp. Share", "Pok\u00c3\u00a9mon Tool"],
+    searchable_by=["Exp. Share", "Pok\u00e9mon Tool"],
     subtypes=["Pok\u00e9mon Tool"],
     collector_number=180,
     set_code="SWSH5",
@@ -39,4 +39,5 @@ card = PokemonToolCardDef(
             effect=exp_share,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, subtypes_for
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, subtypes_for
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
 from spirit.game.session.passives import Passive, carrier_pokemon
 from spirit.game.card_effects.pokemon import is_pokemon_vmax
@@ -42,6 +42,7 @@ card = PokemonCardDef(
     collector_number=108,
     set_code="SWSH8",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=120,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.STAGE1,

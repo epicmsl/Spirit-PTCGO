@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="96dc52bf-33b7-5439-b011-75f65f9bbd67",
@@ -11,6 +11,7 @@ card = PokemonCardDef(
     collector_number=8,
     set_code="CEL25",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=200,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.BASIC,

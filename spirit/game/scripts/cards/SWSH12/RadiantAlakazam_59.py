@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.session.passives import effective_max_hp
 from spirit.game.card_effects.attacks_common import damage_per, count_hand
 
@@ -48,6 +48,7 @@ card = PokemonCardDef(
     collector_number=59,
     set_code="SWSH12",
     rarity=Rarities.RareRadiant,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.RADIANTHOLO]),
     hp=130,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.BASIC,

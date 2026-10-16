@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations, is_pokemon_v
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef, is_pokemon_v
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import search_attach_energy
 from spirit.game.card_effects.trainers import is_basic_energy_card
 
@@ -23,6 +23,7 @@ card = PokemonCardDef(
     collector_number=123,
     set_code="SWSH9",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=280,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.VSTAR,

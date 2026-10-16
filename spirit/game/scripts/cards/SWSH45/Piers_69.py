@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import piers
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="ad2c0db9-aeb3-52ba-9b9e-00e197ba14c2",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=69,
     set_code="SWSH45",
     rarity=Rarities.RareUltra,
-    effect=piers
+    effect=piers,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 30
+
+2 Lillipup BW 80
+2 Herdier BW 82
+2 Stoutland BW 83
+2 Patrat BW 77
+2 Pidove BW 84
+2 Tranquill BW 85
+2 Unfezant BW 86
+2 Minccino BW 88
+2 Cinccino BW 89
+2 Solosis BW 55
+2 Duosion BW 56
+2 Reuniclus BW 57
+2 Venipede BW 52
+2 Whirlipede BW 53
+2 Scolipede BW 54
+
+Trainer Cards - 14
+
+2 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+
+Energy Cards - 16
+
+16 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

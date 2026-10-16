@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, TrainerType
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, TrainerType, FoilMasks, FoilEffects
 from spirit.game.session.passives import Passive
 from spirit.game.card_effects.passives_common import is_in_active_spot, boost_own_next_turn
 
@@ -44,4 +44,5 @@ card = PokemonCardDef(
             effect=boost_own_next_turn(80, attack_title="Overdrive Smash"),
         ),
     ],
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.FLATSILVER])
 )

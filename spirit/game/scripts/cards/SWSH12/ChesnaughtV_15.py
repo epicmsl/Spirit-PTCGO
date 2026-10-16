@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import in_active_spot
 from spirit.game.card_effects.support_common import heal_attack
 
@@ -25,6 +25,7 @@ card = PokemonCardDef(
     collector_number=15,
     set_code="SWSH12",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=230,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.BASIC,

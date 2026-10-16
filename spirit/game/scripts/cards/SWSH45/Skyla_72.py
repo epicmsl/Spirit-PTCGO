@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_trainer_card
 from spirit.game.card_effects.support_common import search_to_hand
 
@@ -14,4 +14,5 @@ card = SupporterCardDef(
     set_code="SWSH45",
     rarity=Rarities.RareUltra,
     effect=search_to_hand(is_trainer_card, count=1, reveal=True, prompt="Choose a Trainer card."),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

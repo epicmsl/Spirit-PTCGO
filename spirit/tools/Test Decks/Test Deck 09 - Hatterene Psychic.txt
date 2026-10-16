@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Hatenna SWSH 40
+2 Hattrem SHF 128
+2 Hatterene SHF 129
+2 Sinistea SHF 125
+2 Polteageist SWSH 81
+2 Milcery SHF 130
+2 Alcremie SWSH 58
+2 Indeedee SHF 56
+2 Indeedee V SHF 39
+2 Comfey SWSH 242
+2 Mimikyu SWSH 136
+2 Dedenne SWSH 80
+2 Wyrdeer SWSH 206
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Psychic Energy Energy 5
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

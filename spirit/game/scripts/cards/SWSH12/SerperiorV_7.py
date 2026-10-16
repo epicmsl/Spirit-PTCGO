@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def noble_light(ctx):
@@ -17,6 +17,7 @@ card = PokemonCardDef(
     collector_number=7,
     set_code="SWSH12",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=210,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.BASIC,

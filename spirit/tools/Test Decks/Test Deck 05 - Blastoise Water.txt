@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 25
+
+2 Squirtle SWSH 233
+2 Wartortle PGO 16
+1 Blastoise PGO 17
+2 Blastoise V SWSH 101
+2 Blastoise VMAX SWSH 103
+2 Alomomola BW 38
+2 Ducklett BW 36
+2 Swanna BW 37
+2 Arrokuda SWSH 93
+2 Barraskewda SHF 105
+2 Horsea SHF 20
+2 Kyogre SHF 21
+2 Suicune SHF 95
+
+Trainer Cards - 21
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+3 Switch SSH 183
+
+Energy Cards - 14
+
+14 Water Energy Energy 3
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

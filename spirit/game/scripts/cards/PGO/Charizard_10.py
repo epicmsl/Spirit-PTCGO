@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import self_energy_discard_attack
 from spirit.game.card_effects.pokemon import energy_provides_type
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
 from spirit.game.session.passives import Passive, active_passives
 
@@ -32,6 +32,7 @@ card = PokemonCardDef(
     collector_number=10,
     set_code="PGO",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=170,
     elements=[PokemonTypes.FIRE],
     stage=PokemonStage.STAGE2,

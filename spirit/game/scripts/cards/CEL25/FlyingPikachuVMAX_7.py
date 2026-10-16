@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.passives_common import prevent_damage_when
 
 
@@ -28,6 +28,7 @@ card = PokemonCardDef(
     collector_number=7,
     set_code="CEL25",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=310,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.VMAX,

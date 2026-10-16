@@ -34,11 +34,31 @@ def card_display_name(card) -> str:
 
 
 def _copy_limit_key(card) -> str:
-    """Cards sharing a name share the 4-copy limit, except V-UNION pieces, which count per piece."""
-    name = card_display_name(card)
-    if card.get_attribute_value(AttrID.CARD_TYPE) == CardType.LEGEND_HALF.value             and card.get_attribute_value(AttrID.STAGE) == PokemonStage.VUNION.value:
-        return f"{name} #{card.get_attribute_value(AttrID.COLLECTOR_NUMBER)}"
-    return name
+    """Cards sharing a name share the 4-copy limit. V-UNION pieces also count
+    against their shared name: the rulebook (Appendix D) states all four pieces
+    of a V-UNION have the same name, so a deck may hold four *total* cards named
+    X V-UNION, not four of each individual piece."""
+    return card_display_name(card)
+
+
+def _vunion_printing_guid(card) -> Optional[str]:
+    """The combined-definition GUID identifying one printing of a V-UNION.
+
+    The rulebook requires all V-UNION cards of a name in a deck to be part of
+    the same set and illustrated by the same artist. Different printings of the
+    same V-UNION name share `display_name` but resolve to different combined
+    definitions, so the combined GUID is the printing identifier. None when the
+    piece is unbound or the card is not a V-UNION piece.
+    """
+    # Deferred: content.definitions imports DeckValidator from this module.
+    from spirit.game.content.definitions import CARD_DEFS_BY_GUID
+    from spirit.game.content.vunion import VUnionPieceCardDef
+
+    definition = CARD_DEFS_BY_GUID.get(getattr(card, "guid", "").lower())
+    if isinstance(definition, VUnionPieceCardDef):
+        combined = definition.vunion_definition
+        return combined.guid.lower() if combined is not None else None
+    return None
 
 
 def _is_basic_pokemon_card(card) -> bool:
@@ -102,6 +122,28 @@ class DeckValidator:
             details.append(_detail(
                 "MaxDuplicates",
                 f"A deck can't contain more than {MAX_COPIES} cards with the same name: {names}.",
+                offenders))
+
+        # V-UNION pieces of the same name must all be from one printing
+        # (rulebook Appendix D: same set and same illustrator). Pieces of
+        # different printings share a display_name but resolve to different
+        # combined definitions.
+        printing_by_name: Dict[str, set] = {}
+        for card in self.cards:
+            printing = _vunion_printing_guid(card)
+            if printing is None:
+                continue
+            printing_by_name.setdefault(card_display_name(card), set()).add(printing)
+        mixed = {name: ps for name, ps in printing_by_name.items() if len(ps) > 1}
+        if mixed:
+            names = ", ".join(sorted(mixed))
+            offenders = sorted({card.guid.lower() for card in self.cards
+                                if _vunion_printing_guid(card) is not None
+                                and card_display_name(card) in mixed})
+            details.append(_detail(
+                "VUnionMixedPrintings",
+                f"All cards named {names} must be from the same V-UNION printing "
+                f"(same set and illustrator).",
                 offenders))
 
         if not any(_is_basic_pokemon_card(c) for c in self.cards):

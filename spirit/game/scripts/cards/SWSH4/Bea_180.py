@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import AttrID, PokemonTypes, Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_energy_card
 from spirit.game.card_effects.support_common import distribute_energy
 
@@ -33,5 +33,6 @@ card = SupporterCardDef(
     collector_number=180,
     set_code="SWSH4",
     rarity=Rarities.RareUltra,
-    effect=bea
+    effect=bea,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import lock_all_attacks
 from spirit.game.card_effects.pokemon import energy_provides_type
 from spirit.game.card_effects.support_common import look_top_attach_energy
@@ -30,6 +30,7 @@ card = PokemonCardDef(
     collector_number=50,
     set_code="PGO",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=280,
     elements=[PokemonTypes.DRAGON],
     stage=PokemonStage.VSTAR,

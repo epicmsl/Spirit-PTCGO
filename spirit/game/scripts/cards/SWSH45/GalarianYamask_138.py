@@ -1,0 +1,4 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
+from spirit.game.card_effects.attacks_common import recoil_attack
+card = PokemonCardDef(guid='4f35c57a-60f8-5366-a710-b1729c271b45', key='SWSH45', name='com.direwolfdigital.cake.data.archetypes.pokemon.GalarianYamask.Name', display_name='Galarian Yamask', searchable_by=['Galarian Yamask', 'Basic', 'GalarianYamask'], subtypes=['Basic'], collector_number=138, set_code='SWSH45', rarity=Rarities.Shining, foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]), hp=70, elements=[PokemonTypes.FIGHTING], stage=PokemonStage.BASIC, retreat_cost=2, weakness_type=PokemonTypes.GRASS, family_id=562, abilities=[Attack(title='Reckless Charge', game_text='This Pokémon also does 30 damage to itself.', cost={PokemonTypes.COLORLESS: 2}, damage=50, effect=recoil_attack(30))])

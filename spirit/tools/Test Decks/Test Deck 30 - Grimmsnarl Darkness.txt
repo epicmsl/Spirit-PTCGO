@@ -1,0 +1,36 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 30
+
+2 Impidimp SHF 156
+2 Morgrem SHF 157
+2 Grimmsnarl SHF 158
+2 Grimmsnarl V SWSH 57
+2 Grimmsnarl VMAX DAA 115
+2 Nickit SHF 47
+2 Thievul SHF 48
+2 Croagunk SWSH 245
+2 Weavile SWSH 246
+2 Houndoom SWSH 90
+2 Houndour BST 95
+2 Tyranitar V SWSH 109
+2 Larvitar DAA 86
+2 Pupitar DAA 87
+2 Hydreigon SWSH 37
+
+Trainer Cards - 16
+
+2 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+
+Energy Cards - 14
+
+14 Darkness Energy Energy 7
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

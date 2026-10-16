@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, TrainerType
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, TrainerType, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_trainer_card
 from spirit.game.session.passives import Passive
 from spirit.game.card_effects.passives_common import is_in_active_spot
@@ -33,6 +33,7 @@ card = PokemonCardDef(
     collector_number=40,
     set_code="SWSH8",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=320,
     elements=[PokemonTypes.FIRE],
     stage=PokemonStage.VMAX,

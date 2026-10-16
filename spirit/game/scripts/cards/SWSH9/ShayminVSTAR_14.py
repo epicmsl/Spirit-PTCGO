@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import damage_per, count_prizes_taken
 
 
@@ -32,6 +32,7 @@ card = PokemonCardDef(
     collector_number=14,
     set_code="SWSH9",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=250,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.VSTAR,

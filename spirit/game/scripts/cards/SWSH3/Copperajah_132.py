@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
 from spirit.game.card_effects.attacks_common import bonus_if
 from spirit.game.card_effects.passives_common import condition_immunity_passive
@@ -20,6 +20,7 @@ card = PokemonCardDef(
     collector_number=132,
     set_code="SWSH3",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=190,
     elements=[PokemonTypes.METAL],
     stage=PokemonStage.STAGE1,

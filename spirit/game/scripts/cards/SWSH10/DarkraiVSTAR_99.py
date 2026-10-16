@@ -1,7 +1,8 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_item_card
 from spirit.game.card_effects.attacks_common import damage_per, count_energy
+from spirit.game.card_effects.support_common import requires_discard
 
 
 async def star_abyss(ctx):
@@ -24,6 +25,7 @@ card = PokemonCardDef(
     collector_number=99,
     set_code="SWSH10",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=270,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.VSTAR,
@@ -35,7 +37,9 @@ card = PokemonCardDef(
         Ability(
             title="Star Abyss",
             game_text="During your turn, you may put up to 2 Item cards from your discard pile into your hand. (You can't use more than 1 VSTAR Power in a game.)",
+            activation=Activations.ONCE_PER_TURN,
             vstar=True,
+            condition=lambda board, player_id, pokemon: requires_discard(is_item_card)(board, player_id, pokemon),
             effect=star_abyss,
         ),
         Attack(

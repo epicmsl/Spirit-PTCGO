@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import bosss_orders, opponent_has_bench, opponent_play_targets
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="06f16ae2-2712-59dc-89e4-75b957feb084",
@@ -15,5 +15,6 @@ card = SupporterCardDef(
     effect=bosss_orders,
     play_targets=opponent_play_targets(bench_only=True),
     play_target_prompt="Choose the opponent's new Active Pokémon",
-    condition=opponent_has_bench
+    condition=opponent_has_bench,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

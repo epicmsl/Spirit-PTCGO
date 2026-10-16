@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import recoil_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="47d74084-aaee-564b-914a-47dbc633eecd",
@@ -27,4 +27,5 @@ card = PokemonCardDef(
             effect=recoil_attack(30),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,7 +1,7 @@
 import json
 
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, def_for
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, def_for
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 
 
 def _is_grass_archetype(archetype_id):
@@ -36,6 +36,7 @@ card = PokemonCardDef(
     collector_number=9,
     set_code="SWSH1",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=220,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.BASIC,

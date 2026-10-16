@@ -1,6 +1,6 @@
 from spirit.game.card_effects.support_common import switch_self_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="efaacb91-bd06-5922-b9db-39cab9b03995",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=87,
     set_code="SWSH5",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=220,
     elements=[PokemonTypes.FIGHTING],
     stage=PokemonStage.BASIC,

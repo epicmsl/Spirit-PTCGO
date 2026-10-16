@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, is_pokemon_v
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, is_pokemon_v
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.attacks_common import self_energy_discard_attack
 from spirit.game.card_effects.pokemon import is_pokemon_gx
@@ -25,6 +25,7 @@ card = PokemonCardDef(
     collector_number=50,
     set_code="SWSH7",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=130,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.STAGE1,

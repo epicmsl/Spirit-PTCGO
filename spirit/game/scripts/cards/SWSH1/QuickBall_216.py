@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import hand_size_at_least, quick_ball
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = ItemCardDef(
     guid="cdaf82a1-0150-5052-b1ee-eb3fbe5437b6",
@@ -13,5 +13,6 @@ card = ItemCardDef(
     set_code="SWSH1",
     rarity=Rarities.RareSecret,
     effect=quick_ball,
-    condition=hand_size_at_least(2)
+    condition=hand_size_at_least(2),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

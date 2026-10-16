@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.passives_common import takes_less_passive
 from spirit.game.card_effects.pokemon import is_pokemon_vmax
 
@@ -19,6 +19,7 @@ card = PokemonCardDef(
     collector_number=18,
     set_code="CEL25",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=220,
     elements=[PokemonTypes.FIGHTING],
     stage=PokemonStage.BASIC,

@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import aero_dive, read_the_wind
-from spirit.game.data_utils import PokemonCardDef, Attack
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="fb5563a2-d94c-5699-b89a-834d1c68c53c",
@@ -34,4 +34,5 @@ card = PokemonCardDef(
             effect=aero_dive,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

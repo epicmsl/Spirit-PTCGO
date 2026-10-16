@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, unimplemented
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, unimplemented
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import delayed_knockout, read_the_wind
 
 card = PokemonCardDef(
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=99,
     set_code="SWSH6",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=220,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.BASIC,

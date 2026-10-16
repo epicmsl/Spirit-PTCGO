@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities, AttrID, TrainerType
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, AttrID, TrainerType, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_pokemon_card
 from spirit.game.card_effects.pokemon import is_energy_card
 
@@ -58,4 +58,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareRainbow,
     effect=roseannes_backup,
     condition=_roseannes_backup_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

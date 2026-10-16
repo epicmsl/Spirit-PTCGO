@@ -1,5 +1,5 @@
-from spirit.game.data_utils import StadiumCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import StadiumCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.passives import Passive
 
 
@@ -21,4 +21,5 @@ card = StadiumCardDef(
     set_code="SWSH10",
     rarity=Rarities.RareSecret,
     passive=TempleOfSinnohPassive(),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,0 +1,41 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 21
+
+1 Pikachu V-UNION SWSH 139
+1 Greninja V-UNION SWSH 155
+1 Mewtwo V-UNION SWSH 159
+1 Morpeko V-UNION SWSH 287
+1 Zacian V-UNION SWSH 163
+2 Zacian V SSH 138
+2 Zamazenta V BRS 105
+2 Copperajah V SWSH 30
+2 Duraludon SWSH 28
+2 Corviknight V SWSH 200
+2 Mewtwo V SWSH 223
+2 Gardevoir ex CEL 14
+2 Kirlia SWSH 271
+
+Trainer Cards - 23
+
+1 Professor's Research BRS 147
+1 Marnie SWSH 120
+1 Boss's Orders BRS 132
+2 Quick Ball SSH 179
+2 Switch BW 104
+2 Ball Guy SHF 57
+2 Bird Keeper DAA 159
+2 Gym Trainer SIT 158
+2 Skyla SHF 72
+2 Cara Liss VIV 149
+2 Piers SHF 69
+2 Rose SHF 71
+2 Team Yell Towel SHF 63
+
+Energy Cards - 16
+
+16 Metal Energy Energy 8
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Grookey SWSH 1
+2 Thwackey SHF 12
+2 Rillaboom SWSH 6
+2 Rillaboom V SWSH 14
+2 Rillaboom VMAX SHF 179
+2 Gossifleur SWSH 10
+2 Eldegoss SWSH 46
+2 Rowlet SWSH 220
+2 Dartrix SHF 7
+2 Decidueye SWSH 35
+2 Snivy BW 1
+2 Servine BW 3
+2 Serperior BW 5
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Grass Energy Energy 1
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonToolCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import PokemonToolCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.passives_common import hp_bonus_tool
 
 card = PokemonToolCardDef(
@@ -7,10 +7,11 @@ card = PokemonToolCardDef(
     key="SWSH2",
     name="com.direwolfdigital.cake.data.archetypes.trainer.BigCharm.Name",
     display_name="Big Charm",
-    searchable_by=["Big Charm", "Pok\u00c3\u00a9mon Tool"],
+    searchable_by=["Big Charm", "Pok\u00e9mon Tool"],
     subtypes=["Pok\u00e9mon Tool"],
     collector_number=206,
     set_code="SWSH2",
     rarity=Rarities.RareSecret,
-    passive=hp_bonus_tool(30)
+    passive=hp_bonus_tool(30),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

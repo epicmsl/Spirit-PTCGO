@@ -1,0 +1,4 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
+from spirit.game.card_effects.passives_common import flip_protection
+card = PokemonCardDef(guid='50e597c5-c51e-5497-b88d-c80a1d92c478', key='SWSH45', name='com.direwolfdigital.cake.data.archetypes.pokemon.Applin.Name', display_name='Applin', searchable_by=['Applin', 'Basic', 'Applin'], subtypes=['Basic'], collector_number=85, set_code='SWSH45', rarity=Rarities.Shining, foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]), hp=40, elements=[PokemonTypes.GRASS], stage=PokemonStage.BASIC, retreat_cost=1, weakness_type=PokemonTypes.FIRE, family_id=840, abilities=[Attack(title='Withdraw', game_text="Flip a coin. If heads, during your opponent's next turn, prevent all damage done to this Pokémon by attacks.", cost={PokemonTypes.COLORLESS: 1}, effect=flip_protection(prevent=True))])

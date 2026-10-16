@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import condition_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions, FoilMasks, FoilEffects
 
 
 async def counter(ctx):
@@ -19,6 +19,7 @@ card = PokemonCardDef(
     collector_number=40,
     set_code="PGO",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=230,
     elements=[PokemonTypes.FIGHTING],
     stage=PokemonStage.BASIC,

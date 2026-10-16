@@ -1,6 +1,6 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, unimplemented
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, unimplemented, Foil
 from spirit.game.card_effects.pokemon import rewind_beam
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="08f63b56-ae17-569b-ae5f-74e3e73de3d8",
@@ -33,4 +33,5 @@ card = PokemonCardDef(
             effect=rewind_beam,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

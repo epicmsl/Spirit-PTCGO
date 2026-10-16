@@ -1,6 +1,6 @@
 from spirit.game.card_effects.support_common import switch_self_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="2651c173-cb49-5075-97a0-1354342f7f27",
@@ -32,4 +32,5 @@ card = PokemonCardDef(
             damage=150,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

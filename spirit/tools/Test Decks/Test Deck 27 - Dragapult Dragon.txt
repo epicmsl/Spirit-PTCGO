@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Dreepy SHF 133
+2 Drakloak SHF 134
+2 Dragapult SWSH 132
+2 Dragapult V SWSH 96
+2 Dragapult VMAX SWSH 97
+2 Dragonite V SWSH 154
+2 Dragonite VSTAR SWSH 236
+2 Giratina V SWSH 259
+2 Dracovish SHF 109
+2 Arctovish SHF 110
+2 Hydreigon SWSH 37
+2 Deino EVS 113
+2 Zweilous EVS 114
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Psychic Energy Energy 5
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

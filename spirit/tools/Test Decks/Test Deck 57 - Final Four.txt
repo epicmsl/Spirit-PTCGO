@@ -1,0 +1,36 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 32
+
+2 Donphan SWSH 67
+2 Gengar SWSH 241
+2 Oricorio SWSH 210
+2 Victini V SWSH 104
+2 Phanpy SWSH 117
+2 Gastly LOR 64
+2 Haunter LOR 65
+2 Snorlax SWSH 32
+2 Snorlax SWSH 68
+2 Kangaskhan SWSH 38
+2 Bouffalant LOR 148
+2 Audino BW 87
+2 Regigigas SWSH 247
+2 Ditto V SHF 50
+2 Ditto VMAX SHF 51
+2 Noctowl SWSH 27
+
+Trainer Cards - 14
+
+4 Professor's Research BRS 147
+4 Marnie CPA 56
+2 Boss's Orders BRS 132
+2 Quick Ball SSH 179
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

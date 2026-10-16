@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.session.passives import Passive
 from spirit.game.card_effects.passives_common import is_in_active_spot
@@ -19,6 +19,7 @@ card = PokemonCardDef(
     collector_number=53,
     set_code="SWSH3",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=150,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.STAGE1,

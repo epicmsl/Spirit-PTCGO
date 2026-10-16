@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import lost_vacuum, lost_vacuum_playable
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = ItemCardDef(
     guid="34d33698-c1bc-5ab8-937b-e80f6027a461",
@@ -13,5 +13,6 @@ card = ItemCardDef(
     set_code="SWSH11",
     rarity=Rarities.RareSecret,
     effect=lost_vacuum,
-    condition=lost_vacuum_playable
+    condition=lost_vacuum_playable,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

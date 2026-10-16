@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import discard_opponent_energy_attack
 
 card = PokemonCardDef(
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=49,
     set_code="PGO",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=230,
     elements=[PokemonTypes.DRAGON],
     stage=PokemonStage.BASIC,

@@ -1,0 +1,36 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 30
+
+2 Chewtle SHF 26
+2 Drednaw SWSH 47
+2 Drednaw SWSH 47
+2 Arrokuda SWSH 93
+2 Barraskewda SHF 105
+2 Cramorant SHF 28
+2 Cramorant V SWSH 86
+2 Cramorant VMAX SHF 55
+2 Snom SHF 29
+2 Frosmoth SWSH 7
+2 Frosmoth SWSH 7
+2 Eiscue SWSH 128
+2 Buizel SHF 22
+2 Floatzel SHF 23
+2 Horsea SHF 20
+
+Trainer Cards - 16
+
+2 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Water Energy Energy 3
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

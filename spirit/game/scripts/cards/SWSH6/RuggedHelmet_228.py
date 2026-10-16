@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonToolCardDef, Ability, Triggers
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import Ability, PokemonToolCardDef, Triggers, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.passives_common import is_in_active_spot
 
 
@@ -25,7 +25,7 @@ card = PokemonToolCardDef(
     key="SWSH6",
     name="com.direwolfdigital.cake.data.archetypes.trainer.RuggedHelmet.Name",
     display_name="Rugged Helmet",
-    searchable_by=["Rugged Helmet", "Pok\u00c3\u00a9mon Tool"],
+    searchable_by=["Rugged Helmet", "Pok\u00e9mon Tool"],
     subtypes=["Pok\u00e9mon Tool"],
     collector_number=228,
     set_code="SWSH6",
@@ -38,4 +38,5 @@ card = PokemonToolCardDef(
             effect=_rugged_helmet_trigger,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

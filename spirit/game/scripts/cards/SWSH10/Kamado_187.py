@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import kamado, hand_size_at_least
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="433dfb5c-911a-56f2-b44a-9be1f03d0c6e",
@@ -13,5 +13,6 @@ card = SupporterCardDef(
     set_code="SWSH10",
     rarity=Rarities.RareUltra,
     effect=kamado,
-    condition=hand_size_at_least(2)
+    condition=hand_size_at_least(2),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import is_pokemon_vmax
 from spirit.game.session.passives import Passive
 
@@ -28,6 +28,7 @@ card = PokemonCardDef(
     collector_number=81,
     set_code="SWSH10",
     rarity=Rarities.RareRadiant,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.RADIANTHOLO]),
     hp=90,
     elements=[PokemonTypes.FIGHTING],
     stage=PokemonStage.BASIC,

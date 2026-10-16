@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Single Strike Urshifu V SWSH 106
+2 Rapid Strike Urshifu V SWSH 107
+2 Zacian V SSH 138
+2 Zamazenta V BRS 105
+2 Copperajah V SWSH 30
+2 Duraludon SWSH 28
+2 Corviknight V SWSH 200
+2 Infernape V SWSH 252
+2 Gallade V SWSH 258
+2 Melmetal V SWSH 224
+2 Magnezone SWSH 208
+2 Hisuian Samurott ASR 100
+2 Hisuian Samurott V SWSH 239
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Metal Saucer SSH 170
+2 Switch BW 104
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Fighting Energy Energy 6
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

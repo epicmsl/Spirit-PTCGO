@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import marnie
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="81b2f2ca-b011-59ff-83b3-5110b8d37780",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=208,
     set_code="SWSH1",
     rarity=Rarities.RareRainbow,
-    effect=marnie
+    effect=marnie,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

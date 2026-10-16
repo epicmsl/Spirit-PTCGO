@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import fusion_strike_system, fusion_strike_system_condition
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="8a340773-6bfd-5786-acc2-28b31243f9ce",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=185,
     set_code="SWSH8",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=190,
     elements=[PokemonTypes.METAL],
     stage=PokemonStage.BASIC,

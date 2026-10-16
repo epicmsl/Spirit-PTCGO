@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, SpecialConditions
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, SpecialConditions, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import condition_attack
 from spirit.game.card_effects.support_common import requires_damaged_pokemon
 
@@ -37,6 +37,7 @@ card = PokemonCardDef(
     collector_number=66,
     set_code="CZ",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=320,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.VMAX,

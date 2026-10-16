@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import ordinary_rod
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = ItemCardDef(
     guid="8ac64122-d101-55bf-a9a3-5841949d0f0e",
@@ -12,5 +12,6 @@ card = ItemCardDef(
     collector_number=215,
     set_code="SWSH1",
     rarity=Rarities.RareSecret,
-    effect=ordinary_rod
+    effect=ordinary_rod,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

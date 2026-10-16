@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 def _prizes_remaining(board, player_id):
@@ -21,6 +21,7 @@ card = PokemonCardDef(
     collector_number=58,
     set_code="PGO",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=230,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.BASIC,

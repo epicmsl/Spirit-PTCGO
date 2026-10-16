@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_trainer_card
 
 
@@ -26,5 +26,6 @@ card = SupporterCardDef(
     collector_number=197,
     set_code="SWSH6",
     rarity=Rarities.RareUltra,
-    effect=peony
+    effect=peony,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

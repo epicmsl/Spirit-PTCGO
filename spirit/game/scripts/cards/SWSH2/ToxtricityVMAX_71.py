@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import condition_bonus_attack
 
 card = PokemonCardDef(
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=71,
     set_code="SWSH2",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=320,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.VMAX,

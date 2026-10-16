@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef, subtypes_for
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, subtypes_for, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import recover_from_discard, requires_discard
 
 
@@ -22,4 +22,5 @@ card = ItemCardDef(
         _is_single_strike_energy, count=2, minimum=1, reveal=False, to="deck_shuffle",
         prompt="Choose up to 2 Single Strike Energy cards to shuffle into your deck.",
     ),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

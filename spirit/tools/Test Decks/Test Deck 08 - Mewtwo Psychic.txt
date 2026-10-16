@@ -1,0 +1,32 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 19
+
+2 Mewtwo V SWSH 223
+1 Mewtwo V-UNION SWSH 159
+2 Mew ex CEL 13
+2 Mewtwo-EX CEL 22
+2 Gardevoir ex CEL 14
+2 Gardevoir V SWSH 105
+2 Kirlia SWSH 271
+2 Ralts SIT 67
+2 Claydol SIT 94
+2 Baltoy SIT 93
+
+Trainer Cards - 22
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+4 Switch SSH 183
+
+Energy Cards - 19
+
+19 Psychic Energy Energy 5
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

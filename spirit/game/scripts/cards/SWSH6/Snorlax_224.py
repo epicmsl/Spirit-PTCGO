@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions
+from spirit.game.data_utils import Ability, Activations, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import condition_attack
 from spirit.game.card_effects.pokemon import in_active_spot
 
@@ -41,4 +41,5 @@ card = PokemonCardDef(
             effect=condition_attack(SpecialConditions.PARALYZED, flip=True),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

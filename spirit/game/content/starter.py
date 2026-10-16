@@ -37,6 +37,10 @@ SET_CODE_MAP = {
     "CRZ": "CZ",
     "CEL": "CEL25",
     "PGO": "PGO",
+    # PTCG-Live exports promo-SWSH cards under "SWSH" and the Black & White
+    # core set under "BW"; both are needed by exported test deck lists.
+    "SWSH": "Promo_SWSH",
+    "BW": "BW1",
 }
 
 # (count, live set code, collector number)
@@ -194,6 +198,10 @@ def _card_index():
         _ensure_cards_loaded()
         index = {}
         for card in card_loader.cards:
+            # V-UNION combined defs (runtime_only) share a collector number with
+            # their first piece; only the piece is a legal deck entry.
+            if getattr(card, "runtime_only", False):
+                continue
             num = card.get_attribute_value(AttrID.COLLECTOR_NUMBER)
             if num is None:
                 continue

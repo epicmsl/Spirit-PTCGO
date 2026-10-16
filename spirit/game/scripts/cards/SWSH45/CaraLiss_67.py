@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import bench_has_room, fossil_search, is_rare_fossil
 
 card = SupporterCardDef(
@@ -14,4 +14,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareUltra,
     effect=fossil_search(is_rare_fossil),
     condition=bench_has_room,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

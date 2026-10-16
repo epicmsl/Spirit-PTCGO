@@ -1,0 +1,34 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 24
+
+2 Milcery SHF 130
+2 Alcremie SWSH 58
+2 Alcremie V SHF 64
+2 Alcremie VMAX SHF 73
+2 Comfey SWSH 242
+2 Dedenne SWSH 80
+2 Mimikyu SWSH 136
+2 Galarian Ponyta SWSH 13
+2 Galarian Rapidash SHF 121
+2 Galarian Rapidash V SWSH 111
+2 Galarian Corsola FST 117
+2 Galarian Cursola FST 118
+
+Trainer Cards - 22
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+4 Switch SSH 183
+
+Energy Cards - 14
+
+14 Psychic Energy Energy 5
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

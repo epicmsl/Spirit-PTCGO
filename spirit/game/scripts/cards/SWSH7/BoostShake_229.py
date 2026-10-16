@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import AttrID, Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import AttrID, Rarities, FoilMasks, FoilEffects
 
 
 async def boost_shake(ctx):
@@ -31,4 +31,5 @@ card = ItemCardDef(
     set_code="SWSH7",
     rarity=Rarities.RareSecret,
     effect=boost_shake,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

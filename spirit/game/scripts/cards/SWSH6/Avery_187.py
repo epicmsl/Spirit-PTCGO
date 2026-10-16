@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import full_stack
 
 
@@ -28,4 +28,5 @@ card = SupporterCardDef(
     set_code="SWSH6",
     rarity=Rarities.RareUltra,
     effect=avery,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

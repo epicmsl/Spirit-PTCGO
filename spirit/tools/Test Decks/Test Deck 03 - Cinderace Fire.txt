@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Scorbunny SWSH 2
+2 Raboot SHF 89
+2 Cinderace SWSH 112
+2 Cinderace V FST 43
+2 Cinderace VMAX SHF 19
+2 Sizzlipede SHF 91
+2 Centiskorch SWSH 48
+2 Darumaka BW 23
+2 Darmanitan BW 25
+2 Pansear BW 21
+2 Simisear BW 22
+2 Tepig BW 15
+2 Pignite BW 17
+2 Emboar BW 19
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+
+Energy Cards - 14
+
+14 Fire Energy Energy 2
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

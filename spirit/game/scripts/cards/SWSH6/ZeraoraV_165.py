@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, subtypes_for
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Attack, PokemonCardDef, subtypes_for, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 def _other_rapid_strike_attacked_last_turn(ctx):
@@ -52,4 +52,5 @@ card = PokemonCardDef(
             effect=cross_fist,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

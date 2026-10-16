@@ -1,5 +1,5 @@
-from spirit.game.data_utils import StadiumCardDef, Ability, Activations
-from spirit.game.attributes import Rarities, PokemonTypes, AttrID
+from spirit.game.data_utils import Ability, Activations, StadiumCardDef, Foil
+from spirit.game.attributes import Rarities, PokemonTypes, AttrID, FoilMasks, FoilEffects
 from spirit.game.session.passives import effective_max_hp
 
 
@@ -40,5 +40,6 @@ card = StadiumCardDef(
     collector_number=230,
     set_code="SWSH7",
     rarity=Rarities.RareSecret,
-    ability=CRYSTAL_CAVE_ABILITY
+    ability=CRYSTAL_CAVE_ABILITY,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

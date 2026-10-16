@@ -1,7 +1,8 @@
 from spirit.game.data_utils import (
+    Foil,
     PokemonCardDef, Attack, Ability, ability_id_for, ABILITIES_BY_ID,
 )
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import flip_damage
 from spirit.game.session.passives import Passive
 
@@ -44,6 +45,7 @@ card = PokemonCardDef(
     collector_number=66,
     set_code="SWSH12",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=250,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.VSTAR,

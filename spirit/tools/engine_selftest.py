@@ -28,12 +28,14 @@ from spirit.game.card_effects.passives_common import (
 )
 from spirit.game.data_utils import (
     ABILITIES_BY_ID, Ability, Activations, Attack, CARD_DEFS_BY_GUID,
-    TRAINER_EFFECTS_BY_GUID, Triggers, evolves_from, evolves_from_chain,
+    TRAINER_EFFECTS_BY_GUID, Triggers, def_for, evolves_from, evolves_from_chain,
 )
 from spirit.game.models.board import EnergyEntity, PokemonEntity
 from spirit.game.scripts.cards import loader as card_loader
 from spirit.game.session import legal_actions, passives
-from spirit.game.session.constants import GamePhase, SelectionKind
+from spirit.game.session.constants import (
+    BENCH_CAPACITY, GamePhase, PRIZE_COUNT, SelectionKind, STARTING_HAND_SIZE,
+)
 from spirit.game.session.effects import (
     EffectContext,
     is_item_card,
@@ -1965,7 +1967,6 @@ async def test_extra_prize_watchers():
 
 
 async def test_setup_as_active():
-    from spirit.game.data_utils import def_for
     luxray = def_for("ef8ca3ef-7c49-55f9-8a3b-0bf871f8e524")  # CZ Luxray
     assert luxray is not None and getattr(luxray, "setup_as_active", False), \
         "CZ Luxray must carry setup_as_active"
@@ -1982,6 +1983,567 @@ async def test_setup_as_active():
     assert candidates[:len(basics)] == basics, \
         "Basics stay first (the AI pick prefers a true Basic)"
     assert board.player_has_any_basic(P1)
+
+
+async def test_setup_order_mulligan_after_placement():
+    """Issue #19: setup must follow rulebook order, not mulligans-first.
+
+    Healthy players place Active+Bench BEFORE the Basic-less opponent's
+    redraw; the batched reveal follows that placement; the mulliganer
+    places before the compensation draw; the compensation draw unlocks a
+    post-draw Bench pass; prizes and introductions come last.
+    """
+    rig = Rig(FILLER, FILLER, ENERGY_GUIDS, ITEM)
+    session, board = rig.session, rig.board
+
+    # Author the opening hands: P1's top seven holds exactly two Basics
+    # (deck top after the deal stays a non-Basic), P2's top seven holds
+    # none (its Basics sit deeper in the deck).
+    deck1 = board.find_player_area(P1, "deck").children
+    fillers = [c for c in deck1
+               if (c.archetype_id or "").lower() == FILLER.guid.lower()]
+    others = [c for c in deck1 if c not in fillers]
+    assert len(fillers) >= 2 and len(others) >= 5, "test deck shape changed"
+    deck1[:] = fillers[:-2] + others + [fillers[-2], fillers[-1]]
+
+    deck2 = board.find_player_area(P2, "deck").children
+    fillers2 = [c for c in deck2
+                if (c.archetype_id or "").lower() == FILLER.guid.lower()]
+    others2 = [c for c in deck2 if c not in fillers2]
+    deck2[:] = fillers2 + others2
+
+    # Deterministic reshuffle: Basics jump to the top, so the mulligan
+    # redraw resolves after exactly one iteration.
+    def _basics_to_top(pid, rng=None):
+        area = board.find_player_area(pid, "deck")
+        if area is None:
+            return False
+        basics, rest = [], []
+        for card in area.children:
+            (basics if board._is_basic_pokemon(card) else rest).append(card)
+        area.children[:] = rest + basics
+        return True
+
+    board.shuffle_deck = _basics_to_top
+
+    board.draw_cards(P1, STARTING_HAND_SIZE)
+    board.draw_cards(P2, STARTING_HAND_SIZE)
+    assert board.setup_active_candidates(P1), "P1 opening hand must be healthy"
+    assert not board.setup_active_candidates(P2), "P2 opening hand must mulligan"
+
+    events = []
+
+    def _wrap(attr, make_event):
+        orig = getattr(session, attr)
+
+        async def wrapper(*args):
+            events.append(make_event(*args))
+            return await orig(*args)
+
+        setattr(session, attr, wrapper)
+
+    _wrap("_place_setup_card", lambda pid, cid, area: (
+        "place", pid,
+        "bench" if area.get_attribute(AttrID.NAME) == "bench" else "active"))
+    _wrap("_broadcast_draw", lambda pid, count: ("draw", pid, count))
+    _wrap("_run_active_placement", lambda pid, done: ("active_run", pid))
+    _wrap("_run_bench_placement", lambda pid, done: ("bench_run", pid))
+    _wrap("_reveal_mulligans", lambda piles: ("reveal",))
+    _wrap("_offer_extra_draws", lambda counts: ("compensation",))
+    _wrap("_deal_prize_cards", lambda: ("prizes",))
+    _wrap("_introduce_initial_pokemon", lambda: ("introduce",))
+
+    await session.run_mulligan_phase()
+    await session.run_placement_phase()
+
+    def pos(predicate):
+        for i, event in enumerate(events):
+            if predicate(event):
+                return i
+        raise AssertionError(f"event not found in {events}")
+
+    i_p1a = pos(lambda e: e == ("place", P1, "active"))
+    i_p1b = pos(lambda e: e == ("place", P1, "bench"))
+    i_mdraw = pos(lambda e: e[0] == "draw" and e[1] == P2)
+    i_reveal = pos(lambda e: e[0] == "reveal")
+    i_p2a = pos(lambda e: e == ("place", P2, "active"))
+    i_p2b = pos(lambda e: e == ("place", P2, "bench"))
+    i_comp = pos(lambda e: e[0] == "compensation")
+    i_cdraw = pos(lambda e: e[0] == "draw" and e[1] == P1)
+    p1_bench_runs = [i for i, e in enumerate(events)
+                     if e[:2] == ("bench_run", P1)]
+    i_prizes = pos(lambda e: e[0] == "prizes")
+    i_intro = pos(lambda e: e[0] == "introduce")
+
+    assert len(p1_bench_runs) == 2, \
+        "healthy player runs Bench placement twice (initial + post-compensation)"
+    assert sum(1 for e in events if e[0] == "active_run") == 2, \
+        "each player places Active exactly once"
+    assert i_p1a < i_p1b < i_mdraw, \
+        "healthy placement must precede the opponent's mulligan redraw"
+    assert i_mdraw < i_reveal < i_p2a, \
+        "reveal then placement for the mulliganer, after its redraw"
+    assert i_p2b < i_comp < i_cdraw, \
+        "compensation draws come only after the mulliganer placed"
+    assert i_cdraw < p1_bench_runs[1] < i_prizes < i_intro, \
+        "post-compensation Bench pass runs before prizes/introductions"
+
+    assert len(board.find_player_area(P1, "activePokemonArea").children) == 1
+    assert len(board.find_player_area(P1, "bench").children) == 1
+    assert len(board.find_player_area(P2, "activePokemonArea").children) == 1
+    assert len(board.find_player_area(P2, "bench").children) == BENCH_CAPACITY
+    assert len(board.find_player_area(P1, "prizePile").children) == PRIZE_COUNT
+    assert len(board.find_player_area(P2, "prizePile").children) == PRIZE_COUNT
+    assert session.game_phase == GamePhase.SETUP_COMPLETE
+
+
+async def test_effect_actually_benches_discard_pokemon():
+    """Regression: discard-to-Bench effects must await bench_pokemon and act
+    on the benched entity, not the still-in-discard source (Gengar
+    Netherworld Gate / Vaporeon VMAX Bubble Pod silently no-oped when the
+    await was dropped -- a truthy coroutine hid the failure)."""
+    from spirit.game.card_effects.promo_swsh_effects import (
+        bubble_pod, netherworld_gate)
+
+    rig, e = new_rig()
+    board = rig.board
+    discard = board.find_player_area(P1, "discard")
+    bench = board.find_player_area(P1, "bench")
+
+    # A filler Basic in the discard stands in for Gengar.
+    victim = rig.to_area(rig.pull_guid(P1, FILLER.guid), P1, "discard")
+    assert victim is not None and victim.parent is discard
+    before = len(bench.children)
+
+    ctx = attack_ctx(rig, e)
+    ctx.source = victim
+    # netherworld_gate's "if you do" is optional in the smoke harness; the
+    # real text makes the bench mandatory, so drive the coroutine directly.
+    await netherworld_gate()(ctx)
+
+    assert victim.parent is bench, "the discard Pokemon must land on the Bench"
+    assert len(bench.children) == before + 1
+    hp = int(victim.get_attribute(AttrID.HP, 0) or 0)
+    max_hp = passives.effective_max_hp(board, victim)
+    assert hp == max_hp - 30, f"3 counters (-30) must land: {max_hp} -> {hp}"
+
+
+async def test_bubble_pod_attaches_to_benched_pokemon():
+    """Regression: Bubble Pod must (a) actually bench the chosen Pokemon and
+    (b) attach Energy to *that* Pokemon, not the acting one. Both the bench
+    and the attach silently no-oped -- truthy coroutine + dead predicates."""
+    from spirit.game.card_effects.promo_swsh_effects import bubble_pod
+
+    # A real Promo SWSH Water Basic (Oshawott); Rig stocks the deck with it
+    # and places one copy in the discard during setup.
+    oshawott = def_for("6173e4e3-04aa-56db-a70a-76bb1dcc9c84")
+    assert oshawott is not None
+    rig = Rig(oshawott, FILLER, ENERGY_GUIDS, ITEM)
+    rig.setup("pokemon")
+    board = rig.board
+    bench = board.find_player_area(P1, "bench")
+    discard = board.find_player_area(P1, "discard")
+
+    # The setup copy in the discard is the Pokemon bubble_pod will bench.
+    benched = next(c for c in discard.children
+                   if c.archetype_id == oshawott.guid)
+    # Water Energy in the discard for the attach step.
+    water = rig.to_area(rig.pull(P1, lambda c: isinstance(c, EnergyEntity)),
+                        P1, "discard")
+    assert water is not None
+
+    e = {"p1_active": board.active_pokemon(P1)}
+    actor = e["p1_active"]
+    before = len(bench.children)
+
+    # choose_cards fires for the Pokemon pick, then the Energy pick.
+    pokemon_picks = []
+
+    async def _choose_cards(seq, count, **kwargs):
+        if not seq:
+            return []
+        if not pokemon_picks:
+            pokemon_picks.extend(seq)
+            return [seq[0]]
+        return [c for c in seq if c is water] or [seq[0]]
+
+    ctx = attack_ctx(rig, e)
+    ctx.source = actor
+    ctx.choose_cards = _choose_cards
+    await bubble_pod()(ctx)
+
+    assert pokemon_picks, "the Water Pokemon pick must be offered"
+    assert pokemon_picks[0] is benched, "first pick must be the Water Pokemon"
+    assert benched.parent is bench, "the chosen Pokemon must be benched"
+    assert len(bench.children) == before + 1, "bench grew by exactly one"
+    assert water.parent is benched, "Energy must attach to the benched Pokemon"
+    assert water.parent is not actor, "Energy must NOT attach to the actor"
+
+
+async def test_emperors_eyes_gates_on_active_spot():
+    """Regression: Emperor's Eyes read AttrID.IS_ACTIVE, which does not exist
+    on AttrID -- the ability-lock passive raised AttributeError the moment the
+    carrier entered play (found by the sim_new_cards bot sweep, Empoleon V).
+    The lock must instead use is_in_active_spot and only fire while the
+    carrier sits Active."""
+    from spirit.game.card_effects.passives_common import (
+        ability_lock_passive, is_in_active_spot)
+    from spirit.game.card_effects.promo_swsh_effects import (
+        emperors_eyes, is_basic_pokemon_predicate, is_pokemon_without_rule_box)
+
+    def is_basic_pokemon(p):
+        return is_basic_pokemon_predicate(p)
+
+    rig, e = new_rig()
+    board = rig.board
+    active = board.active_pokemon(P1)
+    bench_pkmn = next((p for p in board.pokemon_in_play(P1)
+                       if not is_in_active_spot(p)), None)
+    assert bench_pkmn is not None, "rig must have a benched Pokemon"
+
+    # The lock is a Passive whose blocks_abilities(pred) must not raise.
+    passive = emperors_eyes()
+    assert isinstance(passive, Passive)
+
+    # Empoleon V registers emperors_eyes() as BOTH an effect and a passive, so
+    # the lock evaluates against every opponent Basic in play every tick. It
+    # must not crash and must not lock anything while the carrier is benched.
+    assert not passive.blocks_abilities(bench_pkmn, bench_pkmn), \
+        "a benched carrier must not lock Abilities"
+
+    # Carrier Active: an opponent Basic without a Rule Box IS locked (that is
+    # the printed text), while the carrier's own team is untouched.
+    opponent_active = board.active_pokemon(P2)
+    if opponent_active is not None and is_basic_pokemon(opponent_active) \
+            and is_pokemon_without_rule_box(opponent_active):
+        assert passive.blocks_abilities(opponent_active, active), \
+            "an opponent Basic with no Rule Box must be locked while the " \
+            "carrier is Active"
+    assert not passive.blocks_abilities(active, active), \
+        "the carrier's own Active Pokemon must never be locked"
+
+
+async def test_vstar_power_is_once_per_game():
+    """Regression: 12 of the 13 Promo_SWSH VSTAR cards were missing vstar=True,
+    so the once-per-game gate (turn_state.vstar_used) never fired and every
+    VSTAR power was reusable every turn. legal_actions must refuse to re-offer
+    a vstar ability once the player has spent their power for the game."""
+    rig, e = new_rig()
+    board = rig.board
+    ts = rig.session.turn_state
+    active = board.active_pokemon(P1)
+
+    async def _noop(ctx):
+        return None
+
+    power = Ability(title="Star Test", effect=_noop, vstar=True,
+                    activation=Activations.ONCE_PER_TURN)
+    register_ability(power)
+    active.set_attribute(AttrID.PIE_ABILITIES,
+                         [{"abilityID": power.ability_id}])
+
+    # Not yet used this game: the power is offered.
+    entries = compute_legal_actions(board, ts, P1, "test")
+    offered = [x for x in entries
+               if x["selectableAction"]["actionID"] == power.ability_id]
+    assert offered, "a VSTAR power must be offered before it is used"
+
+    # Spend it: the session records the player in vstar_used.
+    ts.vstar_used.add(P1)
+    entries = compute_legal_actions(board, ts, P1, "test")
+    offered = [x for x in entries
+               if x["selectableAction"]["actionID"] == power.ability_id]
+    assert not offered, "a VSTAR power must NOT be re-offered after use"
+
+    # The gate is game-scoped, not turn-scoped: advancing the turn does not
+    # re-arm the power.
+    ts.begin_turn(P2, board)
+    ts.begin_turn(P1, board)
+    entries = compute_legal_actions(board, ts, P1, "test")
+    offered = [x for x in entries
+               if x["selectableAction"]["actionID"] == power.ability_id]
+    assert not offered, "a VSTAR power must stay spent across turns"
+
+
+async def test_vstar_powers_wired_to_correct_effect():
+    """Regression: every Promo_SWSH VSTAR card's power block reused the card's
+    MAIN attack factory (hence 13 duplicate imports) instead of its own, so the
+    printed power text and the executed effect disagreed -- Charizard's Star
+    Blaze 'discard 2 Energy' attached nothing, Arceus's Starbirth 'search your
+    deck for 2 cards' attached energy, etc. The power must carry the factory
+    whose docstring matches the printed text."""
+    import inspect
+    from spirit.game.card_effects import promo_swsh_effects as pse
+
+    # card stem -> (power title keyword, expected factory)
+    expected = {
+        "ArceusVSTAR_307": ("Starbirth", pse.starbirth),
+        "CharizardVSTAR_262": ("Star Blaze", pse.star_blaze),
+        "DeoxysVSTAR_268": ("Star Force", pse.star_force),
+        "DragoniteVSTAR_236": ("Draconic Star", pse.draconic_star),
+        "GlaceonVSTAR_197": ("Crystal Star", pse.crystal_star),
+        "HisuianZoroarkVSTAR_298": ("Phantom Star", pse.phantom_star),
+        "KleavorVSTAR_249": ("Rampaging Star", pse.rampaging_star),
+        "LeafeonVSTAR_195": ("Ivy Star", pse.ivy_star),
+        "LucarioVSTAR_214": ("Aura Star", pse.aura_star),
+        "LucarioVSTAR_291": ("Aura Star", pse.aura_star),
+        "OriginFormePalkiaVSTAR_254": ("Star Portal", pse.star_portal),
+    }
+
+    import os
+    d = os.path.join(os.path.dirname(__file__), "..", "game", "scripts",
+                     "cards", "Promo_SWSH")
+    for stem, (kw, factory) in expected.items():
+        path = os.path.join(d, stem + ".py")
+        src = open(path, encoding="utf-8").read()
+        i = src.find("VSTAR Power")
+        assert i >= 0, f"{stem}: no VSTAR Power block"
+        seg = src[i:i + 600]
+        assert kw in seg, f"{stem}: power title '{kw}' missing"
+        assert inspect.isfunction(factory), f"{stem}: factory not a function"
+        # The power block must reference the expected factory by name.
+        assert factory.__name__ in seg, \
+            f"{stem}: power must use {factory.__name__} (title {kw})"
+        assert "vstar=True" in seg, f"{stem}: power must set vstar=True"
+
+    # Origin Forme Dialga's Star Chronos lives in card_effects.pokemon.
+    from spirit.game.card_effects.pokemon import star_chronos
+    src = open(os.path.join(d, "OriginFormeDialgaVSTAR_256.py"),
+               encoding="utf-8").read()
+    seg = src[src.find("VSTAR Power"):src.find("VSTAR Power") + 600]
+    assert "Star Chronos" in seg and "star_chronos" in seg \
+        and "vstar=True" in seg
+
+
+async def test_vstar_ability_powers_are_offered():
+    """Regression: a VSTAR Ability power without activation= is silently dead
+    -- _ability_entries only offers abilities whose activation is
+    ONCE_PER_TURN/UNLIMITED, and vstar=True alone is not enough (12 cards
+    shipped with unpromptable powers before this was caught). Every VSTAR
+    Ability (as opposed to VSTAR Attack) must carry an activation mode."""
+    from spirit.game.data_utils import CARD_DEFS_BY_GUID, Attack, Activations
+
+    bad = []
+    for definition in CARD_DEFS_BY_GUID.values():
+        for ability in getattr(definition, "abilities", None) or []:
+            if not getattr(ability, "vstar", False) or isinstance(ability, Attack):
+                continue
+            if ability.activation not in (Activations.ONCE_PER_TURN,
+                                          Activations.UNLIMITED):
+                bad.append(f"{definition.set_code}/{definition.display_name} "
+                           f"({ability.title})")
+    assert not bad, "VSTAR Ability powers missing activation=: " + ", ".join(bad)
+
+
+async def test_going_second_first_turn_gate():
+    """Regression: the 'go second, only your first turn' gate was inverted --
+    it checked turn_number == 1, but turn 1 is the FIRST player's turn (turn 2
+    is the second player's first turn, per HisuianVoltorb_2/Shaymin_14 and the
+    SWSH6/7 Cresselia references). The inversion made Cresselia's Crescent Glow
+    always search 1 Energy and left Hisuian Basculin's Submerge Silently
+    permanently unplayable (its condition also read board.session, which does
+    not exist on BoardState)."""
+    from spirit.game.card_effects.promo_swsh_effects import (
+        _going_second_first_turn, submerge_silently_condition)
+
+    class _TS:
+        def __init__(self, n):
+            self.turn_number = n
+
+    class _Board:
+        def __init__(self, n):
+            self.turn_state = _TS(n)
+
+    class _Session:
+        def __init__(self, n, first):
+            self.turn_state = _TS(n)
+            self.first_player_id = first
+
+    class _Ctx:
+        def __init__(self, n, first, pid):
+            self.session = _Session(n, first)
+            self.player_id = pid
+
+    # Turn 1 is the first player's turn: nobody may use it.
+    assert not _going_second_first_turn(_Ctx(1, "p1", "p1"))
+    assert not submerge_silently_condition(_Board(1), "p1")
+
+    # Turn 2 is the second player's (p2) first turn: p2 qualifies.
+    assert _going_second_first_turn(_Ctx(2, "p1", "p2"))
+    assert submerge_silently_condition(_Board(2), "p2")
+
+    # The first player never qualifies, and the gate expires after turn 2.
+    assert not _going_second_first_turn(_Ctx(2, "p1", "p1"))
+    assert not _going_second_first_turn(_Ctx(3, "p1", "p1"))
+    assert not submerge_silently_condition(_Board(3), "p2")
+
+    # A board without turn_state must be safely False, not raise.
+    class _Empty:
+        pass
+
+    assert not submerge_silently_condition(_Empty(), "p1")
+
+
+async def test_no_card_duplicates():
+    """Regression: no two card scripts may yield the same GUID -- the engine's
+    card identity -- or the same (set_code, collector_number) pair, apart from
+    one intentional exception recognized by the batch:
+      - Promo_SWSH '*VUNION_Combined.py': the combined-art/display scripts
+        share their V-UNION piece's collector number.
+    CEL25's Classic Collection half is numbered 26-50 (aligned with its
+    script stems and PNGs), so its collectors are unique and it needs no
+    exception. The loader's cards_by_guid/cards_by_stem silently overwrite on
+    collision, so last_errors == [] alone does not prove the pool is
+    duplicate-free; counting cards vs cards_by_guid is the authoritative
+    check."""
+    cards = card_loader.load_all()
+    assert len(cards) == len(card_loader.cards_by_guid), (
+        "duplicate card GUID in pool: cards_by_guid counts "
+        f"{len(card_loader.cards_by_guid)} but {len(cards)} cards published")
+    guids = {c.guid for c in cards}
+    assert len(guids) == len(cards), "duplicate card GUID in pool"
+
+    seen = {}
+    for reference, d in card_loader.definitions.items():
+        rel = reference.replace("\\", "/")
+        if rel.endswith("_Combined"):
+            continue
+        pair = (d.set_code, d.collector_number)
+        assert pair not in seen, (
+            f"duplicate (set_code, collector_number) {pair}: "
+            f"{seen[pair]} and {rel}")
+        seen[pair] = rel
+
+
+def _vunion_printings() -> Dict[str, Dict[str, list]]:
+    """Every bound V-UNION piece in the pool, grouped name -> combined-guid -> piece guids."""
+    from spirit.game.content.vunion import VUnionPieceCardDef
+
+    out: Dict[str, Dict[str, list]] = {}
+    for d in CARD_DEFS_BY_GUID.values():
+        if isinstance(d, VUnionPieceCardDef) and d.vunion_definition is not None:
+            out.setdefault(d.display_name, {}).setdefault(
+                d.vunion_definition.guid.lower(), []).append(d.guid.lower())
+    return out
+
+
+def _deck_base_failure_types(guids) -> set:
+    from spirit.game.decks.validation import DeckValidator
+
+    deck = {"deckID": "test-deck", "deckName": "V-UNION Test",
+            "piles": {"deck": [str(g) for g in guids]}}
+    return {d["failureType"] for d in DeckValidator(deck).base_failures()}
+
+
+class _StubCard:
+    """Minimal card entity exposing the attributes the engine filters read."""
+
+    def __init__(self, definition):
+        self.archetype_id = definition.guid
+        self._definition = definition
+
+    def get_attribute(self, attr_id):
+        spec = self._definition.extra_attributes.get(str(attr_id.value))
+        return spec.get("value") if isinstance(spec, dict) else None
+
+
+async def test_vunion_deck_limit_is_per_name():
+    """Rulebook Appendix D: the four pieces share one name, so a deck holds four
+    *total* cards named X V-UNION, not four of each individual piece. Regression:
+    _copy_limit_key used to key pieces by their combined GUID, letting a deck hold
+    4 of each of the 4 pieces (16 cards of one name)."""
+    printings = _vunion_printings()
+    assert "Mewtwo V-UNION" in printings
+    by_printing = printings["Mewtwo V-UNION"]
+    assert len(by_printing) == 1, "Mewtwo V-UNION has a single printing"
+    pieces = next(iter(by_printing.values()))
+    assert len(pieces) == 4, "a complete V-UNION is four pieces"
+
+    four = _deck_base_failure_types(pieces)
+    assert "MaxDuplicates" not in four, \
+        "four cards named Mewtwo V-UNION (one printing) must be legal"
+
+    five = _deck_base_failure_types(pieces + [pieces[0]])
+    assert "MaxDuplicates" in five, \
+        "five cards named Mewtwo V-UNION must exceed the 4-copy limit"
+
+
+async def test_vunion_mixed_printings_rejected():
+    """Rulebook Appendix D: every V-UNION card of a name in a deck must come from
+    the same set and illustrator. Morpeko V-UNION is printed twice, so mixing the
+    two printings must be rejected."""
+    printings = _vunion_printings()
+    morpeko = printings.get("Morpeko V-UNION", {})
+    assert len(morpeko) == 2, "Morpeko V-UNION is printed twice (215-218, 287-290)"
+    p1, p2 = list(morpeko.values())
+
+    mixed = _deck_base_failure_types(p1[:2] + p2[:2])
+    assert "VUnionMixedPrintings" in mixed, \
+        "mixing two Morpeko V-UNION printings must be rejected"
+
+    for only in (p1, p2):
+        assert "VUnionMixedPrintings" not in _deck_base_failure_types(only), \
+            "a single Morpeko V-UNION printing is legal"
+
+
+async def test_vunion_rule_box_only_in_play():
+    """Rulebook Appendix D: individual V-UNION pieces are NOT Rule Box Pokemon /
+    Pokemon V when not in play; only the assembled combined card is while in play.
+    is_pokemon_v/has_rule_box must therefore exclude loose pieces."""
+    from spirit.game.content.definitions import has_rule_box, is_pokemon_v
+    from spirit.game.content.vunion import VUnionPieceCardDef, VUnionPokemonDef
+    from spirit.game.session.effects import (
+        _is_vunion_piece, is_unevolved_pokemon,
+    )
+
+    piece = next(d for d in CARD_DEFS_BY_GUID.values()
+                 if isinstance(d, VUnionPieceCardDef) and d.vunion_definition is not None)
+    combined = next(d for d in CARD_DEFS_BY_GUID.values()
+                    if isinstance(d, VUnionPokemonDef))
+    pc, cc = _StubCard(piece), _StubCard(combined)
+
+    assert not has_rule_box(piece.guid) and not is_pokemon_v(piece.guid), \
+        "a loose V-UNION piece is not a Rule Box Pokemon"
+    assert has_rule_box(combined.guid) and is_pokemon_v(combined.guid), \
+        "the assembled V-UNION is a 3-prize Rule Box Pokemon"
+
+    assert _is_vunion_piece(pc) and not _is_vunion_piece(cc)
+    # "cards that affect unevolved Pokemon will affect Pokemon V-UNION"
+    assert is_unevolved_pokemon(cc), "the assembled V-UNION is unevolved"
+    assert not is_unevolved_pokemon(pc), "a loose piece is not a Pokemon"
+
+
+async def test_vunion_once_per_game_keyed_by_name():
+    """Regression: the once-per-game gate keyed on the combined GUID, so the two
+    Morpeko V-UNION printings counted as different Pokemon and both could be
+    assembled. Appendix D limits assembly to once per game *per name*."""
+    from spirit.game.content.vunion import VUnionPokemonDef
+    from spirit.game.session.vunion import _summon_key
+
+    combos = [d for d in CARD_DEFS_BY_GUID.values()
+              if isinstance(d, VUnionPokemonDef) and d.display_name == "Morpeko V-UNION"]
+    assert len(combos) == 2, "expected both Morpeko V-UNION printings"
+    keys = {_summon_key(P1, d) for d in combos}
+    assert len(keys) == 1, \
+        "once-per-game must be keyed by name, not by combined GUID"
+
+
+async def test_vunion_search_caps_pieces():
+    """Rulebook Appendix D: a single "search your deck for a Pokemon" effect may
+    put at most one V-UNION piece into hand even if several are available."""
+    from spirit.game.content.vunion import VUnionPieceCardDef
+    from spirit.game.session.effects import cap_vunion_pieces
+
+    pieces = [d for d in CARD_DEFS_BY_GUID.values()
+              if isinstance(d, VUnionPieceCardDef) and d.vunion_definition is not None][:3]
+    stub_pieces = [_StubCard(d) for d in pieces]
+    regular = _StubCard(next(d for d in CARD_DEFS_BY_GUID.values()
+                             if type(d).__name__ == "PokemonCardDef"))
+
+    assert len(cap_vunion_pieces(stub_pieces + [regular])) == 2, \
+        "only one V-UNION piece may survive the cap"
+    assert len(cap_vunion_pieces([regular, regular])) == 2, \
+        "non-piece picks are untouched"
 
 
 TESTS = [
@@ -2048,6 +2610,20 @@ TESTS = [
     test_on_play_trigger_ends_turn,
     test_extra_prize_watchers,
     test_setup_as_active,
+    test_setup_order_mulligan_after_placement,
+    test_effect_actually_benches_discard_pokemon,
+    test_bubble_pod_attaches_to_benched_pokemon,
+    test_emperors_eyes_gates_on_active_spot,
+    test_vstar_power_is_once_per_game,
+    test_vstar_powers_wired_to_correct_effect,
+    test_vstar_ability_powers_are_offered,
+    test_going_second_first_turn_gate,
+    test_no_card_duplicates,
+    test_vunion_deck_limit_is_per_name,
+    test_vunion_mixed_printings_rejected,
+    test_vunion_rule_box_only_in_play,
+    test_vunion_once_per_game_keyed_by_name,
+    test_vunion_search_caps_pieces,
 ]
 
 

@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import professors_research
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="d7ac94d8-b0af-50f0-b097-fcd6e671d9ae",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=209,
     set_code="SWSH1",
     rarity=Rarities.RareRainbow,
-    effect=professors_research
+    effect=professors_research,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

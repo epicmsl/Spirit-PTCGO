@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 async def copycat(ctx):
@@ -20,5 +20,6 @@ card = SupporterCardDef(
     collector_number=222,
     set_code="SWSH7",
     rarity=Rarities.RareRainbow,
-    effect=copycat
+    effect=copycat,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

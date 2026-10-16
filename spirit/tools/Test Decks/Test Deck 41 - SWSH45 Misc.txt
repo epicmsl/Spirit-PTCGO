@@ -1,0 +1,36 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 30
+
+2 Skwovet SHF 172
+2 Greedent SHF 173
+2 Greedent V SHF 53
+2 Bunnelby SWSH 82
+2 Wooloo SWSH 11
+2 Dubwool SHF 177
+2 Dubwool V RCL 153
+2 Minccino BW 88
+2 Cinccino BW 89
+2 Spinarak SHF 43
+2 Koffing SHF 41
+2 Galarian Weezing CRE 96
+2 Yamper SHF 112
+2 Boltund SHF 113
+2 Pincurchin SHF 116
+
+Trainer Cards - 16
+
+2 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

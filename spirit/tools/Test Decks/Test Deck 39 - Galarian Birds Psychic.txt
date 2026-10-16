@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Galarian Articuno EVS 63
+2 Galarian Zapdos EVS 82
+2 Galarian Moltres EVS 93
+2 Galarian Mr. Mime SHF 93
+2 Galarian Mr. Rime BST 35
+2 Galarian Ponyta SWSH 13
+2 Galarian Rapidash SHF 121
+2 Galarian Slowpoke SWSH 126
+2 Galarian Runerigus SHF 139
+2 Galarian Yamask CRE 82
+2 Galarian Corsola FST 117
+2 Galarian Cursola FST 118
+2 Galarian Meowth FST 180
+2 Galarian Perrserker FST 181
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Psychic Energy Energy 5
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

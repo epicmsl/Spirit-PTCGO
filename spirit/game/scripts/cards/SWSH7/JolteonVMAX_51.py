@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def max_thunder_rumble(ctx):
@@ -23,6 +23,7 @@ card = PokemonCardDef(
     collector_number=51,
     set_code="SWSH7",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=300,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.VMAX,

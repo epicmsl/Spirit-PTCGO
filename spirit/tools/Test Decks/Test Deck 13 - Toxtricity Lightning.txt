@@ -1,0 +1,34 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Toxel SWSH 209
+2 Toxtricity SHF 115
+2 Light Toxtricity SWSH 137
+2 Morpeko SWSH 12
+2 Morpeko V SWSH 56
+2 Morpeko VMAX SHF 38
+2 Zekrom BW 47
+2 Rotom SHF 34
+2 Rotom V SWSH 257
+2 Blitzle BW 40
+2 Zebstrika BW 42
+2 Joltik BW 44
+2 Galvantula BW 46
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+4 Switch SSH 183
+
+Energy Cards - 14
+
+14 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

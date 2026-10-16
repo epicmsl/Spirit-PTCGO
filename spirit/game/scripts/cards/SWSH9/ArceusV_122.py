@@ -1,7 +1,7 @@
 from spirit.game.card_effects.support_common import search_attach_energy
 from spirit.game.card_effects.trainers import is_basic_energy_card
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, is_pokemon_v
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, is_pokemon_v
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 trinity_charge = search_attach_energy(
     is_basic_energy_card, count=3,
@@ -19,6 +19,7 @@ card = PokemonCardDef(
     collector_number=122,
     set_code="SWSH9",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=220,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.BASIC,

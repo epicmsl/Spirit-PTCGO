@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import brandon, brandon_playable
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="d648dbd9-9109-53c2-87ae-24ad5d7d5552",
@@ -13,5 +13,6 @@ card = SupporterCardDef(
     set_code="SWSH12",
     rarity=Rarities.RareRainbow,
     effect=brandon,
-    condition=brandon_playable
+    condition=brandon_playable,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

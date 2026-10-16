@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Rookidee SHF 174
+2 Corvisquire SHF 175
+2 Corviknight SHF 162
+2 Corviknight V SWSH 200
+2 Cufant SHF 49
+2 Copperajah SHF 164
+2 Duraludon SWSH 28
+2 Galarian Meowth FST 180
+2 Galarian Perrserker FST 181
+2 Galarian Stunfisk LOR 127
+2 Galarian Farfetch'd SHF 136
+2 Galarian Sirfetch'd SHF 137
+2 Galarian Sirfetch'd V VIV 174
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Metal Saucer SSH 170
+2 Switch BW 104
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Metal Energy Energy 8
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

@@ -1,0 +1,31 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 19
+
+2 Pikachu V SWSH 61
+2 Pikachu VMAX SWSH 286
+1 Pikachu V-UNION SWSH 139
+2 Pikachu BW 115
+2 Pikachu BW 115
+2 Surfing Pikachu VMAX CEL 9
+2 Pincurchin SHF 116
+2 Morpeko SWSH 12
+2 Rotom SHF 34
+2 Rotom V SWSH 257
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+4 Switch SSH 183
+
+Energy Cards - 21
+
+21 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import primate_wisdom
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="0f9e0a4c-12de-5997-be84-1ba3070fb6ee",
@@ -31,4 +31,5 @@ card = PokemonCardDef(
             damage=70,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import full_stack
 from spirit.game.card_effects.pokemon import in_active_spot
 from spirit.game.card_effects.attacks_common import bonus_if
@@ -50,4 +50,5 @@ card = PokemonCardDef(
             effect=bonus_if(lambda ctx: ctx.stadium_in_play() is not None, 80),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import dark_asset, condition_attack
 
 card = PokemonCardDef(
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=44,
     set_code="SWSH45",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=180,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.BASIC,

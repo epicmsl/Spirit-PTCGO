@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef, is_pokemon_v
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, is_pokemon_v, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.models.board import PokemonEntity
 from spirit.game.session.effects import full_stack
 
@@ -35,4 +35,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareUltra,
     condition=_volo_condition,
     effect=volo,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

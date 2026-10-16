@@ -1,5 +1,5 @@
 from spirit.game.card_effects.support_common import heal_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 
 
@@ -28,6 +28,7 @@ card = PokemonCardDef(
     collector_number=18,
     set_code="SWSH6",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=180,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.STAGE2,

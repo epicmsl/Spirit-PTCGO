@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Regieleki V SWSH 280
+2 Regidrago V SWSH 281
+2 Regigigas SWSH 247
+2 Zacian SWSH 33
+2 Zamazenta SWSH 34
+2 Arceus V SWSH 204
+2 Arceus VSTAR BRS 123
+2 Vaporeon V SWSH 150
+2 Vaporeon VMAX SWSH 182
+2 Jolteon V SWSH 151
+2 Jolteon VMAX EVS 51
+2 Flareon V SWSH 149
+2 Flareon VMAX EVS 18
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

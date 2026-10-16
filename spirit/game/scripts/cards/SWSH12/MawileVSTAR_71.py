@@ -1,7 +1,7 @@
 from spirit.game.card_effects.attacks_common import bonus_if
 from spirit.game.card_effects.pokemon import in_active_spot
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def star_rondo(ctx):
@@ -26,6 +26,7 @@ card = PokemonCardDef(
     collector_number=71,
     set_code="SWSH12",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=260,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.VSTAR,
@@ -37,6 +38,7 @@ card = PokemonCardDef(
         Ability(
             title="Star Rondo",
             game_text="During your turn, if this Pok\u00e9mon is on your Bench, you may switch it with your Active Pok\u00e9mon. If you do, switch 1 of your opponent's Benched Pok\u00e9mon with their Active Pok\u00e9mon. (You can't use more than 1 VSTAR Power in a game.)",
+            activation=Activations.ONCE_PER_TURN,
             vstar=True,
             condition=lambda board, pid, poke: not in_active_spot(board, pid, poke),
             effect=star_rondo,

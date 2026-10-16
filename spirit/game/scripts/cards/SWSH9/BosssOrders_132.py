@@ -1,5 +1,5 @@
 from spirit.game.card_effects.trainers import bosss_orders, opponent_has_bench, opponent_play_targets
-from spirit.game.data_utils import SupporterCardDef
+from spirit.game.data_utils import Foil, SupporterCardDef
 from spirit.game.attributes import Rarities
 
 card = SupporterCardDef(
@@ -12,6 +12,7 @@ card = SupporterCardDef(
     collector_number=132,
     set_code="SWSH9",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     effect=bosss_orders,
     play_targets=opponent_play_targets(bench_only=True),
     play_target_prompt="Choose the opponent's new Active Pokémon",

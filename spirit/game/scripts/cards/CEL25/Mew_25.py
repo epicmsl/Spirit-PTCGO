@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_item_card
 from spirit.game.card_effects.pokemon import in_active_spot
 
@@ -30,7 +30,8 @@ card = PokemonCardDef(
     subtypes=["Basic"],
     collector_number=25,
     set_code="CEL25",
-    rarity=Rarities.RareHolo,
+    rarity=Rarities.RareSecret,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET]),
     hp=60,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.BASIC,

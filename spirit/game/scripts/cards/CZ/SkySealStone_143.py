@@ -1,4 +1,5 @@
 from spirit.game.data_utils import (
+    Foil,
     Ability, Activations, PokemonToolCardDef, is_pokemon_v, subtypes_for,
 )
 from spirit.game.attributes import Rarities
@@ -40,9 +41,10 @@ card = PokemonToolCardDef(
     key="CZ",
     name="com.direwolfdigital.cake.data.archetypes.trainer.SkySealStone.Name",
     display_name="Sky Seal Stone",
-    searchable_by=["Sky Seal Stone", "Item", "Pok\u00c3\u00a9mon Tool"],
-    subtypes=["Item", "Pok\u00c3\u00a9mon Tool"],
+    searchable_by=["Sky Seal Stone", "Item", "Pok\u00e9mon Tool"],
+    subtypes=["Item", "Pok\u00e9mon Tool"],
     collector_number=143,
     set_code="CZ",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
 )

@@ -1,0 +1,33 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 24
+
+2 Pikachu BW 115
+2 Pikachu BW 115
+2 Pikachu V SWSH 61
+2 Pikachu VMAX SWSH 286
+2 Meowth V SWSH 4
+2 Meowth VMAX SWSH 5
+2 Boltund V SWSH 85
+2 Pikachu V SWSH 61
+2 Toxel SWSH 209
+2 Toxtricity SHF 115
+2 Toxtricity V SWSH 17
+2 Toxtricity VMAX RCL 71
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+
+Energy Cards - 18
+
+18 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

@@ -42,3 +42,39 @@ MAX_CONNECTIONS = int(os.environ.get("SPIRIT_MAX_CONNECTIONS", "0"))
 # that normal offer/reply cadence and reconnect replay never trip it.
 INBOUND_RATE_PER_SEC = float(os.environ.get("SPIRIT_INBOUND_RATE", "80"))
 INBOUND_RATE_BURST = float(os.environ.get("SPIRIT_INBOUND_BURST", "240"))
+
+# Matchmaking AI fill: seconds a player may sit alone in a queue before the
+# server pairs them with the AI bot instead of leaving them searching forever
+# on a quiet server (0 disables the fallback; a human joining first wins).
+AI_MATCH_TIMEOUT = float(os.environ.get("SPIRIT_AI_MATCH_TIMEOUT", "10"))
+
+# MiMo duel seat: tiered queue fill. After MIMO_FILL_SECONDS alone in a queue
+# the server pairs the player with the agent-driven AgentSeat -- but only while
+# the duel-bridge heartbeat is fresh (the CLI in tools/mimo_duel_cli.py keeps
+# it alive). Otherwise the stock AI bot takes the seat at AI_MATCH_TIMEOUT.
+MIMO_FILL_ENABLED = os.environ.get("SPIRIT_MIMO_FILL_ENABLED", "1").strip().lower() not in ("0", "false", "no", "off")
+MIMO_FILL_SECONDS = float(os.environ.get("SPIRIT_MIMO_FILL_SECONDS", "7"))
+MIMO_HEARTBEAT_MAX_AGE_SECONDS = float(os.environ.get("SPIRIT_MIMO_HEARTBEAT_MAX_AGE", "30"))
+MIMO_BRIDGE_DIR = os.environ.get("SPIRIT_MIMO_BRIDGE_DIR", "duel_bridge")
+# Watchdog per AgentSeat prompt: when the bridge goes silent mid-duel the offer
+# auto-resolves with a legal default (selection None) so the human is never
+# frozen waiting on the agent.
+MIMO_PROMPT_TIMEOUT_SECONDS = float(os.environ.get("SPIRIT_MIMO_PROMPT_TIMEOUT", "600"))
+# Optional agent-seat deck overrides (standard queues only, MiMo seat never the
+# stock AI bot). Priority per queue fill: bridge control file
+# (MIMO_BRIDGE_DIR/agent_deck.txt, written by `tools/mimo_duel_cli.py set-deck`)
+# > MIMO_AGENT_DECK_FILE > a random .txt from MIMO_AGENT_DECK_DIR > the curated
+# BOT_DECKS pool. Mirrors of the human's deck are allowed on purpose.
+MIMO_AGENT_DECK_FILE = os.environ.get("SPIRIT_MIMO_AGENT_DECK_FILE", "").strip()
+MIMO_AGENT_DECK_DIR = os.environ.get("SPIRIT_MIMO_AGENT_DECK_DIR", "").strip()
+
+# --- Match timers (server-side only; the client just renders what we send) ---
+# Your own turn: quiet seconds before the visible countdown starts, then the
+# countdown itself. When both run out the server ends YOUR TURN (never the match).
+TURN_INACTIVITY_SECONDS = float(os.environ.get("SPIRIT_TURN_INACTIVITY_SECONDS", "15"))
+TURN_COUNTDOWN_SECONDS = float(os.environ.get("SPIRIT_TURN_COUNTDOWN_SECONDS", "60"))
+# Prompts answered while it is the OPPONENT'S turn (choosing a new Active after
+# a KO, prize picks, forced effect responses). The client shows this whole
+# window as a countdown, and when it runs out the server auto-picks a legal
+# default and play continues -- no forfeit, no skipped turn of yours.
+RESPONSE_TIMEOUT_SECONDS = float(os.environ.get("SPIRIT_RESPONSE_TIMEOUT_SECONDS", "180"))

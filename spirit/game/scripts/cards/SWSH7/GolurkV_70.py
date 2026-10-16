@@ -1,6 +1,6 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, unimplemented
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, unimplemented
 from spirit.game.card_effects.pokemon import rewind_beam
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="b3089734-e05b-51c2-934e-787d332ce082",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=70,
     set_code="SWSH7",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=220,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.BASIC,

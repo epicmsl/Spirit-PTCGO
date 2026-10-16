@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 26
+
+2 Sobble SWSH 3
+2 Drizzile SHF 99
+2 Inteleon SWSH 113
+2 Inteleon V SWSH 16
+2 Frosmoth SWSH 7
+2 Snom SHF 29
+2 Drednaw SWSH 47
+2 Chewtle SHF 26
+2 Basculin BW 35
+2 Alomomola BW 38
+2 Ducklett BW 36
+2 Swanna BW 37
+2 Mantine SWSH 26
+
+Trainer Cards - 20
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+2 Switch SSH 183
+
+Energy Cards - 14
+
+14 Water Energy Energy 3
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

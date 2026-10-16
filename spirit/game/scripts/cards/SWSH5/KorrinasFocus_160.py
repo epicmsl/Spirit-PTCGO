@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import draw_until_effect
 
 card = SupporterCardDef(
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=160,
     set_code="SWSH5",
     rarity=Rarities.RareUltra,
-    effect=draw_until_effect(6)
+    effect=draw_until_effect(6),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

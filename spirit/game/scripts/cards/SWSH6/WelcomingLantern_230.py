@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef, subtypes_for
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, subtypes_for, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import recover_from_discard, requires_discard
 from spirit.game.session.effects import is_supporter_card
 
@@ -23,4 +23,5 @@ card = ItemCardDef(
         _is_single_strike_supporter, count=1, minimum=1, reveal=False, to="hand",
         prompt="Choose a Single Strike Supporter card from your discard pile.",
     ),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

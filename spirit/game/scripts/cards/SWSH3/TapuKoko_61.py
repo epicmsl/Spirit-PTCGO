@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.support_common import draw_attack
 
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=61,
     set_code="SWSH3",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=110,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.BASIC,

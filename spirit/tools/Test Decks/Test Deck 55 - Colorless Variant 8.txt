@@ -1,0 +1,31 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 18
+
+2 Blanche SWSH 227
+2 Archeops SWSH 272
+2 Klara SWSH 302
+2 Revive BW 102
+2 Pokédex BW 98
+2 PlusPower BW 96
+2 Spark SWSH 226
+2 Lycanroc V SWSH 199
+2 Candela SWSH 228
+
+Trainer Cards - 22
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+4 Switch SSH 183
+
+Energy Cards - 20
+
+20 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

@@ -1,0 +1,38 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, unimplemented, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
+
+from spirit.game.card_effects.pokemon import dragon_gale, shred
+
+card = PokemonCardDef(
+    guid="5bb0bc7a-8e21-5bcd-b17e-85f6526dbfce",
+    key="Promo_SWSH",
+    name="com.direwolfdigital.cake.data.archetypes.pokemon.DragoniteV.Name",
+    display_name="Dragonite V",
+    searchable_by=["Dragonite V", "Basic", "V", "DragoniteV"],
+    subtypes=["Basic", "V"],
+    collector_number=154,
+    set_code="Promo_SWSH",
+    rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
+    hp=230,
+    elements=[PokemonTypes.DRAGON],
+    stage=PokemonStage.BASIC,
+    retreat_cost=3,
+    family_id=149,
+    abilities=[
+        Attack(
+            title="Shred",
+            game_text="This attack's damage isn't affected by any effects on your opponent's Active Pok\u00e9mon.",
+            cost={PokemonTypes.COLORLESS: 2},
+            damage=50,
+            effect=shred,
+        ),
+        Attack(
+            title="Dragon Gale",
+            game_text="This attack also does 20 damage to each of your Benched Pok\u00e9mon. (Don't apply Weakness and Resistance for Benched Pok\u00e9mon.)",
+            cost={PokemonTypes.WATER: 2, PokemonTypes.LIGHTNING: 1},
+            damage=250,
+            effect=dragon_gale,
+        ),
+    ],
+)

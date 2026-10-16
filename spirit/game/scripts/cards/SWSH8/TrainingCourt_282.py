@@ -1,5 +1,5 @@
-from spirit.game.data_utils import StadiumCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import StadiumCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import TRAINING_COURT_ABILITY
 
 card = StadiumCardDef(
@@ -13,4 +13,5 @@ card = StadiumCardDef(
     set_code="SWSH8",
     rarity=Rarities.RareSecret,
     ability=TRAINING_COURT_ABILITY,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

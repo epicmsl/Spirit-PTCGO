@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Falinks SHF 147
+2 Falinks V RCL 110
+2 Stonjourner SHF 148
+2 Clobbopus SHF 145
+2 Grapploct SHF 146
+2 Silicobra SHF 143
+2 Sandaconda SHF 144
+2 Cranidos SWSH 274
+2 Passimian SWSH 115
+2 Kleavor V SWSH 248
+2 Kleavor VSTAR SWSH 249
+2 Riolu BRS 78
+2 Lucario V SWSH 213
+2 Lucario VSTAR SWSH 214
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+
+Energy Cards - 14
+
+14 Fighting Energy Energy 6
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

@@ -1,7 +1,7 @@
 from spirit.game.data_utils import (
-    PokemonCardDef, Attack, Ability, ability_id_for, ABILITIES_BY_ID,
+    PokemonCardDef, Attack, Ability, ability_id_for, ABILITIES_BY_ID, Foil,
 )
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import flip_damage
 from spirit.game.session.passives import Passive
 
@@ -69,4 +69,5 @@ card = PokemonCardDef(
             effect=star_cipher,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

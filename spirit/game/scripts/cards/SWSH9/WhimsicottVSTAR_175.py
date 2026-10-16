@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, TrainerType
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, TrainerType, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import count_energy
 from spirit.game.session.effects import is_special_energy
 
@@ -64,4 +64,5 @@ card = PokemonCardDef(
             vstar=True,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

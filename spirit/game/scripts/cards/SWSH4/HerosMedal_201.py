@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonToolCardDef
-from spirit.game.attributes import Rarities, AttrID
+from spirit.game.data_utils import PokemonToolCardDef, Foil
+from spirit.game.attributes import Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.session.passives import Passive, carrier_pokemon
 from spirit.game.card_effects.pokemon import is_pokemon_vmax
 
@@ -27,11 +27,12 @@ card = PokemonToolCardDef(
     key="SWSH4",
     name="com.direwolfdigital.cake.data.archetypes.trainer.HerosMedal.Name",
     display_name="Hero's Medal",
-    searchable_by=["Hero's Medal", "Pok\u00c3\u00a9mon Tool"],
+    searchable_by=["Hero's Medal", "Pok\u00e9mon Tool"],
     subtypes=["Pok\u00e9mon Tool"],
     collector_number=201,
     set_code="SWSH4",
     rarity=Rarities.RareSecret,
     attach_to=_heros_medal_attach_to,
     passive=HerosMedalPassive(),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

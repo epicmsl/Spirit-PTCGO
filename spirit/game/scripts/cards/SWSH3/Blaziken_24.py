@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.support_common import attach_from_discard
 from spirit.game.card_effects.trainers import is_basic_energy_card
@@ -14,6 +14,7 @@ card = PokemonCardDef(
     collector_number=24,
     set_code="SWSH3",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=170,
     # Double Type: this Pokemon is Fire AND Fighting type as long as it's in
     # play; baked directly into POKEMON_TYPES since Weakness is computed off

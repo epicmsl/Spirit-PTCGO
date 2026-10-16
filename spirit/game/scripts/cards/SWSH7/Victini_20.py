@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.support_common import search_to_hand
 
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=20,
     set_code="SWSH7",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=60,
     elements=[PokemonTypes.FIRE],
     stage=PokemonStage.BASIC,

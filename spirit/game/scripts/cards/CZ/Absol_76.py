@@ -1,6 +1,6 @@
 import random
 
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 
 
@@ -22,6 +22,7 @@ card = PokemonCardDef(
     collector_number=76,
     set_code="CZ",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=100,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.BASIC,

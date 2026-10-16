@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import condition_attack
-from spirit.game.data_utils import PokemonCardDef, Attack
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, SpecialConditions
+from spirit.game.data_utils import Attack, Foil, PokemonCardDef
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, SpecialConditions, FoilMasks, FoilEffects
 
 
 async def damaging_spark(ctx):
@@ -21,6 +21,7 @@ card = PokemonCardDef(
     collector_number=49,
     set_code="SWSH4",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=210,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.BASIC,

@@ -1,0 +1,13 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
+from spirit.game.card_effects.pokemon import energy_provides_type
+
+async def spiky_knuckle(ctx):
+    """200. Put 2 Darkness Energy attached to this Pokemon into your hand."""
+    await ctx.deal_damage()
+    energies = [e for e in ctx.attached_energies(ctx.source) if energy_provides_type(e, PokemonTypes.DARKNESS)]
+    if not energies:
+        return
+    picks = await ctx.choose_cards(energies, 2, prompt='Choose up to 2 Darkness Energy to put into your hand.')
+    await ctx.put_in_hand(picks, reveal=False)
+card = PokemonCardDef(guid='72d59845-8519-59e4-bbd9-2b8c80315cf5', key='SWSH45', name='com.direwolfdigital.cake.data.archetypes.pokemon.GrimmsnarlV.Name', display_name='Grimmsnarl V', searchable_by=['Grimmsnarl V', 'Basic', 'V', 'GrimmsnarlV'], subtypes=['Basic', 'V'], collector_number=189, set_code='SWSH45', rarity=Rarities.RareHoloV, foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]), hp=220, elements=[PokemonTypes.DARKNESS], stage=PokemonStage.BASIC, retreat_cost=2, weakness_type=PokemonTypes.GRASS, family_id=861, abilities=[Attack(title='Bite', cost={PokemonTypes.DARKNESS: 1}, damage=40), Attack(title='Spiky Knuckle', game_text='Put 2 Darkness Energy attached to this Pokémon into your hand.', cost={PokemonTypes.DARKNESS: 3}, damage=200, effect=spiky_knuckle)])

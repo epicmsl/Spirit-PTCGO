@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Triggers, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import energy_provides_type
 from spirit.game.card_effects.passives_common import condition_immunity_passive
 from spirit.game.card_effects.attacks_common import lock_all_attacks
@@ -62,4 +62,5 @@ card = PokemonCardDef(
             effect=emerald_blade,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

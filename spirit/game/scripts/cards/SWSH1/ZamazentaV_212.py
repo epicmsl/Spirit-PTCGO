@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import discard_opponent_energy_attack
 from spirit.game.card_effects.passives_common import prevent_damage_when
 from spirit.game.card_effects.pokemon import is_pokemon_vmax
@@ -40,4 +40,5 @@ card = PokemonCardDef(
             effect=discard_opponent_energy_attack(special_only=True),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

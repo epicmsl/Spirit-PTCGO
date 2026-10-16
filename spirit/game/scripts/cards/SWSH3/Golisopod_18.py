@@ -1,7 +1,7 @@
 from spirit.game.card_effects.attacks_common import damage_per, count_in_play
 from spirit.game.card_effects.support_common import switch_self_attack
 from spirit.game.card_effects.pokemon import is_pokemon_gx
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, is_pokemon_v
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, is_pokemon_v
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 
 
@@ -18,6 +18,7 @@ card = PokemonCardDef(
     collector_number=18,
     set_code="SWSH3",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=130,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.STAGE1,

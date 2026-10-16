@@ -1,5 +1,5 @@
-from spirit.game.data_utils import StadiumCardDef, Ability, Activations
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import Ability, Activations, StadiumCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 async def jubilife_village(ctx):
@@ -27,4 +27,5 @@ card = StadiumCardDef(
     set_code="SWSH10",
     rarity=Rarities.RareSecret,
     ability=JUBILIFE_VILLAGE_ABILITY,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

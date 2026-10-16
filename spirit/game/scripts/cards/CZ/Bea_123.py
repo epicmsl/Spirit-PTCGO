@@ -1,4 +1,4 @@
-from spirit.game.data_utils import SupporterCardDef
+from spirit.game.data_utils import Foil, SupporterCardDef
 from spirit.game.attributes import AttrID, PokemonTypes, Rarities
 from spirit.game.card_effects.trainers import is_energy_card
 from spirit.game.card_effects.support_common import distribute_energy
@@ -33,5 +33,6 @@ card = SupporterCardDef(
     collector_number=123,
     set_code="CZ",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     effect=bea
 )

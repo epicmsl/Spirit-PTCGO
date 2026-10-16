@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef, subtypes_for
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, subtypes_for, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_pokemon_card
 from spirit.game.card_effects.support_common import search_to_hand
 
@@ -22,4 +22,5 @@ card = SupporterCardDef(
         _is_fusion_strike_pokemon, count=3, reveal=True,
         prompt="Choose up to 3 Fusion Strike Pokémon.",
     ),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

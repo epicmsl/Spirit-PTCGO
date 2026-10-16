@@ -11,6 +11,6 @@ card = ItemCardDef(
     subtypes=["Item"],
     collector_number=51,
     set_code="SWSH35",
-    rarity=Rarities.Uncommon,
+    rarity=Rarities.Common,
     effect=cure_conditions_effect("active")
 )

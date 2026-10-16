@@ -1,5 +1,5 @@
-from spirit.game.data_utils import EnergyCardDef
-from spirit.game.attributes import PokemonTypes, Rarities
+from spirit.game.data_utils import EnergyCardDef, Foil
+from spirit.game.attributes import PokemonTypes, Rarities, FoilMasks, FoilEffects
 
 card = EnergyCardDef(
     guid="c7ca2142-c68a-5bd4-bf0d-b8a478048d89",
@@ -12,5 +12,6 @@ card = EnergyCardDef(
     set_code="CZ",
     rarity=Rarities.RareUltra,
     energy_type=PokemonTypes.FIGHTING,
-    is_special=False
+    is_special=False,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

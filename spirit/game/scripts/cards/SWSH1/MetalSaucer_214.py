@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import AttrID, PokemonTypes, Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_metal_energy_card
 from spirit.game.session.effects import is_pokemon_card
 
@@ -48,4 +48,5 @@ card = ItemCardDef(
     rarity=Rarities.RareSecret,
     effect=metal_saucer,
     condition=_metal_saucer_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def g_max_volt_tackle(ctx):
@@ -23,6 +23,7 @@ card = PokemonCardDef(
     collector_number=44,
     set_code="SWSH4",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=310,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.VMAX,

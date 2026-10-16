@@ -1,0 +1,35 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 28
+
+2 Galarian Articuno EVS 63
+2 Galarian Zapdos EVS 82
+2 Galarian Moltres EVS 93
+2 Moltres SWSH 185
+2 Reshiram BW 26
+2 Zekrom BW 47
+2 Rocket's Zapdos CEL 7
+2 Lugia VIV 132
+2 Lugia V SWSH 301
+2 Ho-Oh CEL 1
+2 Kyogre SHF 21
+2 Suicune SHF 95
+2 Volcanion SHF 25
+2 Manaphy SWSH 275
+
+Trainer Cards - 18
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch BW 104
+2 Energy Retrieval SSH 160
+
+Energy Cards - 14
+
+14 Lightning Energy Energy 4
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

@@ -1,0 +1,33 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 18
+
+2 Mewtwo V-UNION SWSH 159
+2 Mewtwo V-UNION SWSH 160
+2 Mewtwo V-UNION SWSH 161
+2 Mewtwo V-UNION SWSH 162
+2 Mewtwo V SWSH 223
+2 Mewtwo V SWSH 229
+2 Mew ex CEL 13
+2 Gardevoir ex CEL 14
+2 Gardevoir V SWSH 105
+
+Trainer Cards - 24
+
+4 Professor's Research BRS 147
+4 Marnie CPA 56
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Switch SSH 183
+2 Energy Retrieval SSH 160
+2 Evolution Incense SSH 163
+2 Metal Saucer SSH 170
+2 Air Balloon SSH 156
+
+Energy Cards - 18
+
+18 Psychic Energy Energy 5
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

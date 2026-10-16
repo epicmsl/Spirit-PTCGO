@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.attacks_common import recoil_attack, discard_random_from_hand
 
@@ -24,6 +24,7 @@ card = PokemonCardDef(
     collector_number=113,
     set_code="SWSH12",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=160,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.STAGE2,

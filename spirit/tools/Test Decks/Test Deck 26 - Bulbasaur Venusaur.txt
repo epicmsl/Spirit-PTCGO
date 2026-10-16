@@ -1,0 +1,34 @@
+****** Pokémon Trading Card Game Deck List ******
+
+Pokémon - 24
+
+2 Bulbasaur SWSH 231
+2 Ivysaur PGO 2
+2 Venusaur V SWSH 100
+2 Venusaur VMAX SWSH 102
+2 Applin SHF 85
+2 Flapple SWSH 22
+2 Appletun SHF 87
+2 Cherrim SWSH 88
+2 Sunflora SWSH 269
+2 Sunkern SIT 5
+2 Yanma SHF 1
+2 Yanmega SHF 2
+
+Trainer Cards - 22
+
+4 Professor's Research BRS 147
+4 Marnie SWSH 120
+2 Boss's Orders BRS 132
+4 Quick Ball SSH 179
+2 Evolution Incense SSH 163
+2 Switch BW 104
+4 Switch SSH 183
+
+Energy Cards - 14
+
+14 Grass Energy Energy 1
+
+Total Cards - 60
+
+****** Deck list generated on Pokemon.com ******

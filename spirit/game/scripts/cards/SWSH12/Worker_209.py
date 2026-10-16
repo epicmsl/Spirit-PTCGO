@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import EffectContext
 
 async def worker(ctx: EffectContext):
@@ -16,5 +16,6 @@ card = SupporterCardDef(
     collector_number=209,
     set_code="SWSH12",
     rarity=Rarities.RareRainbow,
-    effect=worker
+    effect=worker,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

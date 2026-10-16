@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import gapejaw_bog_watch
-from spirit.game.data_utils import StadiumCardDef, Ability, Triggers
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import Ability, StadiumCardDef, Triggers, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = StadiumCardDef(
     guid="0d155b0c-dfa0-554f-91d2-f95bb886b97a",
@@ -20,4 +20,5 @@ card = StadiumCardDef(
             effect=gapejaw_bog_watch,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

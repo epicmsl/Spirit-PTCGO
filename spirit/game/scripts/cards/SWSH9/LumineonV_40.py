@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import aqua_return, luminous_sign
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="b4ce3a0e-da4d-5478-899a-ec0a364bc59a",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=40,
     set_code="SWSH9",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=170,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.BASIC,

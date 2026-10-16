@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import cross_fusion_strike, max_miracle
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="2b2efb79-6c02-5350-89ca-6777e295e7a9",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=114,
     set_code="SWSH8",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=310,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.VMAX,

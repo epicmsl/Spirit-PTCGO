@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import AttrID, Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import AttrID, Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_evolution_pokemon
 
 
@@ -29,4 +29,5 @@ card = SupporterCardDef(
     set_code="SWSH5",
     rarity=Rarities.RareUltra,
     effect=cheryl,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

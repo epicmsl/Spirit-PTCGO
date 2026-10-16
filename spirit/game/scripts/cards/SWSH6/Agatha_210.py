@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 async def agatha(ctx):
@@ -21,5 +21,6 @@ card = SupporterCardDef(
     collector_number=210,
     set_code="SWSH6",
     rarity=Rarities.RareRainbow,
-    effect=agatha
+    effect=agatha,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

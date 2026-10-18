@@ -1,4 +1,4 @@
-from spirit.game.data_utils import Ability, Attack, PokemonCardDef, unimplemented, Foil
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import delayed_knockout, read_the_wind
 

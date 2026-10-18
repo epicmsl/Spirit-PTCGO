@@ -1,4 +1,4 @@
-from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, unimplemented
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.card_effects.pokemon import star_chronos
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import damage_per, count_energy

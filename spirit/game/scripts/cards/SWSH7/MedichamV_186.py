@@ -1,4 +1,4 @@
-from spirit.game.data_utils import Ability, Attack, PokemonCardDef, unimplemented, Foil
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
 from spirit.game.card_effects.pokemon import yoga_loop, yoga_loop_condition
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 

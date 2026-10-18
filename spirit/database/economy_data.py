@@ -318,6 +318,14 @@ def _screen_names_for(session, account_ids):
     return {a.account_id: (a.screen_name or a.username) for a in rows}
 
 
+def screen_names_for(account_ids):
+    """Public wrapper: {account_id: screen_name} for the given ids (best effort)."""
+    if not account_ids:
+        return {}
+    with db_session() as session:
+        return _screen_names_for(session, set(account_ids))
+
+
 def _has_tradable(session, account_id, wanted):
     """Checks the account owns every {guid: count} in wanted as tradable copies."""
     for guid, count in wanted.items():

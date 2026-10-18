@@ -1,5 +1,7 @@
+import datetime
 import logging
 import time
+import uuid
 
 from spirit.network.protocol import WargFlags
 from spirit.network.message_names import InboundMsg, OutboundMsg
@@ -13,6 +15,48 @@ from spirit.game.attributes import AttrID
 EMPTY_GUID = "00000000-0000-0000-0000-000000000000"
 # Lot lifetime shown to the client; offers never expire server-side for now
 LOT_LIFETIME_MS = 30 * 24 * 3600 * 1000
+
+
+def _offer_to_lot_history(offer, names=None):
+    """Serializes an accepted offer to the client's LotHistory JSON shape.
+
+    The trade-history tab deserializes entries into core.dll's LotHistory and
+    dereferences Offer/CounterOffer unguarded (missing keys deserialize to null
+    and the panel NREs), so both arrays and both trader names must always be
+    present, even when empty. History items use the client's HistoryOfferItem
+    shape: itemID, ownerID, archetypeID, created (float seconds), isTradable."""
+    names = names or {}
+    created = offer.get("created_at")
+    created_dt = (datetime.datetime.fromisoformat(str(created))
+                  if created else datetime.datetime.now())
+    created_s = float(created_dt.timestamp())
+
+    def history_items(owner_id, counts):
+        items = []
+        for guid, count in (counts or {}).items():
+            for _ in range(int(count)):
+                items.append({
+                    "itemID": str(uuid.uuid4()),
+                    "ownerID": str(owner_id),
+                    "archetypeID": str(guid),
+                    "created": created_s,
+                    "isTradable": True,
+                })
+        return items
+
+    return {
+        "id": offer["offer_id"],
+        "offer": history_items(offer["sender_id"], offer.get("offering")),
+        "counterOffer": history_items(offer["accepted_by"], offer.get("requesting")),
+        "offeredBy": offer["sender_id"],
+        "acceptedBy": offer["accepted_by"],
+        "offeredByUsername": names.get(offer["sender_id"], ""),
+        "acceptedByUsername": names.get(offer["accepted_by"], ""),
+        "price": 0,
+        "acceptedDttm": int(created_s * 1000),
+        "isPrivate": bool(offer.get("recipient_id")),
+        "cardPrice": offer.get("requesting") or {},
+    }
 
 
 class TradeHandler(BaseHandler):
@@ -95,7 +139,7 @@ class TradeHandler(BaseHandler):
     @handle(InboundMsg.VIEW_TRADE_HISTORY_2_COUNT)
     async def handle_view_trade_history_count(self, message, request_id, flags):
         account_id = self._account_id()
-        count = len(await run_db(self._trade_history, account_id)) if account_id else 0
+        count = len((await run_db(self._trade_history, account_id))[0]) if account_id else 0
         await self.send({
             "messageName": OutboundMsg.TRADE_HISTORY_RETRIEVED_COUNT.value,
             "count": count
@@ -261,9 +305,15 @@ class TradeHandler(BaseHandler):
             await self._sync_collection(owner_client)
 
     def _trade_history(self, account_id):
-        """Completed trades this account was party to (sender or accepter)."""
+        """Completed trades this account was party to (sender or accepter),
+        plus both sides' screen names for the LotHistory serializer."""
         offers, _ = economy_data.list_trade_offers(status="accepted", limit=500)
-        return [o for o in offers if account_id in (o["sender_id"], o["accepted_by"])]
+        history = [o for o in offers if account_id in (o["sender_id"], o["accepted_by"])]
+        names = {}
+        if history:
+            ids = {o["sender_id"] for o in history} | {o["accepted_by"] for o in history}
+            names = economy_data.screen_names_for(ids)
+        return history, names
 
     @handle(InboundMsg.VIEW_TRADE_HISTORY_2)
     async def handle_view_trade_history(self, message, request_id, flags):
@@ -272,11 +322,12 @@ class TradeHandler(BaseHandler):
             return
         offset = int((message or {}).get("offset", 0))
         limit = int((message or {}).get("limit", 50))
-        history = (await run_db(self._trade_history, account_id))[offset:offset + limit]
+        history, names = await run_db(self._trade_history, account_id)
+        page = history[offset:offset + limit]
         await self.send({
             "messageName": OutboundMsg.TRADE_HISTORY_RETRIEVED.value,
             "offset": offset,
-            "history": [self._offer_to_lot(o) for o in history]
+            "history": [_offer_to_lot_history(o, names) for o in page]
         }, request_id)
 
     @staticmethod

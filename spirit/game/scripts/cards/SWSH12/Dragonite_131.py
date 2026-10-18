@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.support_common import search_attach_energy
 from spirit.game.card_effects.trainers import is_basic_energy_card
@@ -13,6 +13,7 @@ card = PokemonCardDef(
     collector_number=131,
     set_code="SWSH12",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=160,
     elements=[PokemonTypes.DRAGON],
     stage=PokemonStage.STAGE2,

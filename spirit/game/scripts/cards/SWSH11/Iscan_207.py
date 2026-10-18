@@ -1,6 +1,6 @@
 from spirit.game.card_effects.support_common import conditional_draw
-from spirit.game.data_utils import SupporterCardDef, def_for
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, def_for, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 def _active_is_hisuian(ctx):
@@ -19,5 +19,6 @@ card = SupporterCardDef(
     collector_number=207,
     set_code="SWSH11",
     rarity=Rarities.RareRainbow,
-    effect=conditional_draw(2, 2, _active_is_hisuian)
+    effect=conditional_draw(2, 2, _active_is_hisuian),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

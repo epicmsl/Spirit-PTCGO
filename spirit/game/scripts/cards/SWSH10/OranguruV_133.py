@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, TrainerType
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, TrainerType, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import damage_per, count_energy
 from spirit.game.card_effects.pokemon import in_active_spot
 from spirit.game.card_effects.support_common import search_to_hand
@@ -20,6 +20,7 @@ card = PokemonCardDef(
     collector_number=133,
     set_code="SWSH10",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=210,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.BASIC,

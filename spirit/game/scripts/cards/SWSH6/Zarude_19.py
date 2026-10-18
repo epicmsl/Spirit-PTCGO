@@ -1,5 +1,5 @@
 from spirit.game.card_effects.attacks_common import damage_per, count_energy
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
 from spirit.game.session.effects import is_pokemon_card
 
@@ -30,6 +30,7 @@ card = PokemonCardDef(
     collector_number=19,
     set_code="SWSH6",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=130,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.BASIC,

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonToolCardDef, def_for, Attack
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import Attack, PokemonToolCardDef, def_for, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.passives import Passive, carrier_pokemon, ability_locked
 
 
@@ -28,10 +28,11 @@ card = PokemonToolCardDef(
     key="SWSH7",
     name="com.direwolfdigital.cake.data.archetypes.trainer.FullFaceGuard.Name",
     display_name="Full Face Guard",
-    searchable_by=["Full Face Guard", "Item", "PokÃ©mon Tool"],
+    searchable_by=["Full Face Guard", "Item", "Pokémon Tool"],
     subtypes=["Item", "Pokémon Tool"],
     collector_number=231,
     set_code="SWSH7",
     rarity=Rarities.RareSecret,
-    passive=FullFaceGuardPassive()
+    passive=FullFaceGuardPassive(),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

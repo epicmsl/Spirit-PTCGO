@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_basic_pokemon
 from spirit.game.session.passives import effective_bench_capacity
 
@@ -42,4 +42,5 @@ card = ItemCardDef(
     rarity=Rarities.RareSecret,
     effect=echoing_horn,
     condition=echoing_horn_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

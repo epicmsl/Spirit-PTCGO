@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import lost_dive, ancient_star
 
 card = PokemonCardDef(
@@ -35,4 +35,5 @@ card = PokemonCardDef(
             effect=ancient_star,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

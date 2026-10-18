@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities, AttrID
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, AttrID, FoilMasks, FoilEffects
 
 
 def _opponent_id(board, player_id):
@@ -44,4 +44,5 @@ card = ItemCardDef(
     rarity=Rarities.RareSecret,
     effect=toy_catcher,
     condition=toy_catcher_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

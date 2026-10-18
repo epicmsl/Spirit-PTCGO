@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef, subtypes_for
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, subtypes_for, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_energy_card
 
 
@@ -41,4 +41,5 @@ card = SupporterCardDef(
     set_code="SWSH8",
     rarity=Rarities.RareUltra,
     effect=elesas_sparkle,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

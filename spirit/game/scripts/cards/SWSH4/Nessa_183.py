@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import PokemonTypes, Rarities, AttrID
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import PokemonTypes, Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import recover_from_discard, requires_discard, is_energy
 from spirit.game.session.effects import is_water_pokemon
 
@@ -28,4 +28,5 @@ card = SupporterCardDef(
         prompt="Choose up to 4 Water Pokémon and Water Energy cards",
     ),
     condition=requires_discard(_nessa_predicate),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

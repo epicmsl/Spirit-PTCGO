@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.attacks_common import damage_per, count_energy
 from spirit.game.card_effects.passives_common import is_in_active_spot, opposing_active
@@ -22,6 +22,7 @@ card = PokemonCardDef(
     collector_number=125,
     set_code="SWSH2",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=170,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.STAGE2,

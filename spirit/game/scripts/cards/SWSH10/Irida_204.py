@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import irida
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="a9526a63-bfc6-540b-b082-fddce9cbcb17",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=204,
     set_code="SWSH10",
     rarity=Rarities.RareRainbow,
-    effect=irida
+    effect=irida,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

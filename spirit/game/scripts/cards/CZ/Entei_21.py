@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.passives_common import retreat_free_when
 from spirit.game.card_effects.pokemon import energy_provides_type
@@ -22,6 +22,7 @@ card = PokemonCardDef(
     collector_number=21,
     set_code="CZ",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=120,
     elements=[PokemonTypes.FIRE],
     stage=PokemonStage.BASIC,

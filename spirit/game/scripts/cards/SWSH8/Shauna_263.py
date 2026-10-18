@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import shuffle_hand_into_deck_draw
 
 card = SupporterCardDef(
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=263,
     set_code="SWSH8",
     rarity=Rarities.RareUltra,
-    effect=shuffle_hand_into_deck_draw(5)
+    effect=shuffle_hand_into_deck_draw(5),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

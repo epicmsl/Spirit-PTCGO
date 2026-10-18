@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import fusion_strike_system, fusion_strike_system_condition
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="562455f4-e5ef-55c9-b5aa-8b7fd333eb16",
@@ -35,4 +35,5 @@ card = PokemonCardDef(
             locks_next_turn=True,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

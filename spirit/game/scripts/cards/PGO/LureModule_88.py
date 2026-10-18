@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_pokemon_card
 
 
@@ -27,5 +27,6 @@ card = ItemCardDef(
     collector_number=88,
     set_code="PGO",
     rarity=Rarities.RareSecret,
-    effect=lure_module_effect
+    effect=lure_module_effect,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

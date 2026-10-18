@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Triggers, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import attach_from_discard
 from spirit.game.card_effects.pokemon import is_energy_card
 from spirit.game.card_effects.attacks_common import lock_all_attacks
@@ -51,4 +51,5 @@ card = PokemonCardDef(
             effect=crystal_breath,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

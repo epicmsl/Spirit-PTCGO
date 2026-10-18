@@ -1,9 +1,14 @@
 import logging
 import os
 
-from sqlalchemy import func
+from sqlalchemy import func, or_
 
-from spirit.database import db_session, Account
+from spirit.database import (
+    db_session, Account, Wallet, Deck, Collection, ArchetypeFlag, Friendship,
+    CodeRedemptionEntry, TradeOffer, VersusProgress, DailyLoginProgress,
+    TournamentEntry, TournamentLeaderboardClaim,
+)
+from spirit.database.models.quests import QuestAccount, DailyQuest, QuestMatchCredit
 from spirit.database.accounts import hash_password
 
 
@@ -19,6 +24,43 @@ def set_admin(account_id: str, is_admin: bool) -> bool:
             return False
         acc.is_admin = bool(is_admin)
         return True
+
+
+def delete_account(account_id: str) -> dict | None:
+    """Hard-deletes an account and every per-player row that references it.
+
+    Returns a {table: deleted_rows} dict, or None when the account does not
+    exist. tournament_history is append-only history of ended tournaments and
+    is deliberately left untouched."""
+    with db_session() as session:
+        acc = session.query(Account).filter_by(account_id=account_id).first()
+        if not acc:
+            return None
+
+        counts = {}
+        counts["wallets"] = session.query(Wallet).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["decks"] = session.query(Deck).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["collection"] = session.query(Collection).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["archetype_flags"] = session.query(ArchetypeFlag).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["friends"] = session.query(Friendship).filter(
+            or_(Friendship.account_id == account_id, Friendship.friend_id == account_id)
+        ).delete(synchronize_session=False)
+        counts["quest_accounts"] = session.query(QuestAccount).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["daily_quests"] = session.query(DailyQuest).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["quest_match_credits"] = session.query(QuestMatchCredit).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["versus_progress"] = session.query(VersusProgress).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["daily_login_progress"] = session.query(DailyLoginProgress).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["trade_offers"] = session.query(TradeOffer).filter(
+            or_(TradeOffer.sender_id == account_id,
+                TradeOffer.recipient_id == account_id,
+                TradeOffer.accepted_by == account_id)
+        ).delete(synchronize_session=False)
+        counts["code_redemption_entries"] = session.query(CodeRedemptionEntry).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["tournament_entries"] = session.query(TournamentEntry).filter_by(account_id=account_id).delete(synchronize_session=False)
+        counts["tournament_leaderboard_claims"] = session.query(TournamentLeaderboardClaim).filter_by(account_id=account_id).delete(synchronize_session=False)
+
+        session.delete(acc)
+        return counts
 
 
 def verify_admin_login(username: str, password: str):

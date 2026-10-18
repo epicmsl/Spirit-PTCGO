@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import lance
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="99060318-68a6-5895-a0fe-f1ecd884cddc",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=192,
     set_code="SWSH12",
     rarity=Rarities.RareUltra,
-    effect=lance
+    effect=lance,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

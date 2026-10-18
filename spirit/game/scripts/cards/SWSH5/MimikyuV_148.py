@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Triggers, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import place_counters
 from spirit.game.card_effects.passives_common import apply_protection
 
@@ -44,4 +44,5 @@ card = PokemonCardDef(
             effect=place_counters(lambda ctx: 3 * ctx.prizes_taken(ctx.opponent_id), "opponent_active"),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

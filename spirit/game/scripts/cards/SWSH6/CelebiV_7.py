@@ -1,7 +1,7 @@
 from spirit.game.card_effects.support_common import distribute_energy, switch_self_attack
 from spirit.game.card_effects.trainers import is_grass_energy_card
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def leaflet_dance(ctx):
@@ -26,6 +26,7 @@ card = PokemonCardDef(
     collector_number=7,
     set_code="SWSH6",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=190,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.BASIC,

@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import zisu
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="8deabaa7-ea95-5460-a352-ee611b5a2a5e",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=207,
     set_code="SWSH10",
     rarity=Rarities.RareRainbow,
-    effect=zisu
+    effect=zisu,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

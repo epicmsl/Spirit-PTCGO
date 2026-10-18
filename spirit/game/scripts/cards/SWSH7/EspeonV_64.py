@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import snipe_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, is_pokemon_v
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, is_pokemon_v
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 zen_shot = snipe_attack(60, pool=lambda p: is_pokemon_v(p.archetype_id), count=1,
                          prompt="Choose 1 of your opponent's Pokémon V")
@@ -15,6 +15,7 @@ card = PokemonCardDef(
     collector_number=64,
     set_code="SWSH7",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=200,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.BASIC,

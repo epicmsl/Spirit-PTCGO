@@ -1,0 +1,26 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects, AttrID
+from spirit.game.card_effects.attacks_common import damage_per, count_in_play
+from spirit.game.card_effects.trainers import is_darkness_pokemon
+from spirit.game.session.passives import Passive
+from spirit.game.models.board import PokemonEntity
+
+class EternalZonePassive(Passive):
+    """While every one of the owner's in-play Pokemon is Darkness type, Bench
+    capacity is 8 (auto-enforced back down to 5 when it stops applying). The
+    accompanying "can't put non-Darkness Pokemon into play" restriction has no
+    engine hook for Pokemon-from-hand plays yet (play_locked only gates
+    Energy/Trainer offers) and is not enforced here."""
+
+    def bench_capacity(self, player_id, carrier):
+        if player_id != carrier.owning_player_id:
+            return None
+        return 8 if _all_darkness_in_play(carrier) else None
+
+def _all_darkness_in_play(carrier) -> bool:
+    player_entity = carrier.parent.parent if carrier.parent else None
+    if player_entity is None:
+        return False
+    mons = [c for area in player_entity.children if area.get_attribute(AttrID.NAME) in ('bench', 'activePokemonArea') for c in area.children if isinstance(c, PokemonEntity)]
+    return bool(mons) and all((is_darkness_pokemon(m) for m in mons))
+card = PokemonCardDef(guid='12da6ea9-77bc-5c33-a6d0-89ceb1e7b572', key='SWSH45', name='com.direwolfdigital.cake.data.archetypes.pokemon.EternatusVMAX.Name', display_name='Eternatus VMAX', searchable_by=['Eternatus VMAX', 'VMAX', 'EternatusVMAX'], subtypes=['VMAX'], collector_number=195, set_code='SWSH45', rarity=Rarities.RareSecret, foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET]), hp=340, elements=[PokemonTypes.DARKNESS], stage=PokemonStage.VMAX, retreat_cost=3, weakness_type=PokemonTypes.FIGHTING, evolves_from='com.direwolfdigital.cake.data.archetypes.pokemon.EternatusV.Name', family_id=890, abilities=[Ability(title='Eternal Zone', game_text="If all of your Pokémon in play are Darkness type, you can have up to 8 Pokémon on your Bench, and you can't put non-Darkness Pokémon into play. (If this Ability stops working, discard Pokémon from your Bench until you have 5.)", passive=EternalZonePassive()), Attack(title='Dread End', game_text='This attack does 30 damage for each of your Darkness Pokémon in play.', cost={PokemonTypes.DARKNESS: 1, PokemonTypes.COLORLESS: 1}, damage=30, damage_operator='x', effect=damage_per(count_in_play('mine', is_darkness_pokemon), 30))])

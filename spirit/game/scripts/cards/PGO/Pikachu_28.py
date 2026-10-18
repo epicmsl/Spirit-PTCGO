@@ -1,5 +1,5 @@
 from spirit.game.card_effects.attacks_common import recoil_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 
 card = PokemonCardDef(
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=28,
     set_code="PGO",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=70,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.BASIC,

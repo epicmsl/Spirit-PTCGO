@@ -1,6 +1,6 @@
 from spirit.game.card_effects.passives_common import takes_less_passive
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="7e0ab609-b887-5109-a340-f0963443ffe7",
@@ -30,4 +30,5 @@ card = PokemonCardDef(
             damage=140,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

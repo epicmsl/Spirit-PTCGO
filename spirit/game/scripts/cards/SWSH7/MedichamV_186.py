@@ -1,6 +1,6 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, unimplemented, Foil
 from spirit.game.card_effects.pokemon import yoga_loop, yoga_loop_condition
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def smash_uppercut(ctx):
@@ -39,4 +39,5 @@ card = PokemonCardDef(
             effect=smash_uppercut,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

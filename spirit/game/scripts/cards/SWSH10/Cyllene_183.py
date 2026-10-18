@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import cyllene, has_discard_card
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="0430a361-71fc-5cbc-ac62-f324e5b32c40",
@@ -13,5 +13,6 @@ card = SupporterCardDef(
     set_code="SWSH10",
     rarity=Rarities.RareUltra,
     effect=cyllene,
-    condition=has_discard_card
+    condition=has_discard_card,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

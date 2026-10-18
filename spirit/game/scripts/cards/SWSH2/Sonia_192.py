@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import sonia
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="8cc50741-9eab-5305-b408-c590ce218d0c",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=192,
     set_code="SWSH2",
     rarity=Rarities.RareUltra,
-    effect=sonia
+    effect=sonia,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

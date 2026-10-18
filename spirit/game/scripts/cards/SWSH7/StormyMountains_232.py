@@ -1,5 +1,5 @@
-from spirit.game.data_utils import StadiumCardDef, Ability, Activations
-from spirit.game.attributes import Rarities, PokemonTypes, AttrID
+from spirit.game.data_utils import Ability, Activations, StadiumCardDef, Foil
+from spirit.game.attributes import Rarities, PokemonTypes, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import search_to_bench, requires_bench_space
 from spirit.game.session.effects import is_basic_pokemon
 
@@ -33,4 +33,5 @@ card = StadiumCardDef(
     set_code="SWSH7",
     rarity=Rarities.RareSecret,
     ability=STORMY_MOUNTAINS_ABILITY,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

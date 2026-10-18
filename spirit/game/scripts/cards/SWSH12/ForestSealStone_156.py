@@ -1,5 +1,5 @@
 from spirit.game.card_effects.trainers import star_alchemy
-from spirit.game.data_utils import Ability, Activations, PokemonToolCardDef, is_pokemon_v
+from spirit.game.data_utils import Ability, Activations, Foil, PokemonToolCardDef, is_pokemon_v
 from spirit.game.attributes import Rarities
 
 card = PokemonToolCardDef(
@@ -19,9 +19,10 @@ card = PokemonToolCardDef(
     key="SWSH12",
     name="com.direwolfdigital.cake.data.archetypes.trainer.ForestSealStone.Name",
     display_name="Forest Seal Stone",
-    searchable_by=["Forest Seal Stone", "Item", "Pok\u00c3\u00a9mon Tool"],
+    searchable_by=["Forest Seal Stone", "Item", "Pok\u00e9mon Tool"],
     subtypes=["Item", "Pok\u00e9mon Tool"],
     collector_number=156,
     set_code="SWSH12",
-    rarity=Rarities.RareHolo
+    rarity=Rarities.RareHolo,
+    foil=Foil(),
 )

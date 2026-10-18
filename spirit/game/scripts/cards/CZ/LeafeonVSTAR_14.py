@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.passives_common import TakesLessPassive
 
 
@@ -44,6 +44,7 @@ card = PokemonCardDef(
     collector_number=14,
     set_code="CZ",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=260,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.VSTAR,
@@ -55,6 +56,7 @@ card = PokemonCardDef(
         Ability(
             title="Ivy Star",
             game_text="During your turn, you may switch 1 of your opponent's Benched Pok\u00e9mon with their Active Pok\u00e9mon. (You can't use more than 1 VSTAR Power in a game.)",
+            activation=Activations.ONCE_PER_TURN,
             vstar=True,
             condition=_ivy_star_condition,
             effect=ivy_star,

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 async def cynthias_ambition(ctx):
@@ -18,5 +18,6 @@ card = SupporterCardDef(
     collector_number=169,
     set_code="SWSH9",
     rarity=Rarities.RareUltra,
-    effect=cynthias_ambition
+    effect=cynthias_ambition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

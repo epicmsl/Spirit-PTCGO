@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 async def allister(ctx):
@@ -23,5 +23,6 @@ card = SupporterCardDef(
     collector_number=192,
     set_code="SWSH4",
     rarity=Rarities.RareRainbow,
-    effect=allister
+    effect=allister,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

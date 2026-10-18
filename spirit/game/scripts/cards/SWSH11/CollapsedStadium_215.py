@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import CollapsedStadiumPassive
-from spirit.game.data_utils import StadiumCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import StadiumCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = StadiumCardDef(
     passive=CollapsedStadiumPassive(),
@@ -12,5 +12,6 @@ card = StadiumCardDef(
     subtypes=["Stadium"],
     collector_number=215,
     set_code="SWSH11",
-    rarity=Rarities.RareSecret
+    rarity=Rarities.RareSecret,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

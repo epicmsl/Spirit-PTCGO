@@ -1,4 +1,4 @@
-from spirit.game.data_utils import SupporterCardDef, is_pokemon_v
+from spirit.game.data_utils import Foil, SupporterCardDef, is_pokemon_v
 from spirit.game.attributes import Rarities
 from spirit.game.models.board import PokemonEntity
 from spirit.game.session.effects import full_stack
@@ -33,6 +33,7 @@ card = SupporterCardDef(
     collector_number=169,
     set_code="SWSH11",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     condition=_volo_condition,
     effect=volo,
 )

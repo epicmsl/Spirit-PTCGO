@@ -3,8 +3,8 @@ from spirit.game.card_effects.pokemon import (
     summoning_star_condition,
     tempest_dive,
 )
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="03ef5e0c-e166-56af-9dd9-3fc40b576f39",
@@ -16,6 +16,7 @@ card = PokemonCardDef(
     collector_number=139,
     set_code="SWSH12",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=280,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.VSTAR,

@@ -1172,10 +1172,11 @@ class EffectContext:
         pid = player_id or self.player_id
         deck_cards = list(self.deck(pid))
         matches = [c for c in deck_cards if predicate is None or predicate(c)]
-        return await self.choose_cards(
+        picks = await self.choose_cards(
             matches, count, minimum=minimum, prompt=prompt, player_id=pid,
             display_cards=deck_cards, slot_prompt=slot_prompt,
         )
+        return cap_vunion_pieces(picks)
 
     async def search_deck_groups(
         self,
@@ -1211,7 +1212,21 @@ class EffectContext:
             total=total, any_of=any_of,
         )
         by_id = {c.entity_id: c for c in deck_cards}
-        return [[by_id[i] for i in ids if i in by_id] for ids in picked_ids]
+        groups_out = [[by_id[i] for i in ids if i in by_id] for ids in picked_ids]
+        # Rulebook Appendix D: a search may put at most one V-UNION piece into
+        # hand, across the whole pick (all groups), not per group.
+        piece_taken = False
+        capped: List[List[CardEntity]] = []
+        for group_cards in groups_out:
+            kept: List[CardEntity] = []
+            for card in group_cards:
+                if _is_vunion_piece(card):
+                    if piece_taken:
+                        continue
+                    piece_taken = True
+                kept.append(card)
+            capped.append(kept)
+        return capped
 
     async def discard_from_hand(
         self,
@@ -2265,6 +2280,49 @@ def is_evolution_pokemon(card: CardEntity) -> bool:
         and card.get_attribute(AttrID.STAGE) not in (
             PokemonStage.BASIC.value, PokemonStage.LEGEND.value, PokemonStage.VUNION.value)
     )
+
+
+def is_unevolved_pokemon(card: CardEntity) -> bool:
+    """A Pokemon in play that is "unevolved": a Basic or a V-UNION.
+
+    Rulebook Appendix D: "cards that affect 'unevolved Pokemon' will affect
+    Pokemon V-UNION." V-UNION has its own Stage (neither Basic nor Evolution),
+    so is_basic_pokemon/is_evolution_pokemon both exclude it; this predicate
+    treats the assembled V-UNION as unevolved. A loose piece is not a Pokemon
+    at all, and LEGEND halves are handled by their own rules, so both are False.
+    """
+    if not is_pokemon_card(card) or _is_vunion_piece(card):
+        return False
+    stage = card.get_attribute(AttrID.STAGE)
+    return stage in (PokemonStage.BASIC.value, PokemonStage.VUNION.value)
+
+
+def _is_vunion_piece(card) -> bool:
+    """True for a loose V-UNION piece (not the assembled combined card)."""
+    from spirit.game.content.vunion import piece_definition
+    return piece_definition(card) is not None
+
+
+def cap_vunion_pieces(picks: Sequence[CardEntity]) -> List[CardEntity]:
+    """Limits a deck-search pick to at most one V-UNION piece.
+
+    Rulebook Appendix D: "if a card tells you to 'search your deck for a
+    Pokemon and put it into your hand' and you have three pieces of Mewtwo
+    V-UNION in your deck, you may only put one of those three pieces into your
+    hand." Extra pieces beyond the first are dropped silently (the client's
+    browser lets a player select them, but the server owns the legality).
+    """
+    if not picks:
+        return list(picks)
+    kept: List[CardEntity] = []
+    piece_taken = False
+    for card in picks:
+        if _is_vunion_piece(card):
+            if piece_taken:
+                continue
+            piece_taken = True
+        kept.append(card)
+    return kept
 
 
 def is_water_pokemon(card: CardEntity) -> bool:

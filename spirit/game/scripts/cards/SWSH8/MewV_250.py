@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import energy_mix, psychic_leap
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="6c906654-a474-5962-8452-363ea6ad5cb7",
@@ -34,4 +34,5 @@ card = PokemonCardDef(
             effect=psychic_leap,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

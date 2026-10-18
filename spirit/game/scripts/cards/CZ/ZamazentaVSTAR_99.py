@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import lock_all_attacks
 from spirit.game.card_effects.passives_common import takes_less_passive
 
@@ -28,6 +28,7 @@ card = PokemonCardDef(
     collector_number=99,
     set_code="CZ",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=270,
     elements=[PokemonTypes.METAL],
     stage=PokemonStage.VSTAR,

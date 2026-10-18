@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.session.passives import TurnDamageModifier
 
@@ -24,6 +24,7 @@ card = PokemonCardDef(
     collector_number=34,
     set_code="SWSH7",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=140,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.STAGE2,

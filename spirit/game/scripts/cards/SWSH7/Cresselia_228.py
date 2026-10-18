@@ -1,7 +1,7 @@
 from spirit.game.card_effects.attacks_common import bonus_if, count_energy
 from spirit.game.card_effects.pokemon import energy_provides_type
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def crescent_glow(ctx):
@@ -58,4 +58,5 @@ card = PokemonCardDef(
             effect=bonus_if(lambda ctx: count_energy("mine")(ctx) >= 5, 90),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

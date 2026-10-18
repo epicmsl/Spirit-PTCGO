@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, has_rule_box
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, has_rule_box
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.passives_common import (
     ability_lock_passive, is_in_active_spot, opposing_pokemon,
 )
@@ -43,6 +43,7 @@ card = PokemonCardDef(
     collector_number=40,
     set_code="SWSH5",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=210,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.BASIC,

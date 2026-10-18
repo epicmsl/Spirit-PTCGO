@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import count_prizes_remaining
 
 _opponent_prizes_remaining = count_prizes_remaining("opponent")
@@ -21,5 +21,6 @@ card = SupporterCardDef(
     collector_number=261,
     set_code="SWSH8",
     rarity=Rarities.RareUltra,
-    effect=schoolboy
+    effect=schoolboy,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

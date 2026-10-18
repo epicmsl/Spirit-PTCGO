@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import rose, has_vmax_in_play
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="b5ea3fef-3024-5756-81b2-b4bf302fcae1",
@@ -13,5 +13,6 @@ card = SupporterCardDef(
     set_code="SWSH45",
     rarity=Rarities.RareUltra,
     effect=rose,
-    condition=has_vmax_in_play
+    condition=has_vmax_in_play,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.pokemon import is_lightning_energy
 from spirit.game.card_effects.support_common import distribute_energy
@@ -41,6 +41,7 @@ card = PokemonCardDef(
     collector_number=46,
     set_code="SWSH4",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=90,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.STAGE1,

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef, has_rule_box
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, has_rule_box, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import search_to_hand
 from spirit.game.session.effects import is_evolution_pokemon
 
@@ -24,4 +24,5 @@ card = SupporterCardDef(
         _arezu_predicate, count=3,
         prompt="Choose up to 3 Evolution Pokémon that don't have a Rule Box.",
     ),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

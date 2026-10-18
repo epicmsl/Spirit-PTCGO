@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import Foil, SupporterCardDef
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import professors_research
 
 card = SupporterCardDef(
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=23,
     set_code="CEL25",
     rarity=Rarities.RareHolo,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.FLATSILVER]),
     effect=professors_research
 )

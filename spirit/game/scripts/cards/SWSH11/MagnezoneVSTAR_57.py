@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import search_to_hand
 from spirit.game.card_effects.attacks_common import snipe_attack
 from spirit.game.session.effects import is_item_card
@@ -14,6 +14,7 @@ card = PokemonCardDef(
     collector_number=57,
     set_code="SWSH11",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=270,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.VSTAR,

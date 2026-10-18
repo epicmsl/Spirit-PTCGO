@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import adaman, has_two_metal_energy_in_hand
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="07e5bc6b-0da5-5fe8-92cc-e7be35c2e1ec",
@@ -13,5 +13,6 @@ card = SupporterCardDef(
     set_code="SWSH10",
     rarity=Rarities.RareUltra,
     effect=adaman,
-    condition=has_two_metal_energy_in_hand
+    condition=has_two_metal_energy_in_hand,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

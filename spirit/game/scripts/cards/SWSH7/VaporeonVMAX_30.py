@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import bonus_if, has_damage
 from spirit.game.card_effects.pokemon import is_energy_card, energy_provides_type
 from spirit.game.session.effects import is_water_pokemon
@@ -43,6 +43,7 @@ card = PokemonCardDef(
     collector_number=30,
     set_code="SWSH7",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=320,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.VMAX,

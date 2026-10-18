@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import bench_has_room, furisode_girl
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="70530d2e-89f4-5186-974b-ce59c8d60cb8",
@@ -13,5 +13,6 @@ card = SupporterCardDef(
     set_code="SWSH12",
     rarity=Rarities.RareUltra,
     effect=furisode_girl,
-    condition=bench_has_room
+    condition=bench_has_room,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

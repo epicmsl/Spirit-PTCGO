@@ -35,6 +35,8 @@ from spirit.game.data_utils import (
     unimplemented,
 )
 from spirit.game.models.board import CardEntity, EnergyEntity, PokemonEntity
+from spirit.game.content.vunion import VUnionPokemonDef, VUnionPiece, piece_definition
+from spirit.game.session.vunion import assemble_state
 from spirit.game.scripts.cards import loader as card_loader
 from spirit.game.session import passives
 from spirit.game.session.ai_player import AIPlayer
@@ -223,6 +225,11 @@ class Rig:
         psychic = self.energy_guids.get(PokemonTypes.PSYCHIC.value, water)
         p1_pile = [target_guid] * 4 + [filler_guid] * 12 + self._cost_energy_guids() \
             + [water] * 4 + [psychic] * 2
+        if isinstance(self.target_def, VUnionPokemonDef):
+            # The combined card never enters the deck; its four pieces do.
+            piece_guids = [p.guid for p in (self.target_def.pieces or [])]
+            p1_pile = piece_guids * 2 + [filler_guid] * 12 \
+                + self._cost_energy_guids() + [water] * 4 + [psychic] * 2
         if self.item_def is not None:
             p1_pile += [self.item_def.guid] * 2
         p2_pile = [filler_guid] * 12 + [water] * 8 + [psychic] * 4
@@ -297,7 +304,28 @@ class Rig:
 
         # Own side.
         target_entity: Optional[CardEntity] = None
-        if target_kind == "pokemon":
+        if target_kind == "pokemon" and isinstance(self.target_def, VUnionPokemonDef):
+            # V-UNION combined cards never sit in the deck as a single card;
+            # assemble the four pieces (from the discard, as in a real game)
+            # and promote the combined entity to the Active Spot.
+            pieces = []
+            for _ in range(len(VUnionPiece)):
+                piece = self.pull(P1, lambda c: piece_definition(c) is not None
+                                  and piece_definition(c).vunion_definition
+                                  is self.target_def)
+                if piece is None:
+                    break
+                self.to_area(piece, P1, "discard")
+                pieces.append(piece)
+            if len(pieces) == len(VUnionPiece):
+                vunion, _msgs = assemble_state(self.session, P1, pieces)
+                area = self.board.find_player_area(P1, "activePokemonArea")
+                self.board.move_card(vunion.entity_id, area.entity_id)
+                target_entity = vunion
+                p1_active = vunion
+            else:
+                p1_active = None
+        elif target_kind == "pokemon":
             target_entity = self.to_area(
                 self.pull_guid(P1, target_guid), P1, "activePokemonArea")
             p1_active = target_entity

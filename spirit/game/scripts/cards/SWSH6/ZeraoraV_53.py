@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, subtypes_for
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Attack, Foil, PokemonCardDef, subtypes_for
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 def _other_rapid_strike_attacked_last_turn(ctx):
@@ -37,6 +37,7 @@ card = PokemonCardDef(
     collector_number=53,
     set_code="SWSH6",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=210,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.BASIC,

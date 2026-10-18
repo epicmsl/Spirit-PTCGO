@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import AttrID, PokemonTypes, Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import is_energy_card
 from spirit.game.card_effects.support_common import look_at_top
 
@@ -36,4 +36,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareRainbow,
     condition=_kindler_condition,
     effect=kindler,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

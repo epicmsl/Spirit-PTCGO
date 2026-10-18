@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, def_for
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, def_for
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.passives_common import team_damage_boost_passive
 from spirit.game.session.effects import is_basic_pokemon, is_water_pokemon
@@ -20,6 +20,7 @@ card = PokemonCardDef(
     collector_number=24,
     set_code="PGO",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=120,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.BASIC,

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 async def opal_effect(ctx):
@@ -26,4 +26,5 @@ card = SupporterCardDef(
     set_code="SWSH4",
     rarity=Rarities.RareRainbow,
     effect=opal_effect,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,0 +1,4 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
+from spirit.game.card_effects.attacks_common import place_counters
+card = PokemonCardDef(guid='c6ff92b8-c504-556f-a999-a0182b1a7cfc', key='SWSH45', name='com.direwolfdigital.cake.data.archetypes.pokemon.Sinistea.Name', display_name='Sinistea', searchable_by=['Sinistea', 'Basic', 'Sinistea'], subtypes=['Basic'], collector_number=125, set_code='SWSH45', rarity=Rarities.Shining, foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]), hp=30, elements=[PokemonTypes.PSYCHIC], stage=PokemonStage.BASIC, retreat_cost=1, weakness_type=PokemonTypes.DARKNESS, resistance_type=PokemonTypes.FIGHTING, family_id=854, abilities=[Attack(title='Furtive Drop', game_text="Put 2 damage counters on your opponent's Active Pokémon.", cost={PokemonTypes.COLORLESS: 1}, effect=place_counters(2, 'opponent_active'))])

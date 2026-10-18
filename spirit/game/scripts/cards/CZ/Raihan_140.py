@@ -1,4 +1,4 @@
-from spirit.game.data_utils import SupporterCardDef
+from spirit.game.data_utils import Foil, SupporterCardDef
 from spirit.game.attributes import Rarities
 from spirit.game.card_effects.support_common import attach_from_discard
 from spirit.game.card_effects.trainers import is_basic_energy_card
@@ -27,6 +27,7 @@ card = SupporterCardDef(
     collector_number=140,
     set_code="CZ",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     condition=_raihan_condition,
     effect=attach_from_discard(
         predicate=is_basic_energy_card, count=1, target="choice",

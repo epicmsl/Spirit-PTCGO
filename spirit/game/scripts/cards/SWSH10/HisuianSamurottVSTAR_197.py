@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import bonus_if, has_damage
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def moon_cleave_star(ctx):
@@ -49,4 +49,5 @@ card = PokemonCardDef(
             effect=bonus_if(has_damage(), 110),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

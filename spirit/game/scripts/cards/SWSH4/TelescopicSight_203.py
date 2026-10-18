@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonToolCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import PokemonToolCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.passives import Passive, carrier_pokemon
 from spirit.game.card_effects.trainers import is_v_or_gx
 
@@ -23,10 +23,11 @@ card = PokemonToolCardDef(
     key="SWSH4",
     name="com.direwolfdigital.cake.data.archetypes.trainer.TelescopicSight.Name",
     display_name="Telescopic Sight",
-    searchable_by=["Telescopic Sight", "Pok\u00c3\u00a9mon Tool"],
+    searchable_by=["Telescopic Sight", "Pok\u00e9mon Tool"],
     subtypes=["Pok\u00e9mon Tool"],
     collector_number=203,
     set_code="SWSH4",
     rarity=Rarities.RareSecret,
     passive=TelescopicSightPassive(),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,0 +1,4 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions
+from spirit.game.card_effects.attacks_common import condition_attack
+card = PokemonCardDef(guid='75b360a0-9132-52d4-beb4-53da902377a0', key='BW1', name='com.direwolfdigital.cake.data.archetypes.pokemon.Klink.Name', display_name='Klink', searchable_by=['Klink', 'Basic', 'Klink'], subtypes=['Basic'], collector_number=74, set_code='BW1', rarity=Rarities.Common, hp=60, elements=[PokemonTypes.METAL], stage=PokemonStage.BASIC, retreat_cost=2, weakness_type=PokemonTypes.FIRE, resistance_type=PokemonTypes.PSYCHIC, resistance_amount=20, family_id=599, abilities=[Attack(title='Bind', game_text='Flip a coin. If heads, the Defending Pokémon is now Paralyzed.', cost={PokemonTypes.METAL: 1}, damage=10, effect=condition_attack(SpecialConditions.PARALYZED, flip=True))])

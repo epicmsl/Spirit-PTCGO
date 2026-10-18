@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import ChoiceBeltPassive
-from spirit.game.data_utils import PokemonToolCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import PokemonToolCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = PokemonToolCardDef(
     passive=ChoiceBeltPassive(),
@@ -8,9 +8,10 @@ card = PokemonToolCardDef(
     key="SWSH10",
     name="com.direwolfdigital.cake.data.archetypes.trainer.ChoiceBelt.Name",
     display_name="Choice Belt",
-    searchable_by=["Choice Belt", "Item", "Pok\u00c3\u00a9mon Tool"],
+    searchable_by=["Choice Belt", "Item", "Pok\u00e9mon Tool"],
     subtypes=["Item", "Pok\u00e9mon Tool"],
     collector_number=211,
     set_code="SWSH10",
-    rarity=Rarities.RareSecret
+    rarity=Rarities.RareSecret,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,7 +1,7 @@
 from spirit.game.data_utils import (
-    PokemonCardDef, Attack, Ability, Triggers, ability_id_for, ABILITIES_BY_ID,
+    PokemonCardDef, Attack, Ability, Triggers, ability_id_for, ABILITIES_BY_ID, Foil,
 )
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import energy_provides_type
 from spirit.game.session.passives import Passive
 
@@ -83,4 +83,5 @@ card = PokemonCardDef(
             effect=trapping_bite,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

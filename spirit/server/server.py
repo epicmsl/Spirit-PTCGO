@@ -8,13 +8,23 @@ from .client_handler import ClientHandler
 from spirit.database.db_manager import db_manager
 from spirit.server import metrics
 
+_SERVER_INSTANCE = None
+
+
+def get_server():
+    """Module-level accessor to the live server (used by the admin API)."""
+    return _SERVER_INSTANCE
+
+
 class PTCGOServer:
     def __init__(self, host='0.0.0.0', port=config.TCP_PORT, use_ssl=True):
+        global _SERVER_INSTANCE
         self.host = host
         self.port = port
         self.use_ssl = use_ssl
         self.server = None
         self.context = None
+        self._loop = None
         
         if self.use_ssl:
             cert_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'server.crt'))
@@ -38,12 +48,15 @@ class PTCGOServer:
         # check-then-await race where two logins for one account both pass.
         self.logins_in_flight = set()
 
+        _SERVER_INSTANCE = self
+
         metrics.register_gauge("connections", lambda: len(self.clients))
         metrics.register_gauge("authenticated", lambda: len(self.clients_by_account))
         metrics.register_gauge("outbound_pending_bytes", lambda: sum(
             client.outbound.pending_bytes for client in self.clients))
 
     async def start(self):
+        self._loop = asyncio.get_running_loop()
         self.server = await asyncio.start_server(
             self._handle_client,
             self.host,

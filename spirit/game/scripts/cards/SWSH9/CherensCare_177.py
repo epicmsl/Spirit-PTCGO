@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import AttrID, PokemonTypes, Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import full_stack
 from spirit.game.session.passives import effective_max_hp
 
@@ -50,4 +50,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareRainbow,
     effect=cherens_care,
     condition=cherens_care_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

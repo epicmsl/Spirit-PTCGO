@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 async def aroma_lady(ctx):
@@ -22,4 +22,5 @@ card = SupporterCardDef(
     set_code="SWSH7",
     rarity=Rarities.RareRainbow,
     effect=aroma_lady,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import bonus_if, count_energy
 from spirit.game.card_effects.passives_common import takes_less_passive
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 
 _extra_fighting_energy = lambda ctx: count_energy(
@@ -16,6 +16,7 @@ card = PokemonCardDef(
     collector_number=110,
     set_code="SWSH1",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=130,
     elements=[PokemonTypes.FIGHTING],
     stage=PokemonStage.STAGE1,

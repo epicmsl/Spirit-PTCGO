@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, TrainerType
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, TrainerType, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_trainer_card
 from spirit.game.session.passives import Passive
 from spirit.game.card_effects.passives_common import is_in_active_spot
@@ -55,4 +55,5 @@ card = PokemonCardDef(
             effect=max_poltergeist,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

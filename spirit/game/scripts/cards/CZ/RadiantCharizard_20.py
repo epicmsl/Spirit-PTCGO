@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import ExcitedHeartPassive
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="cf1e9fc0-419d-5b88-b0ea-e6ab9b14ba3a",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=20,
     set_code="CZ",
     rarity=Rarities.RareRadiant,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.RADIANTHOLO]),
     hp=160,
     elements=[PokemonTypes.FIRE],
     stage=PokemonStage.BASIC,

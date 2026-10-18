@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.passives_common import boost_own_next_turn
 from spirit.game.card_effects.attacks_common import recoil_attack
 
@@ -13,6 +13,7 @@ card = PokemonCardDef(
     collector_number=201,
     set_code="SWSH8",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=200,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.BASIC,

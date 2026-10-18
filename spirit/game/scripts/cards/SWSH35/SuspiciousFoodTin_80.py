@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities, PokemonTypes
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, PokemonTypes, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import requires_in_play
 from spirit.game.card_effects.pokemon import energy_provides_type
 from spirit.game.models.board import BoardState
@@ -44,4 +44,5 @@ card = ItemCardDef(
     rarity=Rarities.RareSecret,
     effect=suspicious_food_tin,
     condition=requires_in_play(_has_psychic_energy),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

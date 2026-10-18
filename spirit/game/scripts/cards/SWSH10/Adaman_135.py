@@ -1,5 +1,5 @@
 from spirit.game.card_effects.trainers import adaman, has_two_metal_energy_in_hand
-from spirit.game.data_utils import SupporterCardDef
+from spirit.game.data_utils import Foil, SupporterCardDef
 from spirit.game.attributes import Rarities
 
 card = SupporterCardDef(
@@ -12,6 +12,7 @@ card = SupporterCardDef(
     collector_number=135,
     set_code="SWSH10",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     effect=adaman,
     condition=has_two_metal_energy_in_hand
 )

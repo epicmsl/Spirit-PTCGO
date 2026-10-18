@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import bede, bede_playable
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="9a29ed1f-2288-5cbb-ae10-dde38f518684",
@@ -13,5 +13,6 @@ card = SupporterCardDef(
     set_code="SWSH1",
     rarity=Rarities.RareUltra,
     effect=bede,
-    condition=bede_playable
+    condition=bede_playable,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

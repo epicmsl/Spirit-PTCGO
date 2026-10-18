@@ -1,0 +1,4 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
+from spirit.game.card_effects.attacks_common import flip_bonus
+card = PokemonCardDef(guid='f2cd50fe-e1a5-5f56-a5b5-2134760804fe', key='SWSH45', name='com.direwolfdigital.cake.data.archetypes.pokemon.Dreepy.Name', display_name='Dreepy', searchable_by=['Dreepy', 'Basic', 'Dreepy'], subtypes=['Basic'], collector_number=133, set_code='SWSH45', rarity=Rarities.Shining, foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]), hp=60, elements=[PokemonTypes.PSYCHIC], stage=PokemonStage.BASIC, retreat_cost=1, weakness_type=PokemonTypes.DARKNESS, resistance_type=PokemonTypes.FIGHTING, family_id=885, abilities=[Attack(title='Quick Attack', game_text='Flip a coin. If heads, this attack does 10 more damage.', cost={PokemonTypes.PSYCHIC: 1}, damage=10, damage_operator='+', effect=flip_bonus(10))])

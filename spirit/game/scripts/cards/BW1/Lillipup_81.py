@@ -1,0 +1,4 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.card_effects.support_common import draw_attack
+card = PokemonCardDef(guid='827756ac-1d69-5ca0-9421-943129af76d4', key='BW1', name='com.direwolfdigital.cake.data.archetypes.pokemon.Lillipup.Name', display_name='Lillipup', searchable_by=['Lillipup', 'Basic', 'Lillipup'], subtypes=['Basic'], collector_number=81, set_code='BW1', rarity=Rarities.Common, hp=60, elements=[PokemonTypes.COLORLESS], stage=PokemonStage.BASIC, retreat_cost=1, weakness_type=PokemonTypes.FIGHTING, family_id=506, abilities=[Attack(title='Collect', game_text='Draw a card.', cost={PokemonTypes.COLORLESS: 1}, effect=draw_attack(1)), Attack(title='Tackle', cost={PokemonTypes.COLORLESS: 2}, damage=20)])

@@ -1,6 +1,6 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, unimplemented, Foil
 from spirit.game.card_effects.pokemon import star_chronos
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import damage_per, count_energy
 
 metal_blast = damage_per(count_energy("self", energy_type=PokemonTypes.METAL), 40, base=40)
@@ -41,4 +41,5 @@ card = PokemonCardDef(
             effect=star_chronos,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

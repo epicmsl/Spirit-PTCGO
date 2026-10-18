@@ -2,8 +2,8 @@ from spirit.game.card_effects.passives_common import trainer_effect_shield_passi
 from spirit.game.card_effects.trainers import (
     leafy_camo_poncho_condition, leafy_camo_poncho_protects,
 )
-from spirit.game.data_utils import PokemonToolCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import PokemonToolCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = PokemonToolCardDef(
     passive=trainer_effect_shield_passive(
@@ -15,9 +15,10 @@ card = PokemonToolCardDef(
     key="SWSH12",
     name="com.direwolfdigital.cake.data.archetypes.trainer.LeafyCamoPoncho.Name",
     display_name="Leafy Camo Poncho",
-    searchable_by=["Leafy Camo Poncho", "Item", "PokÃ©mon Tool"],
+    searchable_by=["Leafy Camo Poncho", "Item", "Pokémon Tool"],
     subtypes=["Item", "Pokémon Tool"],
     collector_number=214,
     set_code="SWSH12",
-    rarity=Rarities.RareSecret
+    rarity=Rarities.RareSecret,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

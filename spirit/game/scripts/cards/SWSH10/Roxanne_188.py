@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import opponent_prizes_low, roxanne
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="5e25ee04-7ce6-567a-916a-b7a1744bdf90",
@@ -13,5 +13,6 @@ card = SupporterCardDef(
     set_code="SWSH10",
     rarity=Rarities.RareUltra,
     effect=roxanne,
-    condition=opponent_prizes_low
+    condition=opponent_prizes_low,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

@@ -370,6 +370,10 @@
       <div><label>Delay between rounds (s)</label><input id="tRoundDelay" type="number" min="3" style="width:90px" onchange="tField('delayBetweenRounds', parseInt(this.value) || 10)"></div>
     </div>
     <div class="row">
+      <div><label>Fill with bots after delay</label><input id="tBotFill" type="checkbox" style="width:auto;margin-left:6px" onchange="tField('botFill', !!this.checked)"></div>
+      <div><label>Bot fill delay (s)</label><input id="tBotFillDelay" type="number" min="0" max="3600" style="width:90px" onchange="tField('botFillDelay', isNaN(parseInt(this.value, 10)) ? 30 : Math.min(3600, Math.max(0, parseInt(this.value, 10))))"></div>
+    </div>
+    <div class="row">
       <div><label>Preview from</label><input id="tPreview" type="datetime-local" onchange="tField('previewTime', localToMs(this.value))"></div>
       <div><label>Entries open</label><input id="tStart" type="datetime-local" onchange="tField('startTime', localToMs(this.value))"></div>
       <div><label>Entries close</label><input id="tEntryClose" type="datetime-local" onchange="tField('entryClosingTime', localToMs(this.value))"></div>
@@ -796,16 +800,19 @@ async function resolveCardMeta(guids) {
 }
 
 /* ---------------- Accounts ---------------- */
+let ACCOUNTS = [];
 async function loadAccounts() {
   try {
     const d = await api('accounts');
-    $('#accountsTable tbody').innerHTML = d.accounts.map(a => `
+    ACCOUNTS = d.accounts || [];
+    $('#accountsTable tbody').innerHTML = ACCOUNTS.map(a => `
       <tr><td>${esc(a.username)}</td><td>${esc(a.screen_name)}</td>
       <td class="muted">${esc(a.account_id)}</td>
       <td>${a.is_admin ? '<span class="pill on">admin</span>' : '<span class="muted">—</span>'}</td>
       <td><button class="mini" onclick="grantAllCards('${esc(a.account_id)}', this)">Give 4× all cards</button>
           <button class="mini" onclick="grantAllProducts('${esc(a.account_id)}', this)">Give 1× all products</button>
-          <button class="mini" onclick="setAdmin('${esc(a.account_id)}', ${!a.is_admin})">${a.is_admin ? 'Revoke admin' : 'Make admin'}</button></td></tr>`).join('')
+          <button class="mini" onclick="setAdmin('${esc(a.account_id)}', ${!a.is_admin})">${a.is_admin ? 'Revoke admin' : 'Make admin'}</button>
+          <button class="mini" style="color:var(--bad)" onclick="deleteAccount('${esc(a.account_id)}', this)">Delete</button></td></tr>`).join('')
       || '<tr><td colspan="5" class="muted">No accounts.</td></tr>';
   } catch(e) { toast('Accounts: ' + e.message, true); }
 }
@@ -813,6 +820,18 @@ async function setAdmin(account_id, is_admin) {
   if (!confirm((is_admin ? 'Grant' : 'Revoke') + ' dashboard admin rights for this account?')) return;
   try { await api('accounts/set-admin', {account_id, is_admin}); toast('Updated'); loadAccounts(); }
   catch(e) { toast(e.message, true); }
+}
+async function deleteAccount(account_id, btn) {
+  const a = ACCOUNTS.find(x => x.account_id === account_id);
+  const name = a ? a.username : account_id;
+  if (!confirm(`Permanently delete account "${name}" and ALL of its data (cards, decks, wallet, quests, trades)? This CANNOT be undone.`)) return;
+  if (btn) { btn.disabled = true; btn.textContent = 'Deleting…'; }
+  try {
+    const d = await api('accounts/delete', {account_id});
+    toast(`Deleted "${name}"` + (d.kicked ? ' (was online — client disconnected)' : ''));
+    loadAccounts(); loadOverview();
+  } catch(e) { toast(e.message, true); }
+  finally { if (btn) { btn.disabled = false; btn.textContent = 'Delete'; } }
 }
 async function grantAllCards(account_id, btn) {
   if (!confirm('Give 4 tradable copies of every card to this account?')) return;
@@ -1914,6 +1933,7 @@ function defaultTournament(n) {
     maxRuns: 0,
     maxSize: 8, format: "Unlimited", matchStructure: "SingleElimination",
     roundLength: 30, delayBetweenRounds: 10,
+    botFill: false, botFillDelay: 30,
     run: {entryFee: [], allowDeckSwitching: true, maxWins: 3, maxLosses: 3, maxGames: 0, prizeTable: []},
     leaderboard: {runs: 0, winValue: 3, lossValue: 1, prizeTable: []}
   }};
@@ -2058,6 +2078,8 @@ function renderTournaments() {
   $('#tFormat').value = d.format || 'Unlimited';
   $('#tRoundLength').value = d.roundLength || 30;
   $('#tRoundDelay').value = d.delayBetweenRounds || 10;
+  $('#tBotFill').checked = !!d.botFill;
+  $('#tBotFillDelay').value = d.botFillDelay ?? 30;
   $('#tPreview').value = msToLocal(d.previewTime);
   $('#tStart').value = msToLocal(d.startTime);
   $('#tEntryClose').value = msToLocal(d.entryClosingTime);

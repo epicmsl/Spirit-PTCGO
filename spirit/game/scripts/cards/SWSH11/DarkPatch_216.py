@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities, PokemonTypes, AttrID
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, PokemonTypes, AttrID, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import attach_from_discard
 from spirit.game.card_effects.trainers import is_basic_energy_card
 from spirit.game.card_effects.passives_common import is_in_active_spot
@@ -41,5 +41,6 @@ card = ItemCardDef(
         target=_is_benched_darkness_pokemon,
         prompt="Choose a basic Darkness Energy card to attach to a Benched Darkness Pokémon",
     ),
-    condition=_dark_patch_condition
+    condition=_dark_patch_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

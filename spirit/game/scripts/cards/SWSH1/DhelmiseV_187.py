@@ -1,7 +1,7 @@
 import json
 
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, def_for
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, def_for, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, FoilMasks, FoilEffects
 
 
 def _is_grass_archetype(archetype_id):
@@ -59,4 +59,5 @@ card = PokemonCardDef(
             locks_next_turn=True,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import flip_damage
 
 card = PokemonCardDef(
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=5,
     set_code="CEL25",
     rarity=Rarities.RareHolo,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.FLATSILVER]),
     hp=60,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.BASIC,

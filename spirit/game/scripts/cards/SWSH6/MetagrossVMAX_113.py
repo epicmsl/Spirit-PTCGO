@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import search_to_hand
 from spirit.game.card_effects.passives_common import boost_own_next_turn
 
@@ -13,6 +13,7 @@ card = PokemonCardDef(
     collector_number=113,
     set_code="SWSH6",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=330,
     elements=[PokemonTypes.METAL],
     stage=PokemonStage.VMAX,

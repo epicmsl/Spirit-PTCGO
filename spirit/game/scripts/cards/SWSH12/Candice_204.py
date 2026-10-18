@@ -1,7 +1,7 @@
 from spirit.game.card_effects.support_common import look_at_top
 from spirit.game.card_effects.trainers import candice_predicate
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="2755e261-9666-5b49-8870-adfb1c152516",
@@ -16,5 +16,6 @@ card = SupporterCardDef(
     effect=look_at_top(
         7, take=7, predicate=candice_predicate, rest="shuffle", minimum=0,
         prompt="Choose any number of Water Pokémon and Water Energy cards to put into your hand",
-    )
+    ),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

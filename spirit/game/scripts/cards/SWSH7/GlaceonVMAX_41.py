@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, def_for
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, def_for
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import snipe_attack
 from spirit.game.card_effects.passives_common import prevent_damage_when
 from spirit.game.card_effects.pokemon import is_pokemon_vmax
@@ -27,6 +27,7 @@ card = PokemonCardDef(
     collector_number=41,
     set_code="SWSH7",
     rarity=Rarities.RareHoloVMAX,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=310,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.VMAX,

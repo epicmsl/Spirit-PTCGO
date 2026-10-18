@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import is_energy_card
 
 
@@ -51,4 +51,5 @@ card = PokemonCardDef(
             damage=120,
         ),
     ],
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.FLATSILVER])
 )

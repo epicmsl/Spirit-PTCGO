@@ -1,5 +1,5 @@
 from spirit.game.card_effects.attacks_common import bonus_if
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 
 _played_piers_this_turn = lambda ctx: ctx.played_trainer_this_turn("Piers") > 0
@@ -23,6 +23,7 @@ card = PokemonCardDef(
     collector_number=42,
     set_code="SWSH35",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=120,
     elements=[PokemonTypes.DARKNESS],
     stage=PokemonStage.STAGE1,

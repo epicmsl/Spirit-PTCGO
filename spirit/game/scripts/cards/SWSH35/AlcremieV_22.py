@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_basic_pokemon
 from spirit.game.card_effects.attacks_common import lock_defender_attacks
 
@@ -28,6 +28,7 @@ card = PokemonCardDef(
     collector_number=22,
     set_code="SWSH35",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=170,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.BASIC,

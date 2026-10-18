@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.passives import TurnDamageModifier
 
 
@@ -22,5 +22,6 @@ card = SupporterCardDef(
     collector_number=182,
     set_code="SWSH4",
     rarity=Rarities.RareUltra,
-    effect=leon_effect
+    effect=leon_effect,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

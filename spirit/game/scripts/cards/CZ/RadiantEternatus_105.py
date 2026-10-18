@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import search_to_bench
 from spirit.game.card_effects.trainers import is_pokemon_vmax
 from spirit.game.session.effects import is_pokemon_card
@@ -30,6 +30,7 @@ card = PokemonCardDef(
     collector_number=105,
     set_code="CZ",
     rarity=Rarities.RareRadiant,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.RADIANTHOLO]),
     hp=170,
     elements=[PokemonTypes.DRAGON],
     stage=PokemonStage.BASIC,

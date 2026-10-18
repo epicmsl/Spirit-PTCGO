@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, SpecialConditions
 from spirit.game.card_effects.support_common import heal_attack
 from spirit.game.card_effects.pokemon import in_active_spot
@@ -25,6 +25,7 @@ card = PokemonCardDef(
     collector_number=20,
     set_code="SWSH35",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=150,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.STAGE2,

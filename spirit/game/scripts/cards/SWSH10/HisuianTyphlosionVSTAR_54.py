@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import damage_counters_on
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def hollow_flame(ctx):
@@ -28,6 +28,7 @@ card = PokemonCardDef(
     collector_number=54,
     set_code="SWSH10",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=260,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.VSTAR,

@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import condition_attack
-from spirit.game.data_utils import PokemonCardDef, Attack
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, SpecialConditions
+from spirit.game.data_utils import Attack, PokemonCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, SpecialConditions, FoilMasks, FoilEffects
 
 
 async def damaging_spark(ctx):
@@ -43,4 +43,5 @@ card = PokemonCardDef(
             effect=damaging_spark,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

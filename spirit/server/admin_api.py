@@ -1,3 +1,4 @@
+import asyncio
 import base64
 import binascii
 import json
@@ -24,7 +25,7 @@ from spirit.database.admin_data import verify_admin_login
 from spirit.shop import shop_manager
 from spirit.database.player_data import grant_all_cards
 from spirit.database.player_data import grant_all_products
-from spirit.database.admin_data import set_admin
+from spirit.database.admin_data import set_admin, delete_account
 from spirit.game.scripts.cards import loader as card_loader
 from spirit.database import tournament_data
 from spirit.game.tournaments.manager import TournamentManager, validate_definition
@@ -180,6 +181,24 @@ def _reload_shop():
         logging.error(f"[Admin] Shop reload failed: {e}")
 
 
+def _kick_live_client(account_id):
+    """Disconnects the account's live game client (if any) so an in-memory
+    Player cache can't resurrect rows after deletion. Fire-and-forget on the
+    server's event loop; returns True when a client was found and scheduled."""
+    from spirit.server.server import get_server
+    try:
+        server = get_server()
+        client = server.client_for_account(account_id) if server else None
+        loop = getattr(server, "_loop", None) if server else None
+        if client is None or loop is None or loop.is_closed():
+            return False
+        asyncio.run_coroutine_threadsafe(client.disconnect(), loop)
+        return True
+    except Exception as e:
+        logging.warning(f"[Admin] Kick of {account_id} failed: {e}")
+        return False
+
+
 def _login(data):
     admin = verify_admin_login(data.get("username", ""), data.get("password", ""))
     if not admin:
@@ -233,13 +252,13 @@ def route_admin(method, path, body, headers=None):
         return _err(401, "authentication required")
 
     try:
-        return _dispatch(method, endpoint, data)
+        return _dispatch(method, endpoint, data, session)
     except Exception as e:
         logging.error(f"[Admin] API error on {method} {path}: {e}", exc_info=True)
         return _err(500, str(e))
 
 
-def _dispatch(method, endpoint, data):
+def _dispatch(method, endpoint, data, admin_session=None):
     # ------------------------------------------------ metrics (ops observability)
     if method == 'GET' and endpoint == 'metrics':
         return _json(200, metrics.snapshot())
@@ -291,6 +310,18 @@ def _dispatch(method, endpoint, data):
         if not set_admin(account_id, bool(data.get("is_admin"))):
             return _err(404, "account not found")
         return _ok({"account_id": account_id, "is_admin": bool(data.get("is_admin"))})
+
+    if method == 'POST' and endpoint == 'accounts/delete':
+        account_id = data.get("account_id")
+        if not account_id:
+            return _err(400, "account_id required")
+        if admin_session and admin_session.get("account_id") == account_id:
+            return _err(403, "you cannot delete your own admin account")
+        kicked = _kick_live_client(account_id)
+        deleted = delete_account(account_id)
+        if deleted is None:
+            return _err(404, "account not found")
+        return _ok({"account_id": account_id, "deleted": deleted, "kicked": kicked})
 
     if method == 'GET' and endpoint == 'trades':
         return _ok({"trades": _trades_summary()})

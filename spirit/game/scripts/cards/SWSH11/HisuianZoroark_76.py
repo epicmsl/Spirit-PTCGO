@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, unimplemented
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.support_common import recover_from_discard
 from spirit.game.card_effects.pokemon import delayed_knockout
@@ -13,6 +13,7 @@ card = PokemonCardDef(
     collector_number=76,
     set_code="SWSH11",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=120,
     elements=[PokemonTypes.PSYCHIC],
     stage=PokemonStage.STAGE1,

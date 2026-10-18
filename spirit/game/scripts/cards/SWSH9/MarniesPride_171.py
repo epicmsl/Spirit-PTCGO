@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import is_basic_energy_card
 
 
@@ -42,4 +42,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareUltra,
     effect=marnies_pride,
     condition=_marnies_pride_condition,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

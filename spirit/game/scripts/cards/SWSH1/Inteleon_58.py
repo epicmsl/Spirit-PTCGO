@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import snipe_attack
 from spirit.game.card_effects.pokemon import shady_dealings
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Triggers
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef, Triggers
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 
 card = PokemonCardDef(
@@ -13,6 +13,7 @@ card = PokemonCardDef(
     collector_number=58,
     set_code="SWSH1",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=160,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.STAGE2,

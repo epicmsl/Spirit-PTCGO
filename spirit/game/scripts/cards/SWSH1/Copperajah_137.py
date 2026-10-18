@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.attacks_common import bonus_if, damage_counters_on
 from spirit.game.card_effects.support_common import heal_attack
@@ -13,6 +13,7 @@ card = PokemonCardDef(
     collector_number=137,
     set_code="SWSH1",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=190,
     elements=[PokemonTypes.METAL],
     stage=PokemonStage.STAGE1,

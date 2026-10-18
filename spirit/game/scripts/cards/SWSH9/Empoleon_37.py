@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.attacks_common import snipe_attack
 from spirit.game.session.constants import BENCH_CAPACITY
@@ -32,6 +32,7 @@ card = PokemonCardDef(
     collector_number=37,
     set_code="SWSH9",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=160,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.STAGE2,

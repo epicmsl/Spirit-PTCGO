@@ -1,0 +1,4 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
+from spirit.game.card_effects.attacks_common import self_energy_discard_attack
+card = PokemonCardDef(guid='86c27e90-05a0-563f-b765-78c82b50e45e', key='SWSH45', name='com.direwolfdigital.cake.data.archetypes.pokemon.Scorbunny.Name', display_name='Scorbunny', searchable_by=['Scorbunny', 'Basic', 'Scorbunny'], subtypes=['Basic'], collector_number=88, set_code='SWSH45', rarity=Rarities.Shining, foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]), hp=60, elements=[PokemonTypes.FIRE], stage=PokemonStage.BASIC, retreat_cost=1, weakness_type=PokemonTypes.WATER, family_id=813, abilities=[Attack(title='Ember', game_text='Discard an Energy from this Pokémon.', cost={PokemonTypes.FIRE: 1}, damage=30, effect=self_energy_discard_attack(count=1))])

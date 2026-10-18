@@ -24,7 +24,11 @@ def _combined_of(piece) -> VUnionPokemonDef:
 
 
 def _summon_key(player_id, definition):
-    return player_id, definition.guid.lower()
+    # Keyed by name, not the combined GUID: the rulebook (Appendix D) limits a
+    # V-UNION to once per game *per Pokemon name*, and different printings of
+    # the same name (e.g. the two Morpeko V-UNION printings) share a name but
+    # not a GUID -- keying on the GUID would allow assembling each printing once.
+    return player_id, definition.display_name.lower()
 
 
 def summon_pieces(board, turn_state, player_id, piece) -> Optional[List[VUnionPieceEntity]]:

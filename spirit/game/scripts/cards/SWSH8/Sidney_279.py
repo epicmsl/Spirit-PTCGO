@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities, AttrID, TrainerType
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, AttrID, TrainerType, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_special_energy
 
 
@@ -31,5 +31,6 @@ card = SupporterCardDef(
     collector_number=279,
     set_code="SWSH8",
     rarity=Rarities.RareRainbow,
-    effect=sidney
+    effect=sidney,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

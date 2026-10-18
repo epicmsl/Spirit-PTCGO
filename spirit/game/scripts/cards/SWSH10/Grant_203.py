@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import AttrID, PokemonTypes, Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import AttrID, PokemonTypes, Rarities, FoilMasks, FoilEffects
 from spirit.game.session.passives import TurnDamageModifier
 
 
@@ -24,5 +24,6 @@ card = SupporterCardDef(
     collector_number=203,
     set_code="SWSH10",
     rarity=Rarities.RareRainbow,
-    effect=grant
+    effect=grant,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

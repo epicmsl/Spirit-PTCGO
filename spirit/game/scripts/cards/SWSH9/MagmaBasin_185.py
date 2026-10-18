@@ -1,5 +1,5 @@
-from spirit.game.data_utils import StadiumCardDef, Ability, Activations
-from spirit.game.attributes import Rarities, AttrID, PokemonTypes
+from spirit.game.data_utils import Ability, Activations, StadiumCardDef, Foil
+from spirit.game.attributes import Rarities, AttrID, PokemonTypes, FoilMasks, FoilEffects
 from spirit.game.card_effects.pokemon import energy_provides_type
 
 
@@ -60,4 +60,5 @@ card = StadiumCardDef(
     set_code="SWSH9",
     rarity=Rarities.RareSecret,
     ability=MAGMA_BASIN_ABILITY,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

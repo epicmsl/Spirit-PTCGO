@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import gardenias_vigor
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="23be791a-7adb-522c-b5ea-693a2e15e613",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=202,
     set_code="SWSH10",
     rarity=Rarities.RareRainbow,
-    effect=gardenias_vigor
+    effect=gardenias_vigor,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

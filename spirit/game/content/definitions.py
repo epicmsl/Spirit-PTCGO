@@ -51,11 +51,27 @@ _RULE_BOX_SUBTYPES = set(_MULTI_PRIZE_SUBTYPES) | {"Radiant"}
 
 
 def is_pokemon_v(archetype_id: Optional[str]) -> bool:
-    """Pokemon V of any kind (V, VSTAR, VMAX, V-UNION)."""
+    """Pokemon V of any kind (V, VSTAR, VMAX, V-UNION) in play.
+
+    A V-UNION *piece* outside play is not itself a Pokemon V: per rulebook
+    Appendix D, only the assembled combined card is "Pokemon V"/a Rule Box
+    Pokemon while in play, and individual pieces are not when not in play.
+    """
+    definition = def_for(archetype_id)
+    if getattr(definition, "piece", None) is not None:
+        return False
     return any(s in ("V", "VSTAR", "VMAX", "V-UNION") for s in subtypes_for(archetype_id))
 
 
 def has_rule_box(archetype_id: Optional[str]) -> bool:
+    """Whether an in-play Pokemon has a Rule Box.
+
+    V-UNION pieces outside play are not Rule Box Pokemon (rulebook Appendix D);
+    only the assembled combined card is while in play.
+    """
+    definition = def_for(archetype_id)
+    if getattr(definition, "piece", None) is not None:
+        return False
     return any(s in _RULE_BOX_SUBTYPES for s in subtypes_for(archetype_id))
 
 

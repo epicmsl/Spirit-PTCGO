@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import fan_of_waves, opponent_has_special_energy
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = ItemCardDef(
     guid="4a853e86-ca91-5884-952e-1882bd52966b",
@@ -13,5 +13,6 @@ card = ItemCardDef(
     set_code="SWSH6",
     rarity=Rarities.RareSecret,
     effect=fan_of_waves,
-    condition=opponent_has_special_energy
+    condition=opponent_has_special_energy,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, def_for
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, def_for, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.attacks_common import snipe_attack
 from spirit.game.card_effects.passives_common import prevent_damage_when
 from spirit.game.card_effects.pokemon import is_pokemon_vmax
@@ -48,4 +48,5 @@ card = PokemonCardDef(
             effect=snipe_attack(30, also_base=True),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

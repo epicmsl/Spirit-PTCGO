@@ -1,0 +1,6 @@
+from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
+from spirit.game.card_effects.support_common import attach_from_discard
+from spirit.game.card_effects.pokemon import is_lightning_energy
+from spirit.game.card_effects.attacks_common import self_energy_discard_attack
+card = PokemonCardDef(guid='688b57d6-366d-52ab-bc0b-ec722d085b16', key='BW1', name='com.direwolfdigital.cake.data.archetypes.pokemon.Pikachu.Name', display_name='Pikachu', searchable_by=['Pikachu', 'Basic', 'Pikachu'], subtypes=['Basic'], collector_number=115, set_code='BW1', rarity=Rarities.RareSecret, foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.RAINBOW]), hp=60, elements=[PokemonTypes.LIGHTNING], stage=PokemonStage.BASIC, retreat_cost=1, weakness_type=PokemonTypes.FIGHTING, family_id=25, abilities=[Attack(title='Energize', game_text='Attach a Lightning Energy card from your discard pile to this Pokémon.', cost={PokemonTypes.LIGHTNING: 1}, effect=attach_from_discard(predicate=is_lightning_energy, count=1, target='self')), Attack(title='Thunderbolt', game_text='Discard all Energy attached to this Pokémon.', cost={PokemonTypes.LIGHTNING: 1, PokemonTypes.COLORLESS: 2}, damage=80, effect=self_energy_discard_attack(all_energy=True))])

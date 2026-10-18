@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef, subtypes_for
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, subtypes_for, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import requires_in_play
 
 
@@ -31,5 +31,6 @@ card = SupporterCardDef(
     set_code="SWSH6",
     rarity=Rarities.RareUltra,
     condition=requires_in_play(_is_rapid_strike),
-    effect=siebold
+    effect=siebold,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

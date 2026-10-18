@@ -3,8 +3,8 @@ from spirit.game.card_effects.pokemon import (
     summoning_star_condition,
     tempest_dive,
 )
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, PokemonCardDef, unimplemented, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="004ec1f2-234b-5300-8eea-180afadc0484",
@@ -41,4 +41,5 @@ card = PokemonCardDef(
             effect=tempest_dive,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

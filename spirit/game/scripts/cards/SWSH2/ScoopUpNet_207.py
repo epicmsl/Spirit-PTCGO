@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import scoop_up_net
 
 card = ItemCardDef(
@@ -12,5 +12,6 @@ card = ItemCardDef(
     collector_number=207,
     set_code="SWSH2",
     rarity=Rarities.RareSecret,
-    effect=scoop_up_net
+    effect=scoop_up_net,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

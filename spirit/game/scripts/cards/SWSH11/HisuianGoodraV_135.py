@@ -1,7 +1,7 @@
 from spirit.game.card_effects.support_common import gust_attack
 from spirit.game.card_effects.passives_common import protect_next_turn
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="e2c6ccd5-197a-56e7-84f8-bfc350236125",
@@ -13,6 +13,7 @@ card = PokemonCardDef(
     collector_number=135,
     set_code="SWSH11",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=220,
     elements=[PokemonTypes.DRAGON],
     stage=PokemonStage.BASIC,

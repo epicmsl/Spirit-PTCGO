@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations, has_rule_box
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef, has_rule_box
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.trainers import is_grass_energy_card
 
@@ -39,6 +39,7 @@ card = PokemonCardDef(
     collector_number=8,
     set_code="SWSH5",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=80,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.STAGE1,

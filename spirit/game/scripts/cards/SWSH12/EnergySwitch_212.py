@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import is_basic_energy_card
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 def energy_switch_condition(board, player_id):
@@ -27,5 +27,6 @@ card = ItemCardDef(
     set_code="SWSH12",
     rarity=Rarities.RareSecret,
     condition=energy_switch_condition,
-    effect=energy_switch
+    effect=energy_switch,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import VUnionPieceCardDef, VUnionPiece
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import VUnionPieceCardDef, VUnionPiece, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = VUnionPieceCardDef(
     guid="36ed17ee-eed6-5d34-8d88-936af7fdcfd0",
@@ -12,4 +12,5 @@ card = VUnionPieceCardDef(
     rarity=Rarities.RarePromo,
     vunion="Promo_SWSH/MewtwoVUNION_Combined",
     piece=VUnionPiece.BOTTOM_LEFT,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR])
 )

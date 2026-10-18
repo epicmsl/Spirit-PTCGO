@@ -1,6 +1,6 @@
 from spirit.game.card_effects.attacks_common import damage_counters_on
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 
 async def hollow_flame(ctx):
@@ -52,4 +52,5 @@ card = PokemonCardDef(
             effect=shimmering_star,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

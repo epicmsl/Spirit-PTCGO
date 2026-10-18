@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import (
     heal_targets, requires_damaged_pokemon, cure_conditions_effect,
 )
@@ -20,6 +20,7 @@ card = PokemonCardDef(
     collector_number=16,
     set_code="SWSH12",
     rarity=Rarities.RareRadiant,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.RADIANTHOLO]),
     hp=140,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.BASIC,

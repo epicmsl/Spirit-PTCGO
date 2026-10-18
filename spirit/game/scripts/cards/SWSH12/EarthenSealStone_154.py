@@ -1,5 +1,5 @@
 from spirit.game.card_effects.trainers import star_gravity
-from spirit.game.data_utils import Attack, PokemonToolCardDef, is_pokemon_v
+from spirit.game.data_utils import Attack, Foil, PokemonToolCardDef, is_pokemon_v
 from spirit.game.attributes import PokemonTypes, Rarities
 
 card = PokemonToolCardDef(
@@ -17,9 +17,10 @@ card = PokemonToolCardDef(
     key="SWSH12",
     name="com.direwolfdigital.cake.data.archetypes.trainer.EarthenSealStone.Name",
     display_name="Earthen Seal Stone",
-    searchable_by=["Earthen Seal Stone", "Item", "PokÃ©mon Tool"],
+    searchable_by=["Earthen Seal Stone", "Item", "Pokémon Tool"],
     subtypes=["Item", "Pokémon Tool"],
     collector_number=154,
     set_code="SWSH12",
-    rarity=Rarities.RareHolo
+    rarity=Rarities.RareHolo,
+    foil=Foil(),
 )

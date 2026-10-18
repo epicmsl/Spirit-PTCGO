@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import AttrID, PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_pokemon_card
 from spirit.game.card_effects.trainers import is_grass_energy_card
 
@@ -50,6 +50,7 @@ card = PokemonCardDef(
     collector_number=18,
     set_code="SWSH10",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=260,
     elements=[PokemonTypes.GRASS],
     stage=PokemonStage.VSTAR,
@@ -61,6 +62,7 @@ card = PokemonCardDef(
         Ability(
             title="Star Perfume",
             game_text="During your turn, you may search your deck for up to 5 in any combination of Grass Pok\u00e9mon and Grass Energy cards, reveal them, and put them into your hand. Then, shuffle your deck. (You can't use more than 1 VSTAR Power in a game.)",
+            activation=Activations.ONCE_PER_TURN,
             vstar=True,
             effect=star_perfume,
         ),

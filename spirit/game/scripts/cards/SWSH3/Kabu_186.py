@@ -1,6 +1,6 @@
 from spirit.game.card_effects.trainers import kabu
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 card = SupporterCardDef(
     guid="b6a93e85-813a-5de1-ad71-4326430eadc6",
@@ -12,5 +12,6 @@ card = SupporterCardDef(
     collector_number=186,
     set_code="SWSH3",
     rarity=Rarities.RareUltra,
-    effect=kabu
+    effect=kabu,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

@@ -1,8 +1,8 @@
 from spirit.game.card_effects.support_common import attach_from_discard
 from spirit.game.card_effects.trainers import is_basic_energy_card
 from spirit.game.card_effects.pokemon import v_transformation, v_transformation_condition
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="ed8ed163-04e6-527e-a80a-bd0dd51bdffc",
@@ -14,6 +14,7 @@ card = PokemonCardDef(
     collector_number=50,
     set_code="SWSH45",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=170,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.BASIC,

@@ -1,4 +1,4 @@
-from spirit.game.data_utils import SupporterCardDef
+from spirit.game.data_utils import Foil, SupporterCardDef
 from spirit.game.attributes import Rarities
 from spirit.game.session.passives import TurnDamageModifier
 
@@ -22,5 +22,6 @@ card = SupporterCardDef(
     collector_number=154,
     set_code="SWSH4",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     effect=leon_effect
 )

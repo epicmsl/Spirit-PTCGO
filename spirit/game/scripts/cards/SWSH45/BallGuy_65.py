@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef, def_for
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, def_for, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_item_card
 
 
@@ -43,4 +43,5 @@ card = SupporterCardDef(
     set_code="SWSH45",
     rarity=Rarities.RareUltra,
     effect=ball_guy,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonToolCardDef, Ability, Triggers, is_pokemon_v
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import Ability, PokemonToolCardDef, Triggers, is_pokemon_v, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 
 
 async def box_of_disaster(ctx):
@@ -35,4 +35,5 @@ card = PokemonToolCardDef(
             effect=box_of_disaster,
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

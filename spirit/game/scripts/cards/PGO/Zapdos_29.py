@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID
 from spirit.game.card_effects.passives_common import team_damage_boost_passive
 
@@ -21,6 +21,7 @@ card = PokemonCardDef(
     collector_number=29,
     set_code="PGO",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=120,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.BASIC,

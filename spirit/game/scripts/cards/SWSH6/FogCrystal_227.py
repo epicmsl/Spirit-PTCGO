@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import Rarities, AttrID, PokemonTypes
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import Rarities, AttrID, PokemonTypes, FoilMasks, FoilEffects
 from spirit.game.session.effects import is_basic_pokemon
 from spirit.game.card_effects.trainers import is_basic_energy_card
 from spirit.game.card_effects.support_common import search_to_hand
@@ -26,4 +26,5 @@ card = ItemCardDef(
         _psychic_energy_or_basic, count=1, minimum=0, reveal=True,
         prompt="Choose a Psychic Energy card or a Basic Psychic Pokémon.",
     ),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )

@@ -1,4 +1,4 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
 from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
 from spirit.game.card_effects.support_common import search_attach_energy
 from spirit.game.card_effects.attacks_common import damage_per, count_energy
@@ -27,6 +27,7 @@ card = PokemonCardDef(
     collector_number=17,
     set_code="PGO",
     rarity=Rarities.RareHolo,
+    foil=Foil(),
     hp=170,
     elements=[PokemonTypes.WATER],
     stage=PokemonStage.STAGE2,

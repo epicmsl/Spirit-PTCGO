@@ -1,6 +1,6 @@
 from spirit.game.card_effects.pokemon import double_dip_fangs, wild_tackle
-from spirit.game.data_utils import PokemonCardDef, Attack
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="c25c58bd-765c-55fc-b661-aec1b4aef657",
@@ -12,6 +12,7 @@ card = PokemonCardDef(
     collector_number=117,
     set_code="SWSH5",
     rarity=Rarities.RareHoloV,
+    foil=Foil(mask=FoilMasks.HOLO, effects=[FoilEffects.SUNPILLAR]),
     hp=210,
     elements=[PokemonTypes.COLORLESS],
     stage=PokemonStage.BASIC,

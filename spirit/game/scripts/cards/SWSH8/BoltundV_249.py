@@ -1,7 +1,7 @@
 from spirit.game.card_effects.attacks_common import snipe_attack
 from spirit.game.card_effects.support_common import switch_self_attack
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, PokemonCardDef, Foil
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 
 card = PokemonCardDef(
     guid="462eac11-e0a8-51ea-8787-84ea97eb68f7",
@@ -35,4 +35,5 @@ card = PokemonCardDef(
             effect=snipe_attack(30, also_base=True),
         ),
     ],
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

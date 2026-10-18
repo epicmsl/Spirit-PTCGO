@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability, Activations
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, TrainerType
+from spirit.game.data_utils import Ability, Activations, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, AttrID, TrainerType, FoilMasks, FoilEffects
 
 
 def _is_pokemon_tool_card(card):
@@ -47,6 +47,7 @@ card = PokemonCardDef(
     collector_number=46,
     set_code="CZ",
     rarity=Rarities.RareHoloVSTAR,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR]),
     hp=250,
     elements=[PokemonTypes.LIGHTNING],
     stage=PokemonStage.VSTAR,

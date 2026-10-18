@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.data_utils import is_pokemon_v
 
 
@@ -21,4 +21,5 @@ card = SupporterCardDef(
     set_code="SWSH6",
     rarity=Rarities.RareUltra,
     effect=honey,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

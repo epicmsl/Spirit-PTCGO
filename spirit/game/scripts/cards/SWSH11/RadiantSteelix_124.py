@@ -1,5 +1,5 @@
-from spirit.game.data_utils import PokemonCardDef, Attack, Ability
-from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities
+from spirit.game.data_utils import Ability, Attack, Foil, PokemonCardDef
+from spirit.game.attributes import PokemonTypes, PokemonStage, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import attach_from_discard
 from spirit.game.card_effects.trainers import is_metal_energy_card
 from spirit.game.card_effects.pokemon import is_energy_card
@@ -25,6 +25,7 @@ card = PokemonCardDef(
     collector_number=124,
     set_code="SWSH11",
     rarity=Rarities.RareRadiant,
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.RADIANTHOLO]),
     hp=170,
     elements=[PokemonTypes.METAL],
     stage=PokemonStage.BASIC,

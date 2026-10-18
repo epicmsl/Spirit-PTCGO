@@ -1,5 +1,5 @@
-from spirit.game.data_utils import SupporterCardDef
-from spirit.game.attributes import Rarities
+from spirit.game.data_utils import SupporterCardDef, Foil
+from spirit.game.attributes import Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.trainers import hand_size_at_least
 
 
@@ -22,4 +22,5 @@ card = SupporterCardDef(
     rarity=Rarities.RareUltra,
     effect=zinnias_resolve,
     condition=hand_size_at_least(3),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SUNPILLAR])
 )

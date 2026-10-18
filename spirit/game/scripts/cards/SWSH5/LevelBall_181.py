@@ -1,5 +1,5 @@
-from spirit.game.data_utils import ItemCardDef
-from spirit.game.attributes import AttrID, Rarities
+from spirit.game.data_utils import ItemCardDef, Foil
+from spirit.game.attributes import AttrID, Rarities, FoilMasks, FoilEffects
 from spirit.game.card_effects.support_common import search_to_hand
 from spirit.game.session.effects import is_pokemon_card
 
@@ -21,5 +21,6 @@ card = ItemCardDef(
     effect=search_to_hand(
         _hp_90_or_less, count=1,
         prompt="Choose a Pokémon with 90 HP or less to put into your hand.",
-    )
+    ),
+    foil=Foil(mask=FoilMasks.ETCHED, effects=[FoilEffects.SWSECRET])
 )
